@@ -8,233 +8,505 @@
 
 <style>
 :root{
- --bg:#070910;--card:#101520;--card2:#141a24;--line:#252d3b;
- --txt:#f7f8fc;--muted:#98a3b5;--p:#735cff;--p2:#2ec5ff;
- --ok:#20c997;--bad:#ff5c7a
+ --bg:#070910;
+ --card:#101520;
+ --card2:#141a24;
+ --line:#252d3b;
+ --txt:#f7f8fc;
+ --muted:#98a3b5;
+ --p:#735cff;
+ --p2:#2ec5ff;
+ --ok:#20c997;
+ --bad:#ff5c7a
 }
+
 *{box-sizing:border-box}
+
 html{scroll-behavior:smooth}
+
 body{
- margin:0;background:radial-gradient(circle at 15% 0,#211747 0,#070910 38%);
- color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif
+ margin:0;
+ background:radial-gradient(circle at 15% 0,#211747 0,#070910 38%);
+ color:var(--txt);
+ font-family:system-ui,-apple-system,Segoe UI,sans-serif
 }
+
 button,input,textarea,select{font:inherit}
+
 button{cursor:pointer}
-a{text-decoration:none;color:inherit}
+
+a{
+ text-decoration:none;
+ color:inherit
+}
 
 header{
- position:sticky;top:0;z-index:30;background:#080a10e8;
- backdrop-filter:blur(18px);border-bottom:1px solid #ffffff0d
+ position:sticky;
+ top:0;
+ z-index:30;
+ background:#080a10e8;
+ backdrop-filter:blur(18px);
+ border-bottom:1px solid #ffffff0d
 }
+
 .bar{
- height:70px;max-width:1150px;margin:auto;padding:0 15px;
- display:flex;align-items:center;gap:10px
+ height:70px;
+ max-width:1150px;
+ margin:auto;
+ padding:0 15px;
+ display:flex;
+ align-items:center;
+ gap:10px
 }
+
 .brand{
- font-weight:900;font-size:20px;display:flex;align-items:center;gap:9px
+ font-weight:900;
+ font-size:20px;
+ display:flex;
+ align-items:center;
+ gap:9px
 }
+
 .logo{
- width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
- background:linear-gradient(135deg,var(--p),var(--p2));font-size:22px
+ width:42px;
+ height:42px;
+ border-radius:14px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(135deg,var(--p),var(--p2));
+ font-size:22px
 }
-.nav{margin-left:auto;display:flex;gap:3px}
+
+.nav{
+ margin-left:auto;
+ display:flex;
+ gap:3px
+}
+
 .nav button{
- border:0;background:transparent;color:var(--muted);
- padding:10px 11px;border-radius:12px
+ border:0;
+ background:transparent;
+ color:var(--muted);
+ padding:10px 11px;
+ border-radius:12px
 }
-.nav button:hover,.nav button.active{
- background:#ffffff0a;color:#fff
+
+.nav button:hover,
+.nav button.active{
+ background:#ffffff0a;
+ color:#fff
 }
+
 .menu{
- display:none;margin-left:auto;border:1px solid var(--line);
- background:#151a24;color:#fff;border-radius:13px;padding:9px 12px;font-size:20px
+ display:none;
+ margin-left:auto;
+ border:1px solid var(--line);
+ background:#151a24;
+ color:#fff;
+ border-radius:13px;
+ padding:9px 12px;
+ font-size:20px
 }
 
 main{
- max-width:1150px;margin:auto;padding:25px 15px 100px
+ max-width:1150px;
+ margin:auto;
+ padding:25px 15px 100px
 }
+
 .page{display:none}
+
 .page.active{display:block}
 
 .hero{
- min-height:450px;border:1px solid #ffffff10;border-radius:30px;padding:40px;
- display:flex;align-items:center;
+ min-height:450px;
+ border:1px solid #ffffff10;
+ border-radius:30px;
+ padding:40px;
+ display:flex;
+ align-items:center;
  background:linear-gradient(120deg,#17102d,#101823 65%,#071018);
  overflow:hidden
 }
+
 .hero>div{max-width:720px}
+
 .tag{
- display:inline-block;color:#c7c0ff;background:#735cff1c;
- border:1px solid #735cff55;padding:8px 12px;border-radius:999px;
- font-size:12px;font-weight:900
+ display:inline-block;
+ color:#c7c0ff;
+ background:#735cff1c;
+ border:1px solid #735cff55;
+ padding:8px 12px;
+ border-radius:999px;
+ font-size:12px;
+ font-weight:900
 }
+
 h1{
- font-size:clamp(45px,8vw,78px);line-height:.95;
- letter-spacing:-4px;margin:18px 0
+ font-size:clamp(45px,8vw,78px);
+ line-height:.95;
+ letter-spacing:-4px;
+ margin:18px 0
 }
-h2{margin:0 0 7px;font-size:31px}
-h3{margin:0 0 7px}
-p{color:var(--muted);line-height:1.6}
+
+h2{
+ margin:0 0 7px;
+ font-size:31px
+}
+
+h3{
+ margin:0 0 7px
+}
+
+p{
+ color:var(--muted);
+ line-height:1.6
+}
 
 .actions{
- display:flex;flex-wrap:wrap;gap:9px;margin-top:20px
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-top:20px
 }
+
 .btn{
- border:1px solid var(--line);background:#151a23;color:#fff;
- padding:11px 15px;border-radius:13px;font-weight:800
+ border:1px solid var(--line);
+ background:#151a23;
+ color:#fff;
+ padding:11px 15px;
+ border-radius:13px;
+ font-weight:800
 }
+
 .primary{
- background:linear-gradient(135deg,var(--p),#5140dd);border:0
+ background:linear-gradient(135deg,var(--p),#5140dd);
+ border:0
 }
+
 .danger{
- color:#ff9aac;background:#ff5c7a12;border-color:#ff5c7a44
+ color:#ff9aac;
+ background:#ff5c7a12;
+ border-color:#ff5c7a44
 }
+
 .ok{
- color:#62e1b3;background:#20c99712;border-color:#20c99744
+ color:#62e1b3;
+ background:#20c99712;
+ border-color:#20c99744
+}
+
+.btn:disabled{
+ opacity:.55;
+ cursor:not-allowed
 }
 
 .head{
- display:flex;justify-content:space-between;align-items:end;
- gap:10px;margin:35px 0 15px
+ display:flex;
+ justify-content:space-between;
+ align-items:end;
+ gap:10px;
+ margin:35px 0 15px
 }
+
 .grid{
- display:grid;grid-template-columns:repeat(3,1fr);gap:13px
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:13px
 }
+
 .grid2{
- display:grid;grid-template-columns:repeat(2,1fr);gap:13px
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:13px
 }
+
 .card{
  background:linear-gradient(180deg,#121822,#0e1219);
- border:1px solid var(--line);border-radius:20px;padding:18px
+ border:1px solid var(--line);
+ border-radius:20px;
+ padding:18px
 }
-.stat{font-size:34px;font-weight:900}
+
+.stat{
+ font-size:34px;
+ font-weight:900
+}
+
 .muted{color:var(--muted)}
+
 .small{font-size:12px}
 
-.form{max-width:720px;margin:auto}
+.form{
+ max-width:720px;
+ margin:auto
+}
+
 .field{margin:12px 0}
+
 .field label{
- display:block;font-size:13px;font-weight:800;
- color:#cbd3df;margin-bottom:6px
+ display:block;
+ font-size:13px;
+ font-weight:800;
+ color:#cbd3df;
+ margin-bottom:6px
 }
-input,textarea,select{
- width:100%;background:#080b11;border:1px solid var(--line);
- border-radius:12px;padding:12px;color:#fff;outline:0
+
+input,
+textarea,
+select{
+ width:100%;
+ background:#080b11;
+ border:1px solid var(--line);
+ border-radius:12px;
+ padding:12px;
+ color:#fff;
+ outline:0
 }
+
 textarea{min-height:110px}
-input:focus,textarea:focus,select:focus{
+
+input:focus,
+textarea:focus,
+select:focus{
  border-color:#735cff88
 }
 
 .notice{
- margin:10px 0;padding:12px 14px;border-radius:12px;
- background:#ffffff08;border:1px solid var(--line)
+ margin:10px 0;
+ padding:12px 14px;
+ border-radius:12px;
+ background:#ffffff08;
+ border:1px solid var(--line)
 }
-.error{color:#ff9aad;background:#ff5c7a12}
-.success{color:#70e5b8;background:#20c99712}
+
+.error{
+ color:#ff9aad;
+ background:#ff5c7a12
+}
+
+.success{
+ color:#70e5b8;
+ background:#20c99712
+}
 
 .player{
- display:flex;align-items:center;gap:12px
+ display:flex;
+ align-items:center;
+ gap:12px
 }
+
 .avatar{
- width:58px;height:58px;object-fit:cover;border-radius:17px;
- background:#1b2130;border:1px solid var(--line)
+ width:58px;
+ height:58px;
+ object-fit:cover;
+ border-radius:17px;
+ background:#1b2130;
+ border:1px solid var(--line)
 }
-.avatar.big{width:90px;height:90px;border-radius:25px}
+
+.avatar.big{
+ width:90px;
+ height:90px;
+ border-radius:25px
+}
 
 .badge{
- display:inline-block;padding:4px 8px;border-radius:999px;
- background:#ffffff0b;color:#b9c2d0;font-size:11px;font-weight:800
+ display:inline-block;
+ padding:4px 8px;
+ border-radius:999px;
+ background:#ffffff0b;
+ color:#b9c2d0;
+ font-size:11px;
+ font-weight:800
 }
 
-.list{display:grid;gap:10px}
+.list{
+ display:grid;
+ gap:10px
+}
+
 .row{
- display:flex;align-items:center;justify-content:space-between;
- gap:10px;padding:13px;border:1px solid var(--line);
- background:#0b0e14;border-radius:15px
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ padding:13px;
+ border:1px solid var(--line);
+ background:#0b0e14;
+ border-radius:15px
 }
+
 .empty{
- text-align:center;padding:35px;border:1px dashed var(--line);
- border-radius:18px;color:var(--muted)
+ text-align:center;
+ padding:35px;
+ border:1px dashed var(--line);
+ border-radius:18px;
+ color:var(--muted)
 }
+
 .search{margin-bottom:14px}
+
 .clickable{cursor:pointer}
-.clickable:hover{border-color:#735cff66}
+
+.clickable:hover{
+ border-color:#735cff66
+}
 
 .statgrid{
- display:grid;grid-template-columns:repeat(4,1fr);
- gap:10px;margin-top:15px
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
+ margin-top:15px
 }
+
 .statbox{
- background:#0b0f15;border:1px solid var(--line);
- border-radius:15px;padding:13px
+ background:#0b0f15;
+ border:1px solid var(--line);
+ border-radius:15px;
+ padding:13px
 }
+
 .statbox b{font-size:25px}
 
 .admin{
  background:linear-gradient(180deg,#17122b,#11151d);
- border:1px solid #735cff55;border-radius:22px;padding:17px
+ border:1px solid #735cff55;
+ border-radius:22px;
+ padding:17px
 }
+
 .tabs{
- display:flex;gap:7px;overflow:auto;margin:15px 0
+ display:flex;
+ gap:7px;
+ overflow:auto;
+ margin:15px 0
 }
+
 .tab{
- white-space:nowrap;border:1px solid var(--line);
- background:#0d1016;color:var(--muted);
- padding:9px 12px;border-radius:999px
+ white-space:nowrap;
+ border:1px solid var(--line);
+ background:#0d1016;
+ color:var(--muted);
+ padding:9px 12px;
+ border-radius:999px
 }
+
 .tab.active{
- color:#fff;border-color:#735cff66;background:#735cff18
+ color:#fff;
+ border-color:#735cff66;
+ background:#735cff18
 }
 
 .modal{
- position:fixed;inset:0;background:#000b;z-index:100;
- display:none;align-items:center;justify-content:center;padding:15px
+ position:fixed;
+ inset:0;
+ background:#000b;
+ z-index:100;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:15px
 }
+
 .modal.show{display:flex}
+
 .modalbox{
- width:min(620px,100%);max-height:90vh;overflow:auto;
- background:#12161e;border:1px solid var(--line);
- border-radius:22px;padding:18px
+ width:min(620px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:#12161e;
+ border:1px solid var(--line);
+ border-radius:22px;
+ padding:18px
 }
 
 .loader{
- position:fixed;inset:0;background:#080a0fee;z-index:200;
- display:grid;place-items:center
+ position:fixed;
+ inset:0;
+ background:#080a0fee;
+ z-index:200;
+ display:grid;
+ place-items:center
 }
+
 .loader.off{display:none}
+
 .spin{
- width:40px;height:40px;border:4px solid #ffffff18;
- border-top-color:#8d7fff;border-radius:50%;
+ width:40px;
+ height:40px;
+ border:4px solid #ffffff18;
+ border-top-color:#8d7fff;
+ border-radius:50%;
  animation:s .8s linear infinite
 }
-@keyframes s{to{transform:rotate(360deg)}}
+
+@keyframes s{
+ to{transform:rotate(360deg)}
+}
 
 footer{
- text-align:center;color:#687181;font-size:12px;padding:25px
+ text-align:center;
+ color:#687181;
+ font-size:12px;
+ padding:25px
 }
 
 .bottom{display:none}
 
 @media(max-width:800px){
+
  .nav{display:none}
- .menu{display:block}
+
+ .menu{
+  display:block
+ }
+
  .bottom{
-  position:fixed;display:flex;z-index:50;bottom:0;left:0;right:0;
-  background:#090b10ed;backdrop-filter:blur(18px);
+  position:fixed;
+  display:flex;
+  z-index:50;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#090b10ed;
+  backdrop-filter:blur(18px);
   border-top:1px solid var(--line);
   justify-content:space-around;
   padding:6px 3px calc(6px + env(safe-area-inset-bottom))
  }
+
  .bottom button{
-  font-size:10px;padding:6px;border:0;
-  background:transparent;color:var(--muted)
+  font-size:10px;
+  padding:6px;
+  border:0;
+  background:transparent;
+  color:var(--muted)
  }
- .bottom b{display:block;font-size:17px}
- .grid,.grid2{grid-template-columns:1fr}
- .statgrid{grid-template-columns:repeat(2,1fr)}
- .hero{padding:27px;min-height:430px}
- main{padding-left:12px;padding-right:12px}
+
+ .bottom b{
+  display:block;
+  font-size:17px
+ }
+
+ .grid,
+ .grid2{
+  grid-template-columns:1fr
+ }
+
+ .statgrid{
+  grid-template-columns:repeat(2,1fr)
+ }
+
+ .hero{
+  padding:27px;
+  min-height:430px
+ }
+
+ main{
+  padding-left:12px;
+  padding-right:12px
+ }
 }
 </style>
 </head>
@@ -255,38 +527,61 @@ footer{
 
 <nav class="nav">
 
-<button data-p="home" onclick="go('home')">Home</button>
-<button data-p="tournament" onclick="go('tournament')">Tournament</button>
-<button data-p="players" onclick="go('players')">Players</button>
-<button data-p="results" onclick="go('results')">Results</button>
-<button data-p="rules" onclick="go('rules')">Rules</button>
+<button data-p="home" onclick="go('home')">
+ Home
+</button>
 
-<button data-p="login" id="loginNav" onclick="go('login')">
+<button data-p="tournament" onclick="go('tournament')">
+ Tournament
+</button>
+
+<button data-p="players" onclick="go('players')">
+ Players
+</button>
+
+<button data-p="results" onclick="go('results')">
+ Results
+</button>
+
+<button data-p="rules" onclick="go('rules')">
+ Rules
+</button>
+
+<button
+ data-p="login"
+ id="loginNav"
+ onclick="go('login')">
  Login
 </button>
 
-<button data-p="profile" id="profileNav"
-style="display:none"
-onclick="go('profile')">
+<button
+ data-p="profile"
+ id="profileNav"
+ style="display:none"
+ onclick="go('profile')">
  Profile
 </button>
 
-<button data-p="admin" id="adminNav"
-style="display:none"
-onclick="go('admin')">
+<button
+ data-p="admin"
+ id="adminNav"
+ style="display:none"
+ onclick="go('admin')">
  Admin
 </button>
 
-<button id="logoutNav"
-style="display:none"
-onclick="logout()">
+<button
+ id="logoutNav"
+ style="display:none"
+ onclick="logout()">
  Logout
 </button>
 
 </nav>
 
-<button class="menu"
-onclick="go(currentUser?'profile':'login')">
+<button
+ class="menu"
+ onclick="go(currentUser?'profile':'login')">
  ☰
 </button>
 
@@ -310,7 +605,9 @@ onclick="go(currentUser?'profile':'login')">
 
 <h1>
 LUCC<br>
-<span style="color:#8d7fff">eFootball</span>
+<span style="color:#8d7fff">
+eFootball
+</span>
 </h1>
 
 <p>
@@ -320,19 +617,22 @@ check results and climb the leaderboard.
 
 <div class="actions">
 
-<button class="btn primary"
-onclick="go('register')">
-🚀 Register Now
+<button
+ class="btn primary"
+ onclick="go('register')">
+ 🚀 Register Now
 </button>
 
-<button class="btn"
-onclick="go('tournament')">
-🏆 Tournament
+<button
+ class="btn"
+ onclick="go('tournament')">
+ 🏆 Tournament
 </button>
 
-<button class="btn"
-onclick="go('rules')">
-📋 Rules
+<button
+ class="btn"
+ onclick="go('rules')">
+ 📋 Rules
 </button>
 
 </div>
@@ -342,30 +642,66 @@ onclick="go('rules')">
 
 
 <div class="head">
+
 <div>
-<h2>Live Overview</h2>
+
+<h2>
+Live Overview
+</h2>
+
 <p class="small">
 Tournament platform statistics
 </p>
+
 </div>
+
 </div>
 
 
 <div class="grid">
 
 <div class="card">
-<span class="muted">Players</span>
-<div class="stat" id="sp">—</div>
+
+<span class="muted">
+Players
+</span>
+
+<div
+ class="stat"
+ id="sp">
+—
 </div>
 
-<div class="card">
-<span class="muted">Matches</span>
-<div class="stat" id="sr">—</div>
 </div>
 
+
 <div class="card">
-<span class="muted">Tournaments</span>
-<div class="stat" id="st">—</div>
+
+<span class="muted">
+Matches
+</span>
+
+<div
+ class="stat"
+ id="sr">
+—
+</div>
+
+</div>
+
+
+<div class="card">
+
+<span class="muted">
+Tournaments
+</span>
+
+<div
+ class="stat"
+ id="st">
+—
+</div>
+
 </div>
 
 </div>
@@ -378,10 +714,19 @@ Tournament platform statistics
 <section id="register" class="page">
 
 <div class="head">
+
 <div>
-<h2>Player Registration</h2>
-<p>Create your tournament account.</p>
+
+<h2>
+Player Registration
+</h2>
+
+<p>
+Create your tournament account.
+</p>
+
 </div>
+
 </div>
 
 
@@ -394,13 +739,30 @@ Tournament platform statistics
 <div class="grid2">
 
 <div class="field">
-<label>Player Name *</label>
-<input id="name" required maxlength="60">
+
+<label>
+Player Name *
+</label>
+
+<input
+ id="name"
+ required
+ maxlength="60">
+
 </div>
 
+
 <div class="field">
-<label>Konami/eFootball UID *</label>
-<input id="uid" required maxlength="60">
+
+<label>
+Konami/eFootball UID *
+</label>
+
+<input
+ id="uid"
+ required
+ maxlength="60">
+
 </div>
 
 </div>
@@ -409,63 +771,108 @@ Tournament platform statistics
 <div class="grid2">
 
 <div class="field">
-<label>Email *</label>
-<input id="email" type="email" required>
+
+<label>
+Email *
+</label>
+
+<input
+ id="email"
+ type="email"
+ required>
+
 </div>
 
+
 <div class="field">
-<label>Mobile</label>
+
+<label>
+Mobile
+</label>
+
 <input id="mobile">
-</div>
 
 </div>
 
-
-<div class="field">
-<label>Password *</label>
-<input id="pass" type="password"
-minlength="6" required>
-</div>
-
-
-<div class="field">
-<label>Mobile/device model</label>
-<input id="device"
-placeholder="e.g. Pixel 7">
 </div>
 
 
 <div class="field">
 
-<label>Avatar</label>
+<label>
+Password *
+</label>
 
-<input id="avatar"
-type="file"
-accept="image/*">
+<input
+ id="pass"
+ type="password"
+ minlength="6"
+ required>
 
-<img id="preview"
-class="avatar big"
-style="display:none;margin-top:8px">
+</div>
+
+
+<div class="field">
+
+<label>
+Mobile/device model
+</label>
+
+<input
+ id="device"
+ placeholder="e.g. Pixel 7">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Avatar
+</label>
+
+<input
+ id="avatar"
+ type="file"
+ accept="image/*">
+
+<img
+ id="preview"
+ class="avatar big"
+ style="display:none;margin-top:8px">
+
+<p class="small muted">
+Avatar is automatically compressed and saved
+inside Firestore. Firebase Storage is not used.
+</p>
 
 </div>
 
 
 <button
-id="regBtn"
-class="btn primary"
-type="submit">
+ id="regBtn"
+ class="btn primary"
+ type="submit">
+
 Create Account
+
 </button>
 
 </form>
 
 
 <p class="small">
+
 Already registered?
-<a onclick="go('login')"
-style="color:#a79cff;cursor:pointer">
+
+<a
+ onclick="go('login')"
+ style="color:#a79cff;cursor:pointer">
+
 Login
+
 </a>
+
 </p>
 
 </div>
@@ -478,10 +885,19 @@ Login
 <section id="login" class="page">
 
 <div class="head">
+
 <div>
-<h2>Login</h2>
-<p>Player and admin login.</p>
+
+<h2>
+Login
+</h2>
+
+<p>
+Player and admin login.
+</p>
+
 </div>
+
 </div>
 
 
@@ -492,23 +908,40 @@ Login
 <form id="signin">
 
 <div class="field">
-<label>Email</label>
-<input id="lemail"
-type="email"
-required>
+
+<label>
+Email
+</label>
+
+<input
+ id="lemail"
+ type="email"
+ required>
+
 </div>
+
 
 <div class="field">
-<label>Password</label>
-<input id="lpass"
-type="password"
-required>
+
+<label>
+Password
+</label>
+
+<input
+ id="lpass"
+ type="password"
+ required>
+
 </div>
 
-<button id="loginBtn"
-class="btn primary"
-type="submit">
+
+<button
+ id="loginBtn"
+ class="btn primary"
+ type="submit">
+
 Login
+
 </button>
 
 </form>
@@ -523,24 +956,36 @@ Login
 <section id="players" class="page">
 
 <div class="head">
+
 <div>
-<h2>Players</h2>
+
+<h2>
+Players
+</h2>
+
 <p>
 Search and open any player profile.
 </p>
+
 </div>
+
 </div>
+
 
 <div class="search">
 
 <input
-id="playerSearch"
-placeholder="🔎 Search player name or UID..."
-oninput="renderPlayers()">
+ id="playerSearch"
+ placeholder="🔎 Search player name or UID..."
+ oninput="renderPlayers()">
 
 </div>
 
-<div id="plist" class="grid"></div>
+
+<div
+ id="plist"
+ class="grid">
+</div>
 
 </section>
 
@@ -550,13 +995,26 @@ oninput="renderPlayers()">
 <section id="rules" class="page">
 
 <div class="head">
+
 <div>
-<h2>Tournament Rules</h2>
-<p>Rules every player must follow.</p>
-</div>
+
+<h2>
+Tournament Rules
+</h2>
+
+<p>
+Rules every player must follow.
+</p>
+
 </div>
 
-<div id="rul" class="grid2"></div>
+</div>
+
+
+<div
+ id="rul"
+ class="grid2">
+</div>
 
 </section>
 
@@ -566,13 +1024,21 @@ oninput="renderPlayers()">
 <section id="tournament" class="page">
 
 <div class="head">
+
 <div>
-<h2>Tournament</h2>
+
+<h2>
+Tournament
+</h2>
+
 <p>
 Fixtures, schedule and tournament information.
 </p>
+
 </div>
+
 </div>
+
 
 <div id="tour"></div>
 
@@ -584,17 +1050,30 @@ Fixtures, schedule and tournament information.
 <section id="results" class="page">
 
 <div class="head">
+
 <div>
-<h2>Results & Leaderboard</h2>
-<p>Published match results.</p>
+
+<h2>
+Results & Leaderboard
+</h2>
+
+<p>
+Published match results.
+</p>
+
 </div>
+
 </div>
+
 
 <div id="leader"></div>
 
 <br>
 
-<div id="res" class="list"></div>
+<div
+ id="res"
+ class="list">
+</div>
 
 </section>
 
@@ -604,11 +1083,21 @@ Fixtures, schedule and tournament information.
 <section id="profile" class="page">
 
 <div class="head">
+
 <div>
-<h2>My Profile</h2>
-<p>Your account dashboard.</p>
+
+<h2>
+My Profile
+</h2>
+
+<p>
+Your account dashboard.
+</p>
+
 </div>
+
 </div>
+
 
 <div id="prof"></div>
 
@@ -620,47 +1109,62 @@ Fixtures, schedule and tournament information.
 <section id="admin" class="page">
 
 <div class="head">
+
 <div>
-<h2>Admin Panel</h2>
+
+<h2>
+Admin Panel
+</h2>
+
 <p>
 Manage tournament and players.
 </p>
+
 </div>
+
 </div>
 
 
 <div id="aguard"></div>
 
-<div id="acont" style="display:none">
+<div
+ id="acont"
+ style="display:none">
 
 <div class="tabs">
 
-<button class="tab active"
-onclick="atab('players',this)">
-Players
+<button
+ class="tab active"
+ onclick="atab('players',this)">
+ Players
 </button>
 
-<button class="tab"
-onclick="atab('tournaments',this)">
-Tournament
+<button
+ class="tab"
+ onclick="atab('tournaments',this)">
+ Tournament
 </button>
 
-<button class="tab"
-onclick="atab('fixtures',this)">
-Fixtures
+<button
+ class="tab"
+ onclick="atab('fixtures',this)">
+ Fixtures
 </button>
 
-<button class="tab"
-onclick="atab('results',this)">
-Results
+<button
+ class="tab"
+ onclick="atab('results',this)">
+ Results
 </button>
 
-<button class="tab"
-onclick="atab('rules',this)">
-Rules
+<button
+ class="tab"
+ onclick="atab('rules',this)">
+ Rules
 </button>
 
 </div>
+
 
 <div id="apanel"></div>
 
@@ -679,36 +1183,44 @@ LUCC eFootball
 <nav class="bottom">
 
 <button onclick="go('home')">
-<b>⌂</b>Home
+<b>⌂</b>
+Home
 </button>
 
 <button onclick="go('tournament')">
-<b>🏆</b>Tournament
+<b>🏆</b>
+Tournament
 </button>
 
 <button onclick="go('players')">
-<b>👥</b>Players
+<b>👥</b>
+Players
 </button>
 
 <button onclick="go('results')">
-<b>📊</b>Results
+<b>📊</b>
+Results
 </button>
 
 <button onclick="go(currentUser?'profile':'login')">
-<b>👤</b>Profile
+<b>👤</b>
+Profile
 </button>
 
 </nav>
 
 
-<div id="modal" class="modal">
+<div
+ id="modal"
+ class="modal">
 
 <div class="modalbox">
 
-<button class="btn"
-style="float:right"
-onclick="closeModal()">
-✕
+<button
+ class="btn"
+ style="float:right"
+ onclick="closeModal()">
+ ✕
 </button>
 
 <div id="mc"></div>
@@ -720,20 +1232,26 @@ onclick="closeModal()">
 
 <script type="module">
 
-import{
- initializeApp
-}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+/* =====================================================
+   FIREBASE IMPORTS
+   ===================================================== */
 
-import{
+import {
+ initializeApp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
  getAuth,
  createUserWithEmailAndPassword,
  signInWithEmailAndPassword,
  signOut,
  onAuthStateChanged,
  updateProfile
-}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-import{
+
+import {
  getFirestore,
  doc,
  getDoc,
@@ -744,233 +1262,457 @@ import{
  getDocs,
  addDoc,
  serverTimestamp
-}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-import{
- getStorage,
- ref,
- uploadBytes,
- getDownloadURL
-}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
-/* FIREBASE */
+/* =====================================================
+   FIREBASE CONFIG
+   ===================================================== */
 
-const firebaseConfig={
- apiKey:"AIzaSyDKUmeBGjkJ9AixVaLGEPCVT1wqo5vMik",
- authDomain:"lucc-efootball-tournamen-a2eef.firebaseapp.com",
- projectId:"lucc-efootball-tournamen-a2eef",
- storageBucket:"lucc-efootball-tournamen-a2eef.firebasestorage.app",
- messagingSenderId:"562916468135",
- appId:"1:562916468135:web:8e8b72af92757f407dc282",
- measurementId:"G-HRMKH8HFQZ"
-};
+const firebaseConfig = {
 
-const app=initializeApp(firebaseConfig);
+ apiKey:
+ "AIzaSyDKU2meBGjkJ9AixVaLGEPCVT1wqo5vMik",
 
-const auth=getAuth(app);
-const db=getFirestore(app);
-const storage=getStorage(app);
+ authDomain:
+ "lucc-efootball-tournamen-a2eef.firebaseapp.com",
 
-let currentUser=null;
-let profile=null;
+ projectId:
+ "lucc-efootball-tournamen-a2eef",
 
-let D={
- players:[],
- results:[],
- tournaments:[],
- rules:[],
- fixtures:[]
+ storageBucket:
+ "lucc-efootball-tournamen-a2eef.firebasestorage.app",
+
+ messagingSenderId:
+ "562916468135",
+
+ appId:
+ "1:562916468135:web:8e8b72af92757f407dc282",
+
+ measurementId:
+ "G-HRMKH8HFQZ"
+
 };
 
 
-/* HELPERS */
+const app =
+ initializeApp(firebaseConfig);
 
-const $=id=>document.getElementById(id);
 
-const esc=x=>
- String(x??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;",
- "<":"&lt;",
- ">":"&gt;",
- '"':"&quot;",
- "'":"&#39;"
- }[c]));
+const auth =
+ getAuth(app);
 
-function note(id,text,ok=false){
 
- $(id).innerHTML=
- `<div class="notice ${ok?"success":"error"}">
+const db =
+ getFirestore(app);
+
+
+/*
+ IMPORTANT:
+
+ Firebase Storage is NOT initialized.
+
+ No getStorage()
+ No ref()
+ No uploadBytes()
+ No getDownloadURL()
+
+ Avatar is saved directly into Firestore.
+*/
+
+
+let currentUser = null;
+
+let profile = null;
+
+
+let D = {
+
+ players: [],
+ results: [],
+ tournaments: [],
+ rules: [],
+ fixtures: []
+
+};
+
+
+/* =====================================================
+   HELPERS
+   ===================================================== */
+
+const $ =
+ id => document.getElementById(id);
+
+
+const esc =
+ x =>
+ String(x ?? "")
+ .replace(
+  /[&<>"']/g,
+  c => ({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[c])
+ );
+
+
+function note(
+ id,
+ text,
+ ok=false
+){
+
+ $(id).innerHTML =
+ `
+ <div class="notice ${ok?"success":"error"}">
  ${esc(text)}
- </div>`;
+ </div>
+ `;
 
 }
 
-function timeout(p,ms=15000){
+
+function timeout(
+ p,
+ ms=15000
+){
 
  let timer;
 
  return Promise.race([
+
   p,
-  new Promise((_,reject)=>{
-   timer=setTimeout(()=>{
-    reject(
-     new Error(
-      "Firebase request timed out. Check internet connection and Firebase rules."
-     )
+
+  new Promise(
+   (_,reject)=>{
+
+    timer =
+    setTimeout(
+     ()=>{
+
+      reject(
+       new Error(
+        "Firebase request timed out. Check internet connection and Firebase rules."
+       )
+      );
+
+     },
+     ms
     );
-   },ms);
-  })
- ]).finally(()=>clearTimeout(timer));
+
+   }
+  )
+
+ ]).finally(
+  ()=>clearTimeout(timer)
+ );
 
 }
 
 
-/* ERROR */
+/* =====================================================
+   FIREBASE ERROR
+   ===================================================== */
 
 function firebaseError(e){
 
- const m={
+ const m = {
 
- "auth/email-already-in-use":
- "This email is already registered. Please login.",
+  "auth/email-already-in-use":
+  "This email is already registered. Please login.",
 
- "auth/invalid-email":
- "Invalid email address.",
+  "auth/invalid-email":
+  "Invalid email address.",
 
- "auth/weak-password":
- "Password must contain at least 6 characters.",
+  "auth/weak-password":
+  "Password must contain at least 6 characters.",
 
- "auth/invalid-credential":
- "Wrong email or password.",
+  "auth/invalid-credential":
+  "Wrong email or password.",
 
- "auth/network-request-failed":
- "Network error. Check your internet connection."
+  "auth/network-request-failed":
+  "Network error. Check your internet connection.",
+
+  "permission-denied":
+  "Firebase permission denied. Check Firestore rules.",
+
+  "failed-precondition":
+  "Firebase operation failed. Check your Firestore setup."
 
  };
 
- return m[e?.code] ||
- e?.message ||
- "Something went wrong.";
+ return (
+  m[e?.code] ||
+  e?.message ||
+  "Something went wrong."
+ );
 
 }
 
 
-/* NAVIGATION */
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
 
-window.go=p=>{
+window.go = p => {
 
  document
  .querySelectorAll(".page")
- .forEach(x=>x.classList.remove("active"));
+ .forEach(
+  x =>
+  x.classList.remove("active")
+ );
+
 
  $(p)?.classList.add("active");
 
+
  document
  .querySelectorAll("[data-p]")
- .forEach(x=>
+ .forEach(
+  x =>
   x.classList.toggle(
    "active",
-   x.dataset.p===p
+   x.dataset.p === p
   )
  );
 
+
  scrollTo(0,0);
 
- if(p==="players")renderPlayers();
- if(p==="results")renderResults();
- if(p==="rules")renderRules();
- if(p==="tournament")renderTournament();
- if(p==="profile")renderProfile();
- if(p==="admin")admin();
+
+ if(p==="players")
+  renderPlayers();
+
+ if(p==="results")
+  renderResults();
+
+ if(p==="rules")
+  renderRules();
+
+ if(p==="tournament")
+  renderTournament();
+
+ if(p==="profile")
+  renderProfile();
+
+ if(p==="admin")
+  admin();
 
 };
 
 
-/* IMAGE COMPRESS */
+/* =====================================================
+   FIRESTORE-SAFE AVATAR COMPRESSION
+   =====================================================
 
-async function compress(file,max=700000){
+   Firestore document max size is limited.
 
- if(!file)return null;
+   So avatar is resized and compressed to
+   approximately <= 220 KB before converting
+   to Base64.
+
+   This is intentionally kept below the
+   Firestore document size limit.
+   ===================================================== */
+
+async function compressAvatar(
+ file,
+ maxBytes=220000
+){
+
+ if(!file)
+  return null;
+
 
  if(!file.type.startsWith("image/"))
-  throw Error("Please select an image.");
+  throw new Error(
+   "Please select an image."
+  );
 
- const bitmap=
+
+ const bitmap =
  await createImageBitmap(file);
 
- let w=bitmap.width;
- let h=bitmap.height;
 
- const scale=
- Math.min(1,900/Math.max(w,h));
+ let w = bitmap.width;
 
- w=Math.round(w*scale);
- h=Math.round(h*scale);
+ let h = bitmap.height;
 
- const canvas=document.createElement("canvas");
 
- canvas.width=w;
- canvas.height=h;
+ /*
+  Maximum dimension:
+  650px
+ */
 
- canvas
- .getContext("2d")
- .drawImage(bitmap,0,0,w,h);
+ const maxDimension = 650;
 
- let quality=.82;
 
- let blob=
- await new Promise(r=>
-  canvas.toBlob(
-   r,
-   "image/jpeg",
-   quality
-  )
+ const scale =
+ Math.min(
+  1,
+  maxDimension /
+  Math.max(w,h)
  );
 
+
+ w =
+ Math.max(
+  1,
+  Math.round(w * scale)
+ );
+
+
+ h =
+ Math.max(
+  1,
+  Math.round(h * scale)
+ );
+
+
+ const canvas =
+ document.createElement("canvas");
+
+
+ canvas.width = w;
+
+ canvas.height = h;
+
+
+ const ctx =
+ canvas.getContext("2d");
+
+
+ ctx.drawImage(
+  bitmap,
+  0,
+  0,
+  w,
+  h
+ );
+
+
+ let quality = 0.78;
+
+
+ let dataUrl =
+ canvas.toDataURL(
+  "image/jpeg",
+  quality
+ );
+
+
+ /*
+  Reduce quality until
+  Base64 data is small enough.
+ */
+
  while(
-  blob.size>max &&
-  quality>.42
+  dataUrl.length > maxBytes * 1.38 &&
+  quality > 0.35
  ){
 
-  quality-=.08;
+  quality -= 0.07;
 
-  blob=
-  await new Promise(r=>
-   canvas.toBlob(
-    r,
-    "image/jpeg",
-    quality
-   )
+  dataUrl =
+  canvas.toDataURL(
+   "image/jpeg",
+   quality
   );
 
  }
 
- return new File(
-  [blob],
-  "avatar.jpg",
-  {type:"image/jpeg"}
- );
+
+ /*
+  If still too large,
+  resize again.
+ */
+
+ while(
+  dataUrl.length > maxBytes * 1.38 &&
+  w > 350
+ ){
+
+  w =
+  Math.round(w * 0.82);
+
+  h =
+  Math.round(h * 0.82);
+
+
+  canvas.width = w;
+
+  canvas.height = h;
+
+
+  ctx.drawImage(
+   bitmap,
+   0,
+   0,
+   w,
+   h
+  );
+
+
+  dataUrl =
+  canvas.toDataURL(
+   "image/jpeg",
+   quality
+  );
+
+ }
+
+
+ bitmap.close?.();
+
+
+ return dataUrl;
 
 }
 
 
-$("avatar").onchange=async e=>{
+/* =====================================================
+   AVATAR PREVIEW
+   ===================================================== */
+
+$("avatar").onchange =
+async e => {
 
  try{
 
-  const f=
-  await compress(
-   e.target.files[0]
-  );
+  const file =
+  e.target.files[0];
 
-  if(!f)return;
 
-  $("preview").src=
-  URL.createObjectURL(f);
+  if(!file){
 
-  $("preview").style.display=
+   $("preview").style.display =
+   "none";
+
+   return;
+
+  }
+
+
+  const dataUrl =
+  await compressAvatar(file);
+
+
+  if(!dataUrl)
+   return;
+
+
+  $("preview").src =
+  dataUrl;
+
+
+  $("preview").style.display =
   "block";
+
 
  }catch(x){
 
@@ -984,26 +1726,25 @@ $("avatar").onchange=async e=>{
 };
 
 
-/*
-========================================
-FAST REGISTRATION FIX
-========================================
+/* =====================================================
+   REGISTRATION
+   ===================================================== */
 
-Account + Firestore save first.
-
-Avatar upload happens AFTER successful
-registration and DOES NOT block account
-creation.
-*/
-
-$("reg").onsubmit=async e=>{
+$("reg").onsubmit =
+async e => {
 
  e.preventDefault();
 
- const btn=$("regBtn");
 
- btn.disabled=true;
- btn.textContent="Creating account...";
+ const btn =
+ $("regBtn");
+
+
+ btn.disabled = true;
+
+ btn.textContent =
+ "Creating account...";
+
 
  note(
   "regmsg",
@@ -1011,93 +1752,179 @@ $("reg").onsubmit=async e=>{
   true
  );
 
+
  try{
 
-  const name=
+  const name =
   $("name").value.trim();
 
-  const konamiUid=
+
+  const konamiUid =
   $("uid").value.trim();
 
-  const email=
+
+  const email =
   $("email").value.trim();
 
-  const mobile=
+
+  const mobile =
   $("mobile").value.trim();
 
-  const device=
+
+  const device =
   $("device").value.trim() ||
   "Not specified";
 
-  const file=
+
+  const password =
+  $("pass").value;
+
+
+  const imageFile =
   $("avatar").files[0];
 
-  if(!name || !konamiUid || !email){
 
-   throw Error(
+  if(
+   !name ||
+   !konamiUid ||
+   !email ||
+   !password
+  ){
+
+   throw new Error(
     "Please complete all required fields."
    );
 
   }
 
 
-  /* STEP 1: AUTH */
+  /*
+   ===================================================
+   STEP 1
+   CREATE AUTH ACCOUNT
+   ===================================================
+  */
 
-  const result=
+  const result =
   await timeout(
    createUserWithEmailAndPassword(
     auth,
     email,
-    $("pass").value
+    password
    ),
    15000
   );
 
-  const user=result.user;
+
+  const user =
+  result.user;
 
 
-  /* STEP 2 */
+  /*
+   ===================================================
+   STEP 2
+   UPDATE AUTH PROFILE
+   ===================================================
+  */
 
   await timeout(
    updateProfile(
     user,
-    {displayName:name}
+    {
+     displayName:name
+    }
    ),
    10000
   );
 
 
-  const playerData={
+  /*
+   ===================================================
+   STEP 3
+   COMPRESS AVATAR
+   ===================================================
+  */
+
+  let avatarUrl = "";
+
+
+  if(imageFile){
+
+   try{
+
+    note(
+     "regmsg",
+     "Compressing profile image...",
+     true
+    );
+
+
+    avatarUrl =
+    await compressAvatar(
+     imageFile
+    );
+
+
+   }catch(imageError){
+
+    console.warn(
+     "Avatar compression failed:",
+     imageError
+    );
+
+
+    avatarUrl = "";
+
+   }
+
+  }
+
+
+  /*
+   ===================================================
+   STEP 4
+   PLAYER DATA
+   ===================================================
+  */
+
+  const playerData = {
 
    uid:user.uid,
+
    name:name,
+
    konamiUid:konamiUid,
+
    email:user.email,
+
    mobile:mobile,
+
    device:device,
-   avatarUrl:"",
+
+   avatarUrl:avatarUrl,
+
    role:"user",
-   createdAt:serverTimestamp()
+
+   createdAt:
+   serverTimestamp()
 
   };
 
 
-  /* STEP 3 */
+  /*
+   ===================================================
+   STEP 5
+   SAVE USER DOCUMENT
+   ===================================================
+  */
 
   await timeout(
    setDoc(
-    doc(db,"users",user.uid),
-    playerData
-   ),
-   12000
-  );
-
-
-  /* STEP 4 */
-
-  await timeout(
-   setDoc(
-    doc(db,"players",user.uid),
+    doc(
+     db,
+     "users",
+     user.uid
+    ),
     playerData
    ),
    12000
@@ -1105,8 +1932,29 @@ $("reg").onsubmit=async e=>{
 
 
   /*
-  IMPORTANT:
-  Registration is already complete here.
+   ===================================================
+   STEP 6
+   SAVE PLAYER DOCUMENT
+   ===================================================
+  */
+
+  await timeout(
+   setDoc(
+    doc(
+     db,
+     "players",
+     user.uid
+    ),
+    playerData
+   ),
+   12000
+  );
+
+
+  /*
+   ===================================================
+   REGISTRATION FINISHED
+   ===================================================
   */
 
   note(
@@ -1115,114 +1963,80 @@ $("reg").onsubmit=async e=>{
    true
   );
 
+
   e.target.reset();
 
-  $("preview").style.display="none";
+
+  $("preview").style.display =
+  "none";
+
+
+  /*
+   Immediately show profile.
+  */
 
   go("profile");
+
+
+  /*
+   Reload Firestore data.
+  */
 
   await load();
 
 
-  /*
-  AVATAR UPLOAD IS NOW SEPARATE.
-  It will NOT make registration hang.
-  */
-
-  if(file){
-
-   try{
-
-    const compressed=
-    await compress(file);
-
-    const storageRef=
-    ref(
-     storage,
-     "avatars/"+user.uid+".jpg"
-    );
-
-    await timeout(
-     uploadBytes(
-      storageRef,
-      compressed,
-      {contentType:"image/jpeg"}
-     ),
-     15000
-    );
-
-    const url=
-    await timeout(
-     getDownloadURL(storageRef),
-     10000
-    );
-
-
-    await timeout(
-     updateDoc(
-      doc(db,"users",user.uid),
-      {avatarUrl:url}
-     ),
-     10000
-    );
-
-
-    await timeout(
-     updateDoc(
-      doc(db,"players",user.uid),
-      {avatarUrl:url}
-     ),
-     10000
-    );
-
-
-    await load();
-
-   }catch(avatarError){
-
-    console.warn(
-     "Avatar upload failed:",
-     avatarError
-    );
-
-   }
-
-  }
-
-
  }catch(error){
+
+  console.error(
+   "Registration error:",
+   error
+  );
+
 
   note(
    "regmsg",
    firebaseError(error)
   );
 
+
  }finally{
 
-  btn.disabled=false;
-  btn.textContent="Create Account";
+  btn.disabled = false;
+
+  btn.textContent =
+  "Create Account";
 
  }
 
 };
 
 
-/* LOGIN */
+/* =====================================================
+   LOGIN
+   ===================================================== */
 
-$("signin").onsubmit=async e=>{
+$("signin").onsubmit =
+async e => {
 
  e.preventDefault();
 
- const btn=$("loginBtn");
 
- btn.disabled=true;
- btn.textContent="Signing in...";
+ const btn =
+ $("loginBtn");
+
+
+ btn.disabled = true;
+
+ btn.textContent =
+ "Signing in...";
+
 
  note(
   "loginmsg",
   "Signing in...",
   true
  );
+
 
  try{
 
@@ -1235,13 +2049,16 @@ $("signin").onsubmit=async e=>{
    15000
   );
 
+
   note(
    "loginmsg",
    "Login successful!",
    true
   );
 
+
   go("profile");
+
 
  }catch(error){
 
@@ -1250,19 +2067,25 @@ $("signin").onsubmit=async e=>{
    firebaseError(error)
   );
 
+
  }finally{
 
-  btn.disabled=false;
-  btn.textContent="Login";
+  btn.disabled = false;
+
+  btn.textContent =
+  "Login";
 
  }
 
 };
 
 
-/* LOGOUT */
+/* =====================================================
+   LOGOUT
+   ===================================================== */
 
-window.logout=async()=>{
+window.logout =
+async () => {
 
  try{
 
@@ -1270,82 +2093,139 @@ window.logout=async()=>{
 
   go("home");
 
+
  }catch(e){
 
-  alert(firebaseError(e));
+  alert(
+   firebaseError(e)
+  );
 
  }
 
 };
 
 
-/* AUTH STATE */
+/* =====================================================
+   AUTH STATE
+   ===================================================== */
 
 onAuthStateChanged(
  auth,
- async user=>{
+ async user => {
 
-  currentUser=user;
+  currentUser =
+  user;
+
 
   if(user){
 
    try{
 
-    const snap=
+    const snap =
     await getDoc(
-     doc(db,"users",user.uid)
+     doc(
+      db,
+      "users",
+      user.uid
+     )
     );
+
 
     if(snap.exists()){
 
-     profile=snap.data();
+     profile =
+     snap.data();
 
     }else{
 
-     profile={
+     profile = {
+
       uid:user.uid,
-      name:user.displayName||"Player",
+
+      name:
+      user.displayName ||
+      "Player",
+
       email:user.email,
-      role:"user"
+
+      role:"user",
+
+      avatarUrl:""
+
      };
 
     }
 
+
    }catch(e){
 
-    profile={
+    console.error(e);
+
+
+    profile = {
+
      uid:user.uid,
-     name:user.displayName||"Player",
+
+     name:
+     user.displayName ||
+     "Player",
+
      email:user.email,
-     role:"user"
+
+     role:"user",
+
+     avatarUrl:""
+
     };
 
    }
 
 
-   $("loginNav").style.display="none";
-   $("profileNav").style.display="inline-block";
-   $("logoutNav").style.display="inline-block";
+   $("loginNav").style.display =
+   "none";
 
-   $("adminNav").style.display=
-   profile.role==="admin"
-   ?"inline-block"
-   :"none";
+
+   $("profileNav").style.display =
+   "inline-block";
+
+
+   $("logoutNav").style.display =
+   "inline-block";
+
+
+   $("adminNav").style.display =
+   profile.role === "admin"
+   ? "inline-block"
+   : "none";
 
 
   }else{
 
-   $("loginNav").style.display="inline-block";
-   $("profileNav").style.display="none";
-   $("logoutNav").style.display="none";
-   $("adminNav").style.display="none";
+   $("loginNav").style.display =
+   "inline-block";
 
-   profile=null;
+
+   $("profileNav").style.display =
+   "none";
+
+
+   $("logoutNav").style.display =
+   "none";
+
+
+   $("adminNav").style.display =
+   "none";
+
+
+   profile = null;
 
   }
 
 
-  $("loader").classList.add("off");
+  $("loader")
+  .classList
+  .add("off");
+
 
   await load();
 
@@ -1353,23 +2233,33 @@ onAuthStateChanged(
 );
 
 
-/* FIRESTORE LOAD */
+/* =====================================================
+   FIRESTORE COLLECTION LOAD
+   ===================================================== */
 
 async function col(name){
 
  try{
 
-  const snap=
+  const snap =
   await getDocs(
-   collection(db,name)
+   collection(
+    db,
+    name
+   )
   );
 
+
   return snap.docs.map(
-   x=>({
+   x => ({
+
     id:x.id,
+
     ...x.data()
+
    })
   );
+
 
  }catch(e){
 
@@ -1378,6 +2268,7 @@ async function col(name){
    e
   );
 
+
   return [];
 
  }
@@ -1385,206 +2276,281 @@ async function col(name){
 }
 
 
+/* =====================================================
+   LOAD EVERYTHING
+   ===================================================== */
+
 async function load(){
 
- D.players=
-  await col("players");
-
- D.results=
-  await col("results");
-
- D.tournaments=
-  await col("tournaments");
-
- D.rules=
-  await col("rules");
-
- D.fixtures=
-  await col("fixtures");
+ D.players =
+ await col("players");
 
 
- $("sp").textContent=
+ D.results =
+ await col("results");
+
+
+ D.tournaments =
+ await col("tournaments");
+
+
+ D.rules =
+ await col("rules");
+
+
+ D.fixtures =
+ await col("fixtures");
+
+
+ $("sp").textContent =
  D.players.length;
 
- $("sr").textContent=
- D.results.length+
+
+ $("sr").textContent =
+ D.results.length +
  D.fixtures.length;
 
- $("st").textContent=
+
+ $("st").textContent =
  D.tournaments.length;
 
 
  renderPlayers();
+
  renderResults();
+
  renderRules();
+
  renderTournament();
+
  renderProfile();
 
 }
 
 
-/* PLAYER STATS */
+/* =====================================================
+   PLAYER STATS
+   ===================================================== */
 
 function playerStats(id){
 
- const matches=
+ const matches =
  D.results.filter(
-  x=>
-   x.playerAId===id ||
-   x.playerBId===id
+  x =>
+   x.playerAId === id ||
+   x.playerBId === id
  );
 
- let wins=0;
- let losses=0;
- let draws=0;
 
- const history=[];
+ let wins = 0;
 
+ let losses = 0;
 
- matches.forEach(match=>{
-
-  const isA=
-  match.playerAId===id;
-
-  const mine=
-  Number(
-   isA
-   ?match.scoreA
-   :match.scoreB
-  );
-
-  const opponentScore=
-  Number(
-   isA
-   ?match.scoreB
-   :match.scoreA
-  );
-
-  if(mine>opponentScore)
-   wins++;
-
-  else if(mine<opponentScore)
-   losses++;
-
-  else
-   draws++;
+ let draws = 0;
 
 
-  history.push({
-
-   opponent:
-   isA
-   ?match.playerB
-   :match.playerA,
-
-   score:
-   mine+"-"+opponentScore,
-
-   date:
-   match.date||""
-
-  });
-
- });
+ const history = [];
 
 
- const played=
+ matches.forEach(
+  match => {
+
+   const isA =
+   match.playerAId === id;
+
+
+   const mine =
+   Number(
+    isA
+    ? match.scoreA
+    : match.scoreB
+   );
+
+
+   const opponentScore =
+   Number(
+    isA
+    ? match.scoreB
+    : match.scoreA
+   );
+
+
+   if(
+    mine >
+    opponentScore
+   ){
+
+    wins++;
+
+   }else if(
+    mine <
+    opponentScore
+   ){
+
+    losses++;
+
+   }else{
+
+    draws++;
+
+   }
+
+
+   history.push({
+
+    opponent:
+    isA
+    ? match.playerB
+    : match.playerA,
+
+    score:
+    mine +
+    "-" +
+    opponentScore,
+
+    date:
+    match.date ||
+    ""
+
+   });
+
+  }
+ );
+
+
+ const played =
  matches.length;
 
- const winRate=
+
+ const winRate =
  played
- ?Math.round(
-   wins/played*100
+ ? Math.round(
+   wins /
+   played *
+   100
   )
- :0;
+ : 0;
 
 
- return{
+ return {
+
   played,
+
   wins,
+
   losses,
+
   draws,
+
   winRate,
+
   history
+
  };
 
 }
 
 
-/* PLAYERS */
+/* =====================================================
+   PLAYERS
+   ===================================================== */
 
-window.renderPlayers=()=>{
+window.renderPlayers =
+() => {
 
- const q=
- ($("playerSearch")?.value||"")
+ const q =
+ (
+  $("playerSearch")
+  ?.value ||
+  ""
+ )
  .trim()
  .toLowerCase();
 
- const players=
+
+ const players =
  D.players.filter(
-  p=>
-   (p.name||"")
-   .toLowerCase()
-   .includes(q)
-   ||
-   (p.konamiUid||"")
-   .toLowerCase()
-   .includes(q)
+  p =>
+
+  (p.name || "")
+  .toLowerCase()
+  .includes(q)
+
+  ||
+
+  (p.konamiUid || "")
+  .toLowerCase()
+  .includes(q)
  );
 
 
- $("plist").innerHTML=
+ $("plist").innerHTML =
+
  players.length
 
- ?players.map(p=>{
+ ?
 
-  const s=
-  playerStats(p.id);
+ players.map(
+  p => {
 
-  return `
+   const s =
+   playerStats(p.id);
 
-  <div
-   class="card clickable"
-   onclick="openPlayer('${p.id}')">
 
-   <div class="player">
+   return `
 
-    <img
-     class="avatar"
-     src="${esc(p.avatarUrl||"")}"
-     onerror="this.style.opacity=.25">
+   <div
+    class="card clickable"
+    onclick="openPlayer('${p.id}')">
 
-    <div>
+    <div class="player">
 
-     <h3>
-      ${esc(p.name)}
-     </h3>
+     <img
+      class="avatar"
+      src="${esc(p.avatarUrl || "")}"
+      onerror="this.style.opacity=.25">
 
-     <span class="badge">
-      UID ${esc(p.konamiUid)}
-     </span>
+     <div>
+
+      <h3>
+       ${esc(p.name)}
+      </h3>
+
+      <span class="badge">
+       UID ${esc(p.konamiUid)}
+      </span>
+
+     </div>
 
     </div>
 
+    <p class="small">
+
+     Played ${s.played}
+
+     • W ${s.wins}
+
+     • L ${s.losses}
+
+     • WR ${s.winRate}%
+
+    </p>
+
    </div>
 
-   <p class="small">
-    Played ${s.played}
-    • W ${s.wins}
-    • L ${s.losses}
-    • WR ${s.winRate}%
-   </p>
+   `;
 
-  </div>
+  }
+ ).join("")
 
-  `;
+ :
 
- }).join("")
-
- :`
+ `
 
  <div class="empty">
+
   No player found.
+
  </div>
 
  `;
@@ -1592,28 +2558,34 @@ window.renderPlayers=()=>{
 };
 
 
-/* PLAYER PROFILE MODAL */
+/* =====================================================
+   PLAYER PROFILE
+   ===================================================== */
 
-window.openPlayer=id=>{
+window.openPlayer =
+id => {
 
- const p=
+ const p =
  D.players.find(
-  x=>x.id===id
+  x => x.id === id
  );
 
- if(!p)return;
 
- const s=
+ if(!p)
+  return;
+
+
+ const s =
  playerStats(id);
 
 
- $("mc").innerHTML=`
+ $("mc").innerHTML = `
 
  <div class="player">
 
   <img
    class="avatar big"
-   src="${esc(p.avatarUrl||"")}"
+   src="${esc(p.avatarUrl || "")}"
    onerror="this.style.opacity=.25">
 
   <div>
@@ -1634,35 +2606,62 @@ window.openPlayer=id=>{
  <div class="statgrid">
 
   <div class="statbox">
+
    <span class="muted small">
     Played
    </span>
+
    <br>
-   <b>${s.played}</b>
+
+   <b>
+    ${s.played}
+   </b>
+
   </div>
 
+
   <div class="statbox">
+
    <span class="muted small">
     Wins
    </span>
+
    <br>
-   <b>${s.wins}</b>
+
+   <b>
+    ${s.wins}
+   </b>
+
   </div>
 
+
   <div class="statbox">
+
    <span class="muted small">
     Losses
    </span>
+
    <br>
-   <b>${s.losses}</b>
+
+   <b>
+    ${s.losses}
+   </b>
+
   </div>
 
+
   <div class="statbox">
+
    <span class="muted small">
     Win Rate
    </span>
+
    <br>
-   <b>${s.winRate}%</b>
+
+   <b>
+    ${s.winRate}%
+   </b>
+
   </div>
 
  </div>
@@ -1672,16 +2671,25 @@ window.openPlayer=id=>{
   Match History
  </h3>
 
+
  ${
   s.history.length
 
-  ?[...s.history].reverse().map(
-   x=>`
+  ?
+
+  [...s.history]
+  .reverse()
+  .map(
+   x => `
 
    <div class="row">
 
     <span>
-     vs <b>${esc(x.opponent)}</b>
+
+     vs
+     <b>
+      ${esc(x.opponent)}
+     </b>
 
      <br>
 
@@ -1691,18 +2699,22 @@ window.openPlayer=id=>{
 
     </span>
 
-    <b>${esc(x.score)}</b>
+    <b>
+     ${esc(x.score)}
+    </b>
 
    </div>
 
    `
   ).join("")
 
-  :`
+  :
 
-   <div class="empty">
-    No completed matches yet.
-   </div>
+  `
+
+  <div class="empty">
+   No completed matches yet.
+  </div>
 
   `
  }
@@ -1710,21 +2722,28 @@ window.openPlayer=id=>{
  `;
 
 
- $("modal").classList.add("show");
+ $("modal")
+ .classList
+ .add("show");
 
 };
 
 
-/* RULES */
+/* =====================================================
+   RULES
+   ===================================================== */
 
-window.renderRules=()=>{
+window.renderRules =
+() => {
 
- $("rul").innerHTML=
+ $("rul").innerHTML =
 
  D.rules.length
 
- ?D.rules.map(
-  r=>`
+ ?
+
+ D.rules.map(
+  r => `
 
   <div class="card">
 
@@ -1741,36 +2760,61 @@ window.renderRules=()=>{
   `
  ).join("")
 
- :`
+ :
+
+ `
 
  <div class="card">
-  <h3>Fair Play</h3>
+
+  <h3>
+   Fair Play
+  </h3>
+
   <p>
    No cheating, exploits or abusive behavior.
   </p>
+
  </div>
 
+
  <div class="card">
-  <h3>Match Rules</h3>
+
+  <h3>
+   Match Rules
+  </h3>
+
   <p>
    Follow the official fixture and submit
    valid proof when requested.
   </p>
+
  </div>
 
+
  <div class="card">
-  <h3>Connection</h3>
+
+  <h3>
+   Connection
+  </h3>
+
   <p>
    Players are responsible for a stable
    connection unless admin decides otherwise.
   </p>
+
  </div>
 
+
  <div class="card">
-  <h3>Admin Decision</h3>
+
+  <h3>
+   Admin Decision
+  </h3>
+
   <p>
    Admin decisions on disputes are final.
   </p>
+
  </div>
 
  `;
@@ -1778,19 +2822,26 @@ window.renderRules=()=>{
 };
 
 
-/* TOURNAMENT */
+/* =====================================================
+   TOURNAMENT
+   ===================================================== */
 
-window.renderTournament=()=>{
+window.renderTournament =
+() => {
 
- let tournaments=
+ let tournaments =
+
  D.tournaments.length
 
- ?D.tournaments.map(
-  t=>`
+ ?
+
+ D.tournaments.map(
+  t => `
 
   <div class="card">
 
-   <div style="
+   <div
+    style="
     display:flex;
     justify-content:space-between;
     gap:10px">
@@ -1800,31 +2851,42 @@ window.renderTournament=()=>{
     </h3>
 
     <span class="badge">
-     ${esc(t.status||"Upcoming")}
+     ${esc(t.status || "Upcoming")}
     </span>
 
    </div>
 
+
    <p>
-    ${esc(t.description||"")}
+    ${esc(t.description || "")}
    </p>
+
 
    <div class="grid2">
 
     <div>
+
      <span class="small muted">
       Date
      </span>
+
      <br>
-     ${esc(t.date||"TBA")}
+
+     ${esc(t.date || "TBA")}
+
     </div>
 
+
     <div>
+
      <span class="small muted">
       Prize
      </span>
+
      <br>
-     ${esc(t.prize||"TBA")}
+
+     ${esc(t.prize || "TBA")}
+
     </div>
 
    </div>
@@ -1834,13 +2896,16 @@ window.renderTournament=()=>{
   `
  ).join("")
 
- :"";
+ : "";
 
 
- let fixtures=
+ let fixtures =
+
  D.fixtures.length
 
- ?`
+ ?
+
+ `
 
  <h2 style="margin:25px 0 12px">
   Fixtures
@@ -1848,141 +2913,200 @@ window.renderTournament=()=>{
 
  <div class="list">
 
- ${D.fixtures.map(
-  f=>`
+ ${
+  D.fixtures.map(
+   f => `
 
-  <div class="card">
+   <div class="card">
 
-   <div style="
-    display:flex;
-    justify-content:space-between;
-    gap:10px">
+    <div
+     style="
+     display:flex;
+     justify-content:space-between;
+     gap:10px">
 
-    <div>
+     <div>
 
-     <b>${esc(f.playerA)}</b>
+      <b>
+       ${esc(f.playerA)}
+      </b>
+
+      <span class="badge">
+
+       ${
+        f.status === "completed"
+
+        ?
+
+        esc(f.scoreA) +
+        " - " +
+        esc(f.scoreB)
+
+        :
+
+        "VS"
+
+       }
+
+      </span>
+
+      <b>
+       ${esc(f.playerB)}
+      </b>
+
+
+      <div class="small muted">
+
+       ${esc(f.tournament || "")}
+
+       •
+
+       ${esc(f.date || "")}
+
+      </div>
+
+     </div>
+
 
      <span class="badge">
-      ${f.status==="completed"
-       ?esc(f.scoreA)+" - "+esc(f.scoreB)
-       :"VS"}
+
+      ${esc(
+       f.status ||
+       "Scheduled"
+      )}
+
      </span>
-
-     <b>${esc(f.playerB)}</b>
-
-     <div class="small muted">
-      ${esc(f.tournament||"")}
-      •
-      ${esc(f.date||"")}
-     </div>
 
     </div>
 
-    <span class="badge">
-     ${esc(f.status||"Scheduled")}
-    </span>
-
    </div>
 
-  </div>
-
-  `
- ).join("")}
+   `
+  ).join("")
+ }
 
  </div>
 
  `
 
- :`
+ :
+
+ `
 
  <div class="empty">
+
   No fixtures generated yet.
+
  </div>
 
  `;
 
 
- $("tour").innerHTML=
- tournaments+
+ $("tour").innerHTML =
+ tournaments +
  fixtures;
 
 };
 
 
-/* RESULTS + LEADERBOARD */
+/* =====================================================
+   RESULTS + LEADERBOARD
+   ===================================================== */
 
-window.renderResults=()=>{
+window.renderResults =
+() => {
 
- const board={};
+ const board = {};
+
 
  D.players.forEach(
-  p=>{
+  p => {
 
-   board[p.id]={
+   board[p.id] = {
+
     id:p.id,
+
     name:p.name,
+
     played:0,
+
     wins:0,
+
     losses:0,
+
     draws:0
+
    };
 
   }
  );
 
 
- D.results.forEach(r=>{
+ D.results.forEach(
+  r => {
 
-  if(
-   !board[r.playerAId]||
-   !board[r.playerBId]
-  )return;
+   if(
+    !board[r.playerAId] ||
+    !board[r.playerBId]
+   )
+    return;
 
-  const a=
-  board[r.playerAId];
 
-  const b=
-  board[r.playerBId];
+   const a =
+   board[r.playerAId];
 
-  const sa=
-  Number(r.scoreA);
 
-  const sb=
-  Number(r.scoreB);
+   const b =
+   board[r.playerBId];
 
-  a.played++;
-  b.played++;
 
-  if(sa>sb){
+   const sa =
+   Number(r.scoreA);
 
-   a.wins++;
-   b.losses++;
 
-  }else if(sa<sb){
+   const sb =
+   Number(r.scoreB);
 
-   b.wins++;
-   a.losses++;
 
-  }else{
+   a.played++;
 
-   a.draws++;
-   b.draws++;
+   b.played++;
+
+
+   if(sa > sb){
+
+    a.wins++;
+
+    b.losses++;
+
+   }else if(sa < sb){
+
+    b.wins++;
+
+    a.losses++;
+
+   }else{
+
+    a.draws++;
+
+    b.draws++;
+
+   }
 
   }
-
- });
-
-
- const ranking=
- Object.values(board)
- .sort(
-  (a,b)=>
-   b.wins-a.wins ||
-   b.played-a.played
  );
 
 
- $("leader").innerHTML=`
+ const ranking =
+ Object.values(board)
+ .sort(
+  (a,b) =>
+   b.wins - a.wins ||
+   b.played - a.played
+ );
+
+
+ $("leader").innerHTML = `
 
  <div class="card">
 
@@ -1995,37 +3119,58 @@ window.renderResults=()=>{
    ${
     ranking.length
 
-    ?ranking.map(
-     (p,i)=>`
+    ?
+
+    ranking.map(
+     (p,i) => `
 
      <div class="row">
 
       <span>
 
        <b>
-        #${i+1} ${esc(p.name)}
+        #${i+1}
+        ${esc(p.name)}
        </b>
 
        <br>
 
        <span class="small muted">
+
         ${p.played} played
+
         •
+
         ${p.wins}W
+
         ${p.losses}L
+
         ${p.draws}D
+
        </span>
 
       </span>
 
+
       <span class="badge">
+
        ${
         p.played
-        ?Math.round(
-          p.wins/p.played*100
-         )
-        :0
+
+        ?
+
+        Math.round(
+         p.wins /
+         p.played *
+         100
+        )
+
+        :
+
+        0
+
        }% WR
+
       </span>
 
      </div>
@@ -2033,7 +3178,9 @@ window.renderResults=()=>{
      `
     ).join("")
 
-    :`
+    :
+
+    `
 
     <div class="empty">
      No players yet.
@@ -2049,34 +3196,52 @@ window.renderResults=()=>{
  `;
 
 
- $("res").innerHTML=
+ $("res").innerHTML =
 
  D.results.length
 
- ?[...D.results].reverse().map(
-  r=>`
+ ?
+
+ [...D.results]
+ .reverse()
+ .map(
+  r => `
 
   <div class="row">
 
    <div>
 
-    <b>${esc(r.playerA)}</b>
+    <b>
+     ${esc(r.playerA)}
+    </b>
 
     <span class="badge">
+
      ${esc(r.scoreA)}
+
      -
+
      ${esc(r.scoreB)}
+
     </span>
 
-    <b>${esc(r.playerB)}</b>
+    <b>
+     ${esc(r.playerB)}
+    </b>
+
 
     <div class="small muted">
-     ${esc(r.tournament||"")}
+
+     ${esc(r.tournament || "")}
+
      •
-     ${esc(r.date||"")}
+
+     ${esc(r.date || "")}
+
     </div>
 
    </div>
+
 
    <span class="badge">
     Final
@@ -2087,7 +3252,9 @@ window.renderResults=()=>{
   `
  ).join("")
 
- :`
+ :
+
+ `
 
  <div class="empty">
   No results published yet.
@@ -2098,26 +3265,36 @@ window.renderResults=()=>{
 };
 
 
-/* MY PROFILE */
+/* =====================================================
+   MY PROFILE
+   ===================================================== */
 
-window.renderProfile=()=>{
+window.renderProfile =
+() => {
 
  if(!currentUser){
 
-  $("prof").innerHTML=
-  `<div class="card">
+  $("prof").innerHTML =
+  `
+
+  <div class="card">
    Please login first.
-  </div>`;
+  </div>
+
+  `;
 
   return;
 
  }
 
- const s=
- playerStats(currentUser.uid);
+
+ const s =
+ playerStats(
+  currentUser.uid
+ );
 
 
- $("prof").innerHTML=`
+ $("prof").innerHTML = `
 
  <div class="card">
 
@@ -2125,23 +3302,37 @@ window.renderProfile=()=>{
 
    <img
     class="avatar big"
-    src="${esc(profile?.avatarUrl||"")}"
+    src="${esc(profile?.avatarUrl || "")}"
     onerror="this.style.opacity=.25">
 
    <div>
 
     <h2>
+
      ${esc(
-      profile?.name||
-      currentUser.displayName||
+      profile?.name ||
+      currentUser.displayName ||
       "Player"
      )}
+
     </h2>
 
+
     <span class="badge">
-     ${profile?.role==="admin"
-      ?"ADMIN"
-      :"PLAYER"}
+
+     ${
+      profile?.role === "admin"
+
+      ?
+
+      "ADMIN"
+
+      :
+
+      "PLAYER"
+
+     }
+
     </span>
 
    </div>
@@ -2152,35 +3343,62 @@ window.renderProfile=()=>{
   <div class="statgrid">
 
    <div class="statbox">
+
     <span class="muted small">
      Played
     </span>
+
     <br>
-    <b>${s.played}</b>
+
+    <b>
+     ${s.played}
+    </b>
+
    </div>
 
+
    <div class="statbox">
+
     <span class="muted small">
      Wins
     </span>
+
     <br>
-    <b>${s.wins}</b>
+
+    <b>
+     ${s.wins}
+    </b>
+
    </div>
 
+
    <div class="statbox">
+
     <span class="muted small">
      Losses
     </span>
+
     <br>
-    <b>${s.losses}</b>
+
+    <b>
+     ${s.losses}
+    </b>
+
    </div>
 
+
    <div class="statbox">
+
     <span class="muted small">
      Win Rate
     </span>
+
     <br>
-    <b>${s.winRate}%</b>
+
+    <b>
+     ${s.winRate}%
+    </b>
+
    </div>
 
   </div>
@@ -2191,53 +3409,85 @@ window.renderProfile=()=>{
    style="margin-top:18px">
 
    <div>
+
     Email
+
     <br>
+
     <b>
      ${esc(
-      profile?.email||
+      profile?.email ||
       currentUser.email
      )}
     </b>
+
    </div>
 
+
    <div>
+
     Konami UID
+
     <br>
+
     <b>
-     ${esc(profile?.konamiUid||"—")}
+     ${esc(
+      profile?.konamiUid ||
+      "—"
+     )}
     </b>
+
    </div>
 
+
    <div>
+
     Mobile
+
     <br>
+
     <b>
-     ${esc(profile?.mobile||"—")}
+     ${esc(
+      profile?.mobile ||
+      "—"
+     )}
     </b>
+
    </div>
 
+
    <div>
+
     Device
+
     <br>
+
     <b>
-     ${esc(profile?.device||"—")}
+     ${esc(
+      profile?.device ||
+      "—"
+     )}
     </b>
+
    </div>
 
   </div>
 
 
   <div class="notice">
+
    🔒 Player information can only be
    changed by an admin.
+
   </div>
 
 
   <button
    class="btn danger"
    onclick="logout()">
+
    Logout
+
   </button>
 
  </div>
@@ -2251,21 +3501,34 @@ window.renderProfile=()=>{
    My Match History
   </h3>
 
+
   ${
    s.history.length
 
-   ?[...s.history].reverse().map(
-    x=>`
+   ?
+
+   [...s.history]
+   .reverse()
+   .map(
+    x => `
 
     <div class="row">
 
      <span>
-      vs <b>${esc(x.opponent)}</b>
+
+      vs
+      <b>
+       ${esc(x.opponent)}
+      </b>
+
       <br>
+
       <span class="small muted">
        ${esc(x.date)}
       </span>
+
      </span>
+
 
      <b>
       ${esc(x.score)}
@@ -2276,7 +3539,9 @@ window.renderProfile=()=>{
     `
    ).join("")
 
-   :`
+   :
+
+   `
 
    <div class="empty">
     No completed matches yet.
@@ -2292,13 +3557,16 @@ window.renderProfile=()=>{
 };
 
 
-/* ADMIN ACCESS */
+/* =====================================================
+   ADMIN ACCESS
+   ===================================================== */
 
-window.admin=()=>{
+window.admin =
+() => {
 
- if(profile?.role!=="admin"){
+ if(profile?.role !== "admin"){
 
-  $("aguard").innerHTML=`
+  $("aguard").innerHTML = `
 
   <div class="admin">
 
@@ -2307,9 +3575,14 @@ window.admin=()=>{
    </b>
 
    <p class="small">
+
     Firestore document:
+
     <b>
-     users/${esc(currentUser?.uid||"UID")}
+     users/${esc(
+      currentUser?.uid ||
+      "UID"
+     )}
     </b>
 
     must contain:
@@ -2317,40 +3590,56 @@ window.admin=()=>{
     <b>
      role: "admin"
     </b>
+
    </p>
 
   </div>
 
   `;
 
-  $("acont").style.display="none";
+
+  $("acont").style.display =
+  "none";
+
 
   return;
 
  }
 
 
- $("aguard").innerHTML=
- `<div class="notice success">
-  Admin authenticated.
- </div>`;
+ $("aguard").innerHTML =
+ `
 
- $("acont").style.display="block";
+ <div class="notice success">
+  Admin authenticated.
+ </div>
+
+ `;
+
+
+ $("acont").style.display =
+ "block";
+
 
  adminPlayers();
 
 };
 
 
-/* ADMIN TABS */
+/* =====================================================
+   ADMIN TABS
+   ===================================================== */
 
-window.atab=(tab,button)=>{
+window.atab =
+(tab,button) => {
 
  document
  .querySelectorAll(".tab")
  .forEach(
-  x=>x.classList.remove("active")
+  x =>
+  x.classList.remove("active")
  );
+
 
  if(button)
   button.classList.add("active");
@@ -2374,11 +3663,13 @@ window.atab=(tab,button)=>{
 };
 
 
-/* ADMIN PLAYERS */
+/* =====================================================
+   ADMIN PLAYERS
+   ===================================================== */
 
 function adminPlayers(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML = `
 
  <div class="card">
 
@@ -2386,34 +3677,53 @@ function adminPlayers(){
    Manage Players
   </h3>
 
+
   <div class="list">
 
   ${
    D.players.length
 
-   ?D.players.map(
-    p=>`
+   ?
+
+   D.players.map(
+    p => `
 
     <div class="row">
 
-     <div>
+     <div class="player">
 
-      <b>
-       ${esc(p.name)}
-      </b>
+      <img
+       class="avatar"
+       src="${esc(p.avatarUrl || "")}"
+       onerror="this.style.opacity=.25">
 
-      <div class="small muted">
-       ${esc(p.konamiUid)}
-       •
-       ${esc(p.email)}
+      <div>
+
+       <b>
+        ${esc(p.name)}
+       </b>
+
+       <div class="small muted">
+
+        ${esc(p.konamiUid)}
+
+        •
+
+        ${esc(p.email)}
+
+       </div>
+
       </div>
 
      </div>
 
+
      <button
       class="btn"
       onclick="editPlayer('${p.id}')">
+
       Edit
+
      </button>
 
     </div>
@@ -2421,7 +3731,9 @@ function adminPlayers(){
     `
    ).join("")
 
-   :`
+   :
+
+   `
 
    <div class="empty">
     No players.
@@ -2439,73 +3751,137 @@ function adminPlayers(){
 }
 
 
-/* ADMIN EDIT PLAYER */
+/* =====================================================
+   ADMIN EDIT PLAYER
+   ===================================================== */
 
-window.editPlayer=id=>{
+window.editPlayer =
+id => {
 
- const p=
+ const p =
  D.players.find(
-  x=>x.id===id
+  x => x.id === id
  );
 
- if(!p)return;
+
+ if(!p)
+  return;
 
 
- $("mc").innerHTML=`
+ $("mc").innerHTML = `
 
  <h2>
   Edit Player
  </h2>
 
+
+ <div class="player">
+
+  <img
+   class="avatar big"
+   src="${esc(p.avatarUrl || "")}"
+   onerror="this.style.opacity=.25">
+
+  <div>
+
+   <b>
+    Current Avatar
+   </b>
+
+   <p class="small muted">
+    Player avatar is stored in Firestore.
+   </p>
+
+  </div>
+
+ </div>
+
+
  <div class="field">
-  <label>Name</label>
-  <input id="mn"
+
+  <label>
+   Name
+  </label>
+
+  <input
+   id="mn"
    value="${esc(p.name)}">
+
  </div>
 
+
  <div class="field">
-  <label>Konami UID</label>
-  <input id="mu"
+
+  <label>
+   Konami UID
+  </label>
+
+  <input
+   id="mu"
    value="${esc(p.konamiUid)}">
+
  </div>
 
- <div class="field">
-  <label>Mobile</label>
-  <input id="mm"
-   value="${esc(p.mobile||"")}">
- </div>
 
  <div class="field">
-  <label>Device</label>
-  <input id="md"
-   value="${esc(p.device||"")}">
+
+  <label>
+   Mobile
+  </label>
+
+  <input
+   id="mm"
+   value="${esc(p.mobile || "")}">
+
  </div>
+
+
+ <div class="field">
+
+  <label>
+   Device
+  </label>
+
+  <input
+   id="md"
+   value="${esc(p.device || "")}">
+
+ </div>
+
 
  <button
   class="btn primary"
   onclick="savePlayer('${id}')">
+
   Save Changes
+
  </button>
 
  `;
 
- $("modal").classList.add("show");
+
+ $("modal")
+ .classList
+ .add("show");
 
 };
 
 
-window.savePlayer=async id=>{
+window.savePlayer =
+async id => {
 
  try{
 
-  const p=
+  const p =
   D.players.find(
-   x=>x.id===id
+   x => x.id === id
   );
 
-  const data={
 
-   name:$("mn").value.trim(),
+  const data = {
+
+   name:
+   $("mn").value.trim(),
 
    konamiUid:
    $("mu").value.trim(),
@@ -2520,7 +3896,11 @@ window.savePlayer=async id=>{
 
 
   await updateDoc(
-   doc(db,"players",id),
+   doc(
+    db,
+    "players",
+    id
+   ),
    data
   );
 
@@ -2528,7 +3908,11 @@ window.savePlayer=async id=>{
   if(p?.uid){
 
    await updateDoc(
-    doc(db,"users",p.uid),
+    doc(
+     db,
+     "users",
+     p.uid
+    ),
     data
    );
 
@@ -2537,11 +3921,14 @@ window.savePlayer=async id=>{
 
   closeModal();
 
+
   await load();
+
 
   alert(
    "Player information updated."
   );
+
 
  }catch(e){
 
@@ -2554,11 +3941,13 @@ window.savePlayer=async id=>{
 };
 
 
-/* ADMIN TOURNAMENT */
+/* =====================================================
+   ADMIN TOURNAMENT
+   ===================================================== */
 
 function adminTournaments(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML = `
 
  <div class="card">
 
@@ -2566,20 +3955,38 @@ function adminTournaments(){
    Create Tournament
   </h3>
 
+
   <div class="grid2">
 
    <div class="field">
-    <label>Name</label>
+
+    <label>
+     Name
+    </label>
+
     <input id="tn">
+
    </div>
 
-   <div class="field">
-    <label>Date</label>
-    <input id="td">
-   </div>
 
    <div class="field">
-    <label>Status</label>
+
+    <label>
+     Date
+    </label>
+
+    <input
+     id="td"
+     type="date">
+
+   </div>
+
+
+   <div class="field">
+
+    <label>
+     Status
+    </label>
 
     <select id="ts">
 
@@ -2603,9 +4010,15 @@ function adminTournaments(){
 
    </div>
 
+
    <div class="field">
-    <label>Prize</label>
+
+    <label>
+     Prize
+    </label>
+
     <input id="tp">
+
    </div>
 
   </div>
@@ -2641,24 +4054,34 @@ function adminTournaments(){
    Published Tournaments
   </h3>
 
+
   ${
    D.tournaments.map(
-    t=>`
+    t => `
 
     <div class="row">
 
      <span>
-      <b>${esc(t.name)}</b>
+
+      <b>
+       ${esc(t.name)}
+      </b>
+
       <br>
+
       <span class="small muted">
-       ${esc(t.status||"")}
+       ${esc(t.status || "")}
       </span>
+
      </span>
+
 
      <button
       class="btn danger"
       onclick="deleteTournament('${t.id}')">
+
       Remove
+
      </button>
 
     </div>
@@ -2668,10 +4091,13 @@ function adminTournaments(){
 
    ||
 
-   `<div class="empty">
-    No tournaments.
-   </div>`
+   `
 
+   <div class="empty">
+    No tournaments.
+   </div>
+
+   `
   }
 
  </div>
@@ -2681,29 +4107,50 @@ function adminTournaments(){
 }
 
 
-window.addTournament=async()=>{
+window.addTournament =
+async () => {
 
  try{
 
   await addDoc(
-   collection(db,"tournaments"),
+   collection(
+    db,
+    "tournaments"
+   ),
    {
-    name:$("tn").value.trim(),
-    date:$("td").value,
-    status:$("ts").value,
-    prize:$("tp").value.trim(),
-    description:$("tx").value.trim(),
-    createdAt:serverTimestamp()
+
+    name:
+    $("tn").value.trim(),
+
+    date:
+    $("td").value,
+
+    status:
+    $("ts").value,
+
+    prize:
+    $("tp").value.trim(),
+
+    description:
+    $("tx").value.trim(),
+
+    createdAt:
+    serverTimestamp()
+
    }
   );
 
+
   await load();
 
+
   adminTournaments();
+
 
   alert(
    "Tournament published."
   );
+
 
  }catch(e){
 
@@ -2716,56 +4163,88 @@ window.addTournament=async()=>{
 };
 
 
-window.deleteTournament=async id=>{
+window.deleteTournament =
+async id => {
 
- if(!confirm(
-  "Remove this tournament?"
- ))return;
+ if(
+  !confirm(
+   "Remove this tournament?"
+  )
+ )
+  return;
 
- await deleteDoc(
-  doc(db,"tournaments",id)
- );
 
- await load();
+ try{
 
- adminTournaments();
+  await deleteDoc(
+   doc(
+    db,
+    "tournaments",
+    id
+   )
+  );
+
+
+  await load();
+
+
+  adminTournaments();
+
+
+ }catch(e){
+
+  alert(
+   firebaseError(e)
+  );
+
+ }
 
 };
 
 
-/* RANDOM FIXTURE GENERATOR */
+/* =====================================================
+   SHUFFLE
+   ===================================================== */
 
 function shuffle(array){
 
  for(
-  let i=array.length-1;
-  i>0;
+  let i = array.length - 1;
+  i > 0;
   i--
  ){
 
-  const j=
+  const j =
   Math.floor(
-   Math.random()*(i+1)
+   Math.random() *
+   (i + 1)
   );
+
 
   [
    array[i],
    array[j]
-  ]=[
+  ] =
+  [
    array[j],
    array[i]
   ];
 
  }
 
+
  return array;
 
 }
 
 
+/* =====================================================
+   ADMIN FIXTURES
+   ===================================================== */
+
 function adminFixtures(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML = `
 
  <div class="card">
 
@@ -2773,10 +4252,13 @@ function adminFixtures(){
    🎲 Random Fixture Generator
   </h3>
 
+
   <p>
+
    Every registered player will be
    matched with every other player once.
    The generated order is randomized.
+
   </p>
 
 
@@ -2835,15 +4317,25 @@ function adminFixtures(){
   <div class="notice">
 
    Reset deletes only:
-   <b>fixtures + results</b>.
+   <b>
+    fixtures + results
+   </b>
 
    <br><br>
 
    ✅ Players remain saved.
+
    <br>
+
    ✅ Player accounts remain saved.
+
    <br>
+
    ✅ Registration data remains saved.
+
+   <br>
+
+   ✅ Player avatars remain saved.
 
   </div>
 
@@ -2858,13 +4350,16 @@ function adminFixtures(){
    Current Fixtures
   </h3>
 
+
   <div class="list">
 
   ${
    D.fixtures.length
 
-   ?D.fixtures.map(
-    f=>`
+   ?
+
+   D.fixtures.map(
+    f => `
 
     <div class="row">
 
@@ -2884,16 +4379,24 @@ function adminFixtures(){
 
       <span class="small muted">
 
-       ${esc(f.tournament||"")}
+       ${esc(f.tournament || "")}
+
        •
-       ${esc(f.date||"")}
+
+       ${esc(f.date || "")}
 
       </span>
 
      </span>
 
+
      <span class="badge">
-      ${esc(f.status||"Scheduled")}
+
+      ${esc(
+       f.status ||
+       "Scheduled"
+      )}
+
      </span>
 
     </div>
@@ -2901,7 +4404,9 @@ function adminFixtures(){
     `
    ).join("")
 
-   :`
+   :
+
+   `
 
    <div class="empty">
     No fixtures.
@@ -2919,9 +4424,12 @@ function adminFixtures(){
 }
 
 
-window.generateFixtures=async()=>{
+window.generateFixtures =
+async () => {
 
- if(D.players.length<2){
+ if(
+  D.players.length < 2
+ ){
 
   alert(
    "At least 2 registered players are required."
@@ -2932,19 +4440,25 @@ window.generateFixtures=async()=>{
  }
 
 
- if(!confirm(
-  "Generate new random fixtures?\n\n"+
-  "Existing fixtures will be replaced.\n"+
-  "Players will NOT be deleted."
- ))return;
+ if(
+  !confirm(
+   "Generate new random fixtures?\n\n" +
+   "Existing fixtures will be replaced.\n" +
+   "Players and avatars will NOT be deleted."
+  )
+ )
+  return;
 
 
  try{
 
-  /* Remove old fixtures */
+  /*
+   Delete old fixtures only.
+  */
 
   for(
-   const fixture of D.fixtures
+   const fixture
+   of D.fixtures
   ){
 
    await deleteDoc(
@@ -2958,33 +4472,34 @@ window.generateFixtures=async()=>{
   }
 
 
-  const players=
+  const players =
   shuffle(
    [...D.players]
   );
 
 
-  const tournament=
+  const tournament =
   $("fxTour").value.trim() ||
   "LUCC eFootball Tournament";
 
-  const date=
+
+  const date =
   $("fxDate").value ||
   "TBA";
 
 
-  const pairs=[];
+  const pairs = [];
 
 
   for(
-   let i=0;
-   i<players.length;
+   let i = 0;
+   i < players.length;
    i++
   ){
 
    for(
-    let j=i+1;
-    j<players.length;
+    let j = i + 1;
+    j < players.length;
     j++
    ){
 
@@ -3007,19 +4522,32 @@ window.generateFixtures=async()=>{
   ){
 
    await addDoc(
-    collection(db,"fixtures"),
+    collection(
+     db,
+     "fixtures"
+    ),
     {
 
-     playerAId:a.id,
-     playerBId:b.id,
+     playerAId:
+     a.id,
 
-     playerA:a.name,
-     playerB:b.name,
+     playerBId:
+     b.id,
 
-     tournament:tournament,
-     date:date,
+     playerA:
+     a.name,
 
-     status:"scheduled",
+     playerB:
+     b.name,
+
+     tournament:
+     tournament,
+
+     date:
+     date,
+
+     status:
+     "scheduled",
 
      createdAt:
      serverTimestamp()
@@ -3032,11 +4560,12 @@ window.generateFixtures=async()=>{
 
   await load();
 
+
   adminFixtures();
 
 
   alert(
-   pairs.length+
+   pairs.length +
    " random fixtures generated."
   );
 
@@ -3052,31 +4581,33 @@ window.generateFixtures=async()=>{
 };
 
 
-/*
-=====================================
-TOURNAMENT RESET
-=====================================
+/* =====================================================
+   RESET TOURNAMENT
+   ===================================================== */
 
-IMPORTANT:
-Players are NOT touched.
+window.resetTournament =
+async () => {
 
-Only fixtures/results are deleted.
-*/
-
-window.resetTournament=async()=>{
-
- if(!confirm(
-  "RESET TOURNAMENT?\n\n"+
-  "Fixtures and results will be deleted.\n"+
-  "Players and accounts will remain safe.\n\n"+
-  "Continue?"
- ))return;
+ if(
+  !confirm(
+   "RESET TOURNAMENT?\n\n" +
+   "Fixtures and results will be deleted.\n" +
+   "Players, accounts and avatars will remain safe.\n\n" +
+   "Continue?"
+  )
+ )
+  return;
 
 
  try{
 
+  /*
+   Delete fixtures only.
+  */
+
   for(
-   const f of D.fixtures
+   const f
+   of D.fixtures
   ){
 
    await deleteDoc(
@@ -3090,8 +4621,13 @@ window.resetTournament=async()=>{
   }
 
 
+  /*
+   Delete results only.
+  */
+
   for(
-   const r of D.results
+   const r
+   of D.results
   ){
 
    await deleteDoc(
@@ -3107,12 +4643,13 @@ window.resetTournament=async()=>{
 
   await load();
 
+
   adminFixtures();
 
 
   alert(
-   "Tournament reset complete.\n"+
-   "Players are still saved."
+   "Tournament reset complete.\n" +
+   "Players and avatars are still saved."
   );
 
 
@@ -3127,11 +4664,13 @@ window.resetTournament=async()=>{
 };
 
 
-/* ADMIN RESULTS */
+/* =====================================================
+   ADMIN RESULTS
+   ===================================================== */
 
 function adminResults(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML = `
 
  <div class="card">
 
@@ -3152,7 +4691,7 @@ function adminResults(){
 
     ${
      D.players.map(
-      p=>`
+      p => `
 
       <option value="${p.id}">
        ${esc(p.name)}
@@ -3177,7 +4716,7 @@ function adminResults(){
 
     ${
      D.players.map(
-      p=>`
+      p => `
 
       <option value="${p.id}">
        ${esc(p.name)}
@@ -3267,21 +4806,27 @@ function adminResults(){
    Published Results
   </h3>
 
+
   ${
    D.results.map(
-    r=>`
+    r => `
 
     <div class="row">
 
      <span>
 
       ${esc(r.playerA)}
+
       ${esc(r.scoreA)}
+
       -
+
       ${esc(r.scoreB)}
+
       ${esc(r.playerB)}
 
      </span>
+
 
      <button
       class="btn danger"
@@ -3298,10 +4843,13 @@ function adminResults(){
 
    ||
 
-   `<div class="empty">
-    No results.
-   </div>`
+   `
 
+   <div class="empty">
+    No results.
+   </div>
+
+   `
   }
 
  </div>
@@ -3311,22 +4859,32 @@ function adminResults(){
 }
 
 
-window.addResult=async()=>{
+window.addResult =
+async () => {
 
  try{
 
-  const a=
+  const a =
   D.players.find(
-   p=>p.id===$("rA").value
-  );
-
-  const b=
-  D.players.find(
-   p=>p.id===$("rB").value
+   p =>
+   p.id ===
+   $("rA").value
   );
 
 
-  if(!a||!b||a.id===b.id){
+  const b =
+  D.players.find(
+   p =>
+   p.id ===
+   $("rB").value
+  );
+
+
+  if(
+   !a ||
+   !b ||
+   a.id === b.id
+  ){
 
    alert(
     "Choose two different players."
@@ -3338,20 +4896,33 @@ window.addResult=async()=>{
 
 
   await addDoc(
-   collection(db,"results"),
+   collection(
+    db,
+    "results"
+   ),
    {
 
-    playerAId:a.id,
-    playerBId:b.id,
+    playerAId:
+    a.id,
 
-    playerA:a.name,
-    playerB:b.name,
+    playerBId:
+    b.id,
+
+    playerA:
+    a.name,
+
+    playerB:
+    b.name,
 
     scoreA:
-    Number($("rSA").value),
+    Number(
+     $("rSA").value
+    ),
 
     scoreB:
-    Number($("rSB").value),
+    Number(
+     $("rSB").value
+    ),
 
     tournament:
     $("rT").value.trim(),
@@ -3359,7 +4930,8 @@ window.addResult=async()=>{
     date:
     $("rD").value,
 
-    status:"Final",
+    status:
+    "Final",
 
     createdAt:
     serverTimestamp()
@@ -3370,7 +4942,9 @@ window.addResult=async()=>{
 
   await load();
 
+
   adminResults();
+
 
   alert(
    "Result published."
@@ -3388,28 +4962,52 @@ window.addResult=async()=>{
 };
 
 
-window.deleteResult=async id=>{
+window.deleteResult =
+async id => {
 
- if(!confirm(
-  "Delete this result?"
- ))return;
+ if(
+  !confirm(
+   "Delete this result?"
+  )
+ )
+  return;
 
- await deleteDoc(
-  doc(db,"results",id)
- );
 
- await load();
+ try{
 
- adminResults();
+  await deleteDoc(
+   doc(
+    db,
+    "results",
+    id
+   )
+  );
+
+
+  await load();
+
+
+  adminResults();
+
+
+ }catch(e){
+
+  alert(
+   firebaseError(e)
+  );
+
+ }
 
 };
 
 
-/* ADMIN RULES */
+/* =====================================================
+   ADMIN RULES
+   ===================================================== */
 
 function adminRules(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML = `
 
  <div class="card">
 
@@ -3459,17 +5057,21 @@ function adminRules(){
    Custom Rules
   </h3>
 
+
   ${
    D.rules.map(
-    r=>`
+    r => `
 
     <div class="row">
 
      <span>
+
       <b>
        ${esc(r.title)}
       </b>
+
      </span>
+
 
      <button
       class="btn danger"
@@ -3486,10 +5088,13 @@ function adminRules(){
 
    ||
 
-   `<div class="empty">
-    No custom rules.
-   </div>`
+   `
 
+   <div class="empty">
+    No custom rules.
+   </div>
+
+   `
   }
 
  </div>
@@ -3499,19 +5104,40 @@ function adminRules(){
 }
 
 
-window.addRule=async()=>{
+window.addRule =
+async () => {
 
  try{
 
+  const title =
+  $("rtitle").value.trim();
+
+
+  const body =
+  $("rbody").value.trim();
+
+
+  if(!title || !body){
+
+   alert(
+    "Please enter both title and rule."
+   );
+
+   return;
+
+  }
+
+
   await addDoc(
-   collection(db,"rules"),
+   collection(
+    db,
+    "rules"
+   ),
    {
 
-    title:
-    $("rtitle").value.trim(),
+    title:title,
 
-    body:
-    $("rbody").value.trim(),
+    body:body,
 
     createdAt:
     serverTimestamp()
@@ -3522,11 +5148,14 @@ window.addRule=async()=>{
 
   await load();
 
+
   adminRules();
+
 
   alert(
    "Rule published."
   );
+
 
  }catch(e){
 
@@ -3539,31 +5168,62 @@ window.addRule=async()=>{
 };
 
 
-window.deleteRule=async id=>{
+window.deleteRule =
+async id => {
 
- if(!confirm(
-  "Remove this rule?"
- ))return;
+ if(
+  !confirm(
+   "Remove this rule?"
+  )
+ )
+  return;
 
- await deleteDoc(
-  doc(db,"rules",id)
- );
 
- await load();
+ try{
 
- adminRules();
+  await deleteDoc(
+   doc(
+    db,
+    "rules",
+    id
+   )
+  );
+
+
+  await load();
+
+
+  adminRules();
+
+
+ }catch(e){
+
+  alert(
+   firebaseError(e)
+  );
+
+ }
 
 };
 
 
-/* MODAL */
+/* =====================================================
+   MODAL
+   ===================================================== */
 
-window.closeModal=()=>{
- $("modal").classList.remove("show");
+window.closeModal =
+() => {
+
+ $("modal")
+ .classList
+ .remove("show");
+
 };
 
 
-/* START */
+/* =====================================================
+   START
+   ===================================================== */
 
 go("home");
 
