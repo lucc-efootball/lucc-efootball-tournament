@@ -1055,6 +1055,8 @@ function hideLoader(){
 
 window.go = function(page){
 
+  sessionStorage.setItem("lucc_page", page);
+
   document
     .querySelectorAll(".page")
     .forEach(x => x.classList.remove("active"));
@@ -1416,6 +1418,7 @@ $("signin").addEventListener(
         "success"
       );
 
+      sessionStorage.setItem("lucc_page", "profile");
       go("profile");
 
     }catch(e){
@@ -1616,6 +1619,13 @@ onAuthStateChanged(
 
 
       await load();
+
+      const saved = sessionStorage.getItem("lucc_page");
+      const hashPage = location.hash.replace("#", "");
+      let startPage = saved && $(saved) ? saved : (hashPage && $(hashPage) ? hashPage : "home");
+      if(!user && (startPage === "profile" || startPage === "admin")) startPage = "home";
+      if(startPage === "admin" && profile?.role !== "admin") startPage = "home";
+      go(startPage);
 
     }catch(e){
 
