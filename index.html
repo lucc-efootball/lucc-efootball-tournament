@@ -3,40 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080a10">
+<meta name="theme-color" content="#080a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 <title>LUCC eFootball Tournament</title>
 
 <style>
 :root{
-  --bg:#080a10;
-  --card:#11151e;
-  --card2:#151a24;
-  --line:#272e3b;
-  --text:#f5f7fb;
+  --bg:#080a0f;
+  --card:#11151d;
+  --card2:#151a23;
+  --line:#252b38;
+  --txt:#f6f7fb;
   --muted:#9aa4b5;
-  --primary:#735cff;
-  --primary2:#5542e8;
-  --green:#20c997;
-  --red:#ff5c7a;
-  --yellow:#ffc857;
+  --p:#735cff;
+  --p2:#4e3bdd;
+  --ok:#20c997;
+  --bad:#ff5c7a;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
   background:
-    radial-gradient(circle at 15% 0%,#211849 0,#080a10 35%),
-    var(--bg);
-  color:var(--text);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    radial-gradient(circle at 20% 0,#211849 0,#080a0f 36%),
+    #080a0f;
+  color:var(--txt);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
-button,input,textarea,select{font:inherit}
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
 
-button{cursor:pointer}
+button{
+  cursor:pointer;
+}
 
 a{
   color:inherit;
@@ -44,41 +61,43 @@ a{
   cursor:pointer;
 }
 
+/* ================= HEADER ================= */
+
 header{
   position:sticky;
   top:0;
-  z-index:50;
-  background:#080a10e8;
+  z-index:20;
+  background:#080a0fdc;
   backdrop-filter:blur(18px);
   border-bottom:1px solid #ffffff10;
 }
 
 .bar{
   max-width:1150px;
-  height:68px;
   margin:auto;
+  height:68px;
   padding:0 15px;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
   font-weight:900;
-  font-size:17px;
+  display:flex;
+  gap:9px;
+  align-items:center;
+  white-space:nowrap;
 }
 
 .logo{
-  width:42px;
-  height:42px;
+  width:40px;
+  height:40px;
+  border-radius:13px;
   display:grid;
   place-items:center;
-  border-radius:14px;
-  background:linear-gradient(135deg,var(--primary),#00cfff);
-  font-size:22px;
+  background:linear-gradient(135deg,#735cff,#00cfff);
+  font-size:21px;
 }
 
 .nav{
@@ -106,46 +125,59 @@ header{
 .menu{
   display:none;
   margin-left:auto;
-  border:1px solid var(--line);
   background:#151923;
+  border:1px solid var(--line);
   color:#fff;
   border-radius:12px;
   padding:9px 12px;
+  font-size:20px;
 }
+
+/* ================= MAIN ================= */
 
 main{
   max-width:1150px;
   margin:auto;
-  padding:25px 15px 100px;
+  padding:24px 15px 100px;
 }
 
-.page{display:none}
+.page{
+  display:none;
+}
 
-.page.active{display:block}
+.page.active{
+  display:block;
+}
+
+/* ================= HERO ================= */
 
 .hero{
-  min-height:430px;
+  min-height:410px;
   border:1px solid #ffffff10;
   border-radius:30px;
-  padding:40px;
+  padding:38px;
   display:flex;
   align-items:center;
   background:
-    radial-gradient(circle at 90% 30%,#4735a555,transparent 35%),
-    linear-gradient(120deg,#17112e,#101722 65%,#071017);
+    linear-gradient(
+      120deg,
+      #17112e,
+      #101722 65%,
+      #071017
+    );
   overflow:hidden;
 }
 
-.hero-content{
-  max-width:720px;
+.hero>div{
+  max-width:700px;
 }
 
 .tag{
   display:inline-block;
-  color:#c3bbff;
+  color:#bcb4ff;
   background:#735cff1c;
   border:1px solid #735cff55;
-  padding:7px 12px;
+  padding:7px 11px;
   border-radius:999px;
   font-size:12px;
   font-weight:800;
@@ -179,6 +211,8 @@ p{
   margin-top:20px;
 }
 
+/* ================= BUTTON ================= */
+
 .btn{
   border:1px solid var(--line);
   background:#151923;
@@ -193,21 +227,23 @@ p{
 }
 
 .primary{
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  background:linear-gradient(135deg,var(--p),var(--p2));
   border:0;
 }
 
 .danger{
-  color:#ff9aad;
+  color:#ff93a6;
   background:#ff5c7a12;
   border-color:#ff5c7a44;
 }
 
-.success-btn{
-  color:#70e5b8;
+.ok{
+  color:#61e0b2;
   background:#20c99712;
   border-color:#20c99744;
 }
+
+/* ================= GRID ================= */
 
 .head{
   display:flex;
@@ -230,7 +266,8 @@ p{
 }
 
 .card{
-  background:linear-gradient(180deg,#121720,#0f1218);
+  background:
+    linear-gradient(180deg,#121720,#0f1218);
   border:1px solid var(--line);
   border-radius:20px;
   padding:18px;
@@ -241,11 +278,15 @@ p{
   font-weight:900;
 }
 
-.muted{color:var(--muted)}
+.muted{
+  color:var(--muted);
+}
 
 .small{
   font-size:12px;
 }
+
+/* ================= FORM ================= */
 
 .form{
   max-width:720px;
@@ -287,6 +328,8 @@ textarea{
   resize:vertical;
 }
 
+/* ================= NOTICE ================= */
+
 .notice{
   margin:10px 0;
   padding:12px 14px;
@@ -307,11 +350,7 @@ textarea{
   border-color:#20c99733;
 }
 
-.warning{
-  color:#ffe09a;
-  background:#ffc85712;
-  border-color:#ffc85733;
-}
+/* ================= PLAYER ================= */
 
 .player{
   display:flex;
@@ -337,6 +376,8 @@ textarea{
   font-size:11px;
   font-weight:800;
 }
+
+/* ================= LIST ================= */
 
 .list{
   display:grid;
@@ -368,6 +409,8 @@ textarea{
   color:var(--muted);
 }
 
+/* ================= IMAGE PREVIEW ================= */
+
 .preview{
   max-width:110px;
   max-height:110px;
@@ -376,8 +419,11 @@ textarea{
   display:none;
 }
 
+/* ================= ADMIN ================= */
+
 .admin{
-  background:linear-gradient(180deg,#17122b,#11151d);
+  background:
+    linear-gradient(180deg,#17122b,#11151d);
   border:1px solid #735cff55;
   border-radius:22px;
   padding:17px;
@@ -405,9 +451,13 @@ textarea{
   background:#735cff18;
 }
 
+/* ================= BOTTOM NAV ================= */
+
 .bottom{
   display:none;
 }
+
+/* ================= MODAL ================= */
 
 .modal{
   position:fixed;
@@ -434,22 +484,20 @@ textarea{
   padding:18px;
 }
 
+/* ================= LOADER ================= */
+
 .loader{
   position:fixed;
   inset:0;
-  background:#080a0ff5;
+  background:#080a0fee;
   z-index:200;
   display:grid;
   place-items:center;
 }
 
-.loader.hidden{
-  display:none;
-}
-
 .spin{
-  width:42px;
-  height:42px;
+  width:40px;
+  height:40px;
   border:4px solid #ffffff18;
   border-top-color:#8d7fff;
   border-radius:50%;
@@ -457,8 +505,12 @@ textarea{
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg);
+  }
 }
+
+/* ================= FOOTER ================= */
 
 footer{
   text-align:center;
@@ -467,11 +519,17 @@ footer{
   padding:25px;
 }
 
+/* ================= MOBILE ================= */
+
 @media(max-width:800px){
 
-  .nav{display:none}
+  .nav{
+    display:none;
+  }
 
-  .menu{display:block}
+  .menu{
+    display:block;
+  }
 
   .bottom{
     position:fixed;
@@ -484,17 +542,22 @@ footer{
     backdrop-filter:blur(18px);
     border-top:1px solid var(--line);
     justify-content:space-around;
-    padding:6px 3px calc(6px + env(safe-area-inset-bottom));
+    padding:
+      6px
+      3px
+      calc(6px + env(safe-area-inset-bottom));
   }
 
   .bottom button{
     font-size:10px;
-    padding:6px;
+    padding:6px 8px;
+    min-width:58px;
   }
 
   .bottom b{
     display:block;
     font-size:17px;
+    margin-bottom:2px;
   }
 
   .grid,
@@ -511,446 +574,735 @@ footer{
     padding-left:12px;
     padding-right:12px;
   }
+
+  h1{
+    font-size:55px;
+  }
+
+  .row{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .rowactions{
+    width:100%;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- ================= LOADER ================= -->
+
 <div id="loader" class="loader">
   <div class="spin"></div>
 </div>
 
+<!-- ================= HEADER ================= -->
+
 <header>
-<div class="bar">
+  <div class="bar">
 
-<a class="brand" href="#home" onclick="go('home')">
-  <span class="logo">⚽</span>
-  LUCC eFootball
-</a>
+    <a
+      class="brand"
+      href="#home"
+      onclick="go('home')"
+    >
+      <span class="logo">⚽</span>
+      LUCC eFootball
+    </a>
 
-<nav class="nav">
+    <nav class="nav">
 
-<button data-p="home" onclick="go('home')">Home</button>
+      <button
+        data-p="home"
+        onclick="go('home')"
+      >
+        Home
+      </button>
 
-<button data-p="tournament" onclick="go('tournament')">
-Tournament
-</button>
+      <button
+        data-p="tournament"
+        onclick="go('tournament')"
+      >
+        Tournament
+      </button>
 
-<button data-p="players" onclick="go('players')">
-Players
-</button>
+      <button
+        data-p="players"
+        onclick="go('players')"
+      >
+        Players
+      </button>
 
-<button data-p="results" onclick="go('results')">
-Results
-</button>
+      <button
+        data-p="results"
+        onclick="go('results')"
+      >
+        Results
+      </button>
 
-<button data-p="rules" onclick="go('rules')">
-Rules
-</button>
+      <button
+        data-p="rules"
+        onclick="go('rules')"
+      >
+        Rules
+      </button>
 
-<button data-p="login" id="loginNav" onclick="go('login')">
-Login
-</button>
+      <button
+        data-p="login"
+        id="loginNav"
+        onclick="go('login')"
+      >
+        Login
+      </button>
 
-<button id="profileNav" style="display:none" onclick="go('profile')">
-Profile
-</button>
+      <button
+        data-p="profile"
+        id="profileNav"
+        style="display:none"
+        onclick="go('profile')"
+      >
+        Profile
+      </button>
 
-<button id="adminNav" style="display:none" onclick="go('admin')">
-Admin
-</button>
+      <button
+        data-p="admin"
+        id="adminNav"
+        style="display:none"
+        onclick="go('admin')"
+      >
+        Admin
+      </button>
 
-<button id="logoutNav" style="display:none" onclick="logout()">
-Logout
-</button>
+      <button
+        id="logoutNav"
+        style="display:none"
+        onclick="logout()"
+      >
+        Logout
+      </button>
 
-</nav>
+    </nav>
 
-<button class="menu" onclick="go('home')">☰</button>
+    <button
+      class="menu"
+      onclick="go('profile')"
+    >
+      ☰
+    </button>
 
-</div>
+  </div>
 </header>
+
+<!-- ================= MAIN ================= -->
 
 <main>
 
-<!-- HOME -->
-<section id="home" class="page active">
+<!-- ================= HOME ================= -->
 
-<div class="hero">
-<div class="hero-content">
-
-<span class="tag">
-🏆 OFFICIAL TOURNAMENT PLATFORM
-</span>
-
-<h1>
-LUCC<br>
-<span style="color:#8d7fff">eFootball</span>
-</h1>
-
-<p>
-Register, compete, follow fixtures, check results and climb the leaderboard.
-</p>
-
-<div class="actions">
-
-<button class="btn primary" onclick="go('register')">
-🚀 Register Now
-</button>
-
-<button class="btn" onclick="go('tournament')">
-🏆 Tournament
-</button>
-
-<button class="btn" onclick="go('rules')">
-📋 Rules
-</button>
-
-</div>
-
-</div>
-</div>
-
-<div class="head">
-<div>
-<h2>Live Overview</h2>
-<p class="small">Tournament platform statistics</p>
-</div>
-</div>
-
-<div class="grid">
-
-<div class="card">
-<span class="muted">Players</span>
-<div class="stat" id="sp">0</div>
-</div>
-
-<div class="card">
-<span class="muted">Results</span>
-<div class="stat" id="sr">0</div>
-</div>
-
-<div class="card">
-<span class="muted">Tournaments</span>
-<div class="stat" id="st">0</div>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- REGISTER -->
-<section id="register" class="page">
-
-<div class="head">
-<div>
-<h2>Player Registration</h2>
-<p>Create your tournament account.</p>
-</div>
-</div>
-
-<div class="card form">
-
-<div id="regmsg"></div>
-
-<form id="reg">
-
-<div class="grid2">
-
-<div class="field">
-<label>Full Name *</label>
-<input id="name" required maxlength="60">
-</div>
-
-<div class="field">
-<label>Konami / eFootball UID *</label>
-<input id="uid" required maxlength="60">
-</div>
-
-</div>
-
-<div class="grid2">
-
-<div class="field">
-<label>Email *</label>
-<input id="email" type="email" required>
-</div>
-
-<div class="field">
-<label>Mobile</label>
-<input id="mobile">
-</div>
-
-</div>
-
-<div class="field">
-<label>Password *</label>
-<input id="pass" type="password" minlength="6" required>
-</div>
-
-<div class="field">
-<label>Mobile / Device Model</label>
-<input id="device" placeholder="Example: Pixel 7">
-</div>
-
-<div class="field">
-
-<label>
-Avatar — optional
-</label>
-
-<input
-id="avatar"
-type="file"
-accept="image/*"
+<section
+  id="home"
+  class="page active"
 >
 
-<img id="preview" class="preview">
+  <div class="hero">
 
-</div>
+    <div>
 
-<button class="btn primary" type="submit">
-Create Account
-</button>
+      <span class="tag">
+        🏆 OFFICIAL TOURNAMENT PLATFORM
+      </span>
 
-</form>
+      <h1>
+        LUCC<br>
+        <span style="color:#8d7fff">
+          eFootball
+        </span>
+      </h1>
 
-<p class="small">
-Already registered?
-<a onclick="go('login')" style="color:#a79cff">
-Login
-</a>
-</p>
+      <p>
+        Register, compete, follow fixtures,
+        check results and climb the leaderboard.
+      </p>
 
-</div>
-</section>
+      <div class="actions">
 
+        <button
+          class="btn primary"
+          onclick="go('register')"
+        >
+          🚀 Register Now
+        </button>
 
-<!-- LOGIN -->
-<section id="login" class="page">
+        <button
+          class="btn"
+          onclick="go('tournament')"
+        >
+          🏆 Tournament
+        </button>
 
-<div class="head">
-<div>
-<h2>Login</h2>
-<p>Login to your player account.</p>
-</div>
-</div>
+        <button
+          class="btn"
+          onclick="go('rules')"
+        >
+          📋 Rules
+        </button>
 
-<div class="card form">
+      </div>
 
-<div id="loginmsg"></div>
+    </div>
 
-<form id="signin">
+  </div>
 
-<div class="field">
-<label>Email</label>
-<input id="lemail" type="email" required>
-</div>
+  <div class="head">
+    <div>
+      <h2>Live Overview</h2>
+      <p class="small">
+        Tournament platform statistics
+      </p>
+    </div>
+  </div>
 
-<div class="field">
-<label>Password</label>
-<input id="lpass" type="password" required>
-</div>
+  <div class="grid">
 
-<button class="btn primary" type="submit">
-Login
-</button>
+    <div class="card">
+      <span class="muted">
+        Players
+      </span>
+      <div
+        class="stat"
+        id="sp"
+      >
+        0
+      </div>
+    </div>
 
-</form>
+    <div class="card">
+      <span class="muted">
+        Results
+      </span>
+      <div
+        class="stat"
+        id="sr"
+      >
+        0
+      </div>
+    </div>
 
-</div>
+    <div class="card">
+      <span class="muted">
+        Tournaments
+      </span>
+      <div
+        class="stat"
+        id="st"
+      >
+        0
+      </div>
+    </div>
 
-</section>
-
-
-<!-- PLAYERS -->
-<section id="players" class="page">
-
-<div class="head">
-<div>
-<h2>Players</h2>
-<p>Registered tournament players.</p>
-</div>
-</div>
-
-<div id="plist" class="grid"></div>
-
-</section>
-
-
-<!-- RULES -->
-<section id="rules" class="page">
-
-<div class="head">
-<div>
-<h2>Tournament Rules</h2>
-<p>Rules every player must follow.</p>
-</div>
-</div>
-
-<div id="rul" class="grid2"></div>
-
-</section>
-
-
-<!-- TOURNAMENT -->
-<section id="tournament" class="page">
-
-<div class="head">
-<div>
-<h2>Tournament</h2>
-<p>Current and upcoming tournaments.</p>
-</div>
-</div>
-
-<div id="tour" class="list"></div>
+  </div>
 
 </section>
 
+<!-- ================= REGISTER ================= -->
 
-<!-- RESULTS -->
-<section id="results" class="page">
+<section
+  id="register"
+  class="page"
+>
 
-<div class="head">
-<div>
-<h2>Results & Leaderboard</h2>
-<p>Published match results.</p>
-</div>
-</div>
+  <div class="head">
 
-<div id="res" class="list"></div>
+    <div>
+      <h2>
+        Player Registration
+      </h2>
+
+      <p>
+        Create your tournament account.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card form">
+
+    <div id="regmsg"></div>
+
+    <form id="reg">
+
+      <div class="grid2">
+
+        <div class="field">
+          <label>Name *</label>
+          <input
+            id="name"
+            required
+            maxlength="60"
+          >
+        </div>
+
+        <div class="field">
+          <label>
+            Konami/eFootball UID *
+          </label>
+
+          <input
+            id="uid"
+            required
+            maxlength="50"
+          >
+        </div>
+
+      </div>
+
+      <div class="grid2">
+
+        <div class="field">
+          <label>Email *</label>
+
+          <input
+            id="email"
+            type="email"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>Mobile</label>
+
+          <input
+            id="mobile"
+          >
+        </div>
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Password *
+        </label>
+
+        <input
+          id="pass"
+          type="password"
+          minlength="6"
+          required
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Mobile / Device Model
+        </label>
+
+        <input
+          id="device"
+          placeholder="e.g. Pixel 7"
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Avatar
+        </label>
+
+        <input
+          id="avatar"
+          type="file"
+          accept="image/*"
+        >
+
+        <img
+          id="preview"
+          class="preview"
+        >
+
+      </div>
+
+      <button
+        class="btn primary"
+        type="submit"
+      >
+        🚀 Create Account
+      </button>
+
+    </form>
+
+    <p class="small">
+      Already registered?
+      <a
+        onclick="go('login')"
+        style="color:#a79cff"
+      >
+        Login
+      </a>
+    </p>
+
+  </div>
 
 </section>
 
+<!-- ================= LOGIN ================= -->
 
-<!-- PROFILE -->
-<section id="profile" class="page">
+<section
+  id="login"
+  class="page"
+>
 
-<div class="head">
-<div>
-<h2>My Profile</h2>
-<p>Your player account.</p>
-</div>
-</div>
+  <div class="head">
 
-<div id="prof"></div>
+    <div>
+      <h2>Login</h2>
+
+      <p>
+        Player and admin login.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card form">
+
+    <div id="loginmsg"></div>
+
+    <form id="signin">
+
+      <div class="field">
+
+        <label>Email</label>
+
+        <input
+          id="lemail"
+          type="email"
+          required
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>Password</label>
+
+        <input
+          id="lpass"
+          type="password"
+          required
+        >
+
+      </div>
+
+      <button
+        class="btn primary"
+        type="submit"
+      >
+        🔐 Login
+      </button>
+
+    </form>
+
+    <div class="notice">
+
+      Admin access is controlled by:
+
+      <br>
+
+      <b>
+        users/{uid}.role = "admin"
+      </b>
+
+    </div>
+
+  </div>
 
 </section>
 
+<!-- ================= PLAYERS ================= -->
 
-<!-- ADMIN -->
-<section id="admin" class="page">
+<section
+  id="players"
+  class="page"
+>
 
-<div class="head">
-<div>
-<h2>Admin Panel</h2>
-<p>Manage your tournament.</p>
-</div>
-</div>
+  <div class="head">
 
-<div id="aguard"></div>
+    <div>
+      <h2>Players</h2>
 
-<div id="acont" style="display:none">
+      <p>
+        Registered players.
+      </p>
+    </div>
 
-<div class="tabs">
+  </div>
 
-<button class="tab active"
-onclick="atab('players',this)">
-Players
-</button>
-
-<button class="tab"
-onclick="atab('tournaments',this)">
-Tournaments
-</button>
-
-<button class="tab"
-onclick="atab('results',this)">
-Results
-</button>
-
-<button class="tab"
-onclick="atab('rules',this)">
-Rules
-</button>
-
-</div>
-
-<div id="apanel"></div>
-
-</div>
+  <div
+    id="plist"
+    class="grid"
+  ></div>
 
 </section>
 
+<!-- ================= RULES ================= -->
+
+<section
+  id="rules"
+  class="page"
+>
+
+  <div class="head">
+
+    <div>
+      <h2>Tournament Rules</h2>
+
+      <p>
+        Rules every player must follow.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div
+    id="rul"
+    class="grid2"
+  ></div>
+
+</section>
+
+<!-- ================= TOURNAMENT ================= -->
+
+<section
+  id="tournament"
+  class="page"
+>
+
+  <div class="head">
+
+    <div>
+      <h2>Tournament</h2>
+
+      <p>
+        Current and upcoming tournaments.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div
+    id="tour"
+    class="list"
+  ></div>
+
+</section>
+
+<!-- ================= RESULTS ================= -->
+
+<section
+  id="results"
+  class="page"
+>
+
+  <div class="head">
+
+    <div>
+      <h2>Results & Leaderboard</h2>
+
+      <p>
+        Published match results.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div
+    id="res"
+    class="list"
+  ></div>
+
+</section>
+
+<!-- ================= PROFILE ================= -->
+
+<section
+  id="profile"
+  class="page"
+>
+
+  <div class="head">
+
+    <div>
+      <h2>My Profile</h2>
+
+      <p>
+        Your player dashboard.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div id="prof"></div>
+
+</section>
+
+<!-- ================= ADMIN ================= -->
+
+<section
+  id="admin"
+  class="page"
+>
+
+  <div class="head">
+
+    <div>
+      <h2>Admin Panel</h2>
+
+      <p>
+        Manage players, tournaments,
+        results and rules.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div id="aguard"></div>
+
+  <div
+    id="acont"
+    style="display:none"
+  >
+
+    <div class="tabs">
+
+      <button
+        class="tab active"
+        onclick="atab('players',this)"
+      >
+        Players
+      </button>
+
+      <button
+        class="tab"
+        onclick="atab('tournaments',this)"
+      >
+        Tournaments
+      </button>
+
+      <button
+        class="tab"
+        onclick="atab('results',this)"
+      >
+        Results
+      </button>
+
+      <button
+        class="tab"
+        onclick="atab('rules',this)"
+      >
+        Rules
+      </button>
+
+    </div>
+
+    <div id="apanel"></div>
+
+  </div>
+
+</section>
 
 <footer>
-LUCC eFootball Tournament • Firebase • GitHub Pages
+  LUCC eFootball Tournament • Firebase • GitHub Pages
 </footer>
 
 </main>
 
+<!-- ================= MOBILE NAV ================= -->
 
-<!-- MOBILE NAV -->
 <nav class="bottom">
 
-<button onclick="go('home')">
-<b>⌂</b>
-Home
-</button>
+  <button
+    id="bottomHome"
+    onclick="go('home')"
+  >
+    <b>⌂</b>
+    Home
+  </button>
 
-<button onclick="go('tournament')">
-<b>🏆</b>
-Tournament
-</button>
+  <button
+    onclick="go('tournament')"
+  >
+    <b>🏆</b>
+    Tournament
+  </button>
 
-<button onclick="go('players')">
-<b>👥</b>
-Players
-</button>
+  <button
+    onclick="go('players')"
+  >
+    <b>👥</b>
+    Players
+  </button>
 
-<button onclick="go('results')">
-<b>📊</b>
-Results
-</button>
+  <button
+    onclick="go('results')"
+  >
+    <b>📊</b>
+    Results
+  </button>
 
-<button onclick="go(currentUser?'profile':'login')">
-<b>👤</b>
-Account
-</button>
+  <button
+    onclick="go(currentUser ? 'profile' : 'login')"
+  >
+    <b>👤</b>
+    Account
+  </button>
 
 </nav>
 
+<!-- ================= MODAL ================= -->
 
-<!-- MODAL -->
-<div id="modal" class="modal">
+<div
+  id="modal"
+  class="modal"
+>
 
-<div class="modalbox">
+  <div class="modalbox">
 
-<button
-class="btn"
-style="float:right"
-onclick="closeModal()">
-✕
-</button>
+    <button
+      class="btn"
+      style="float:right"
+      onclick="closeModal()"
+    >
+      ✕
+    </button>
 
-<div id="mc"></div>
+    <div id="mc"></div>
+
+  </div>
 
 </div>
 
-</div>
 
+<!-- ================= FIREBASE ================= -->
 
 <script type="module">
 
-/* =========================================================
-   FIREBASE
-========================================================= */
-
 import {
   initializeApp
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
   getAuth,
@@ -959,7 +1311,9 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -972,29 +1326,70 @@ import {
   getDocs,
   addDoc,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDKU2meBGjkJ9AixVaLGEPCVT1wqo5vMik",
-  authDomain: "lucc-efootball-tournamen-a2eef.firebaseapp.com",
-  projectId: "lucc-efootball-tournamen-a2eef",
-  storageBucket: "lucc-efootball-tournamen-a2eef.firebasestorage.app",
-  messagingSenderId: "562916468135",
-  appId: "1:562916468135:web:8e8b72af92757f407dc282",
-  measurementId: "G-HRMKH8HFQZ"
+
+  apiKey:
+    "AIzaSyDKU2meBGjkJ9AixVaLGEPCVT1wqo5vMik",
+
+  authDomain:
+    "lucc-efootball-tournamen-a2eef.firebaseapp.com",
+
+  projectId:
+    "lucc-efootball-tournamen-a2eef",
+
+  storageBucket:
+    "lucc-efootball-tournamen-a2eef.firebasestorage.app",
+
+  messagingSenderId:
+    "562916468135",
+
+  appId:
+    "1:562916468135:web:8e8b72af92757f407dc282",
+
+  measurementId:
+    "G-HRMKH8HFQZ"
+
 };
 
-const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+/* =====================================================
+   FIREBASE INIT
+===================================================== */
 
-const db = getFirestore(app);
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+const storage =
+  getStorage(app);
 
 
-/* =========================================================
-   GLOBAL DATA
-========================================================= */
+/* =====================================================
+   GLOBAL STATE
+===================================================== */
 
 let currentUser = null;
 let profile = null;
@@ -1007,59 +1402,98 @@ let D = {
 };
 
 
-/* =========================================================
+/* =====================================================
    HELPERS
-========================================================= */
+===================================================== */
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
+
 
 const esc = value =>
-  String(value ?? "").replace(
-    /[&<>"']/g,
-    c => ({
+  String(value ?? "")
+    .replace(/[&<>"']/g, char => ({
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
       '"':"&quot;",
       "'":"&#39;"
-    }[c])
-  );
+    }[char]));
 
 
-function note(id,text,type="error"){
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function note(id,text,success=false){
 
   const el = $(id);
 
   if(!el) return;
 
-  el.innerHTML =
-    `<div class="notice ${type}">
+  el.innerHTML = `
+    <div class="notice ${success ? "success" : "error"}">
       ${esc(text)}
-    </div>`;
+    </div>
+  `;
 }
 
 
-function showLoader(){
-  $("loader").classList.remove("hidden");
+/* =====================================================
+   ERROR HANDLER
+===================================================== */
+
+function err(e){
+
+  const messages = {
+
+    "auth/email-already-in-use":
+      "This email is already registered.",
+
+    "auth/invalid-email":
+      "Invalid email address.",
+
+    "auth/weak-password":
+      "Password must be at least 6 characters.",
+
+    "auth/invalid-credential":
+      "Wrong email or password.",
+
+    "auth/user-not-found":
+      "No account found with this email.",
+
+    "auth/wrong-password":
+      "Wrong password.",
+
+    "auth/network-request-failed":
+      "Network error. Check your internet connection.",
+
+    "permission-denied":
+      "Firebase permission denied.",
+
+    "storage/unauthorized":
+      "You don't have permission to upload the avatar."
+
+  };
+
+  return messages[e?.code]
+    || e?.message
+    || "Something went wrong.";
+
 }
 
 
-function hideLoader(){
-  $("loader").classList.add("hidden");
-}
-
-
-/* =========================================================
+/* =====================================================
    NAVIGATION
-========================================================= */
+===================================================== */
 
 window.go = function(page){
 
-  sessionStorage.setItem("lucc_page", page);
-
   document
     .querySelectorAll(".page")
-    .forEach(x => x.classList.remove("active"));
+    .forEach(x =>
+      x.classList.remove("active")
+    );
 
   const target = $(page);
 
@@ -1076,72 +1510,49 @@ window.go = function(page){
       )
     );
 
-  window.scrollTo(0,0);
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-  if(page === "players") players();
-  if(page === "results") results();
-  if(page === "rules") rules();
-  if(page === "tournament") tournaments();
-  if(page === "profile") prof();
-  if(page === "admin") admin();
+
+  if(page === "players")
+    players();
+
+  if(page === "results")
+    results();
+
+  if(page === "rules")
+    rules();
+
+  if(page === "tournament")
+    tournaments();
+
+  if(page === "profile")
+    prof();
+
+  if(page === "admin")
+    admin();
+
 };
 
 
-/* =========================================================
-   FIREBASE ERROR
-========================================================= */
+/* =====================================================
+   IMAGE COMPRESS
+===================================================== */
 
-function firebaseError(e){
+async function compress(
+  file,
+  max = 900000
+){
 
-  const code = e?.code || "";
+  if(!file)
+    return null;
 
-  const messages = {
-
-    "auth/email-already-in-use":
-      "This email is already registered.",
-
-    "auth/invalid-email":
-      "Invalid email address.",
-
-    "auth/weak-password":
-      "Password must contain at least 6 characters.",
-
-    "auth/invalid-credential":
-      "Wrong email or password.",
-
-    "auth/user-not-found":
-      "Account not found.",
-
-    "auth/wrong-password":
-      "Wrong password.",
-
-    "permission-denied":
-      "Firebase permission denied. Check Firestore Rules.",
-
-    "auth/network-request-failed":
-      "Network error. Check your internet connection."
-  };
-
-  return messages[code] ||
-    e?.message ||
-    "Something went wrong.";
-}
-
-
-/* =========================================================
-   IMAGE COMPRESSION
-   IMPORTANT:
-   No Firebase Storage required.
-   Avatar is stored as a small compressed data URL.
-========================================================= */
-
-async function compressImage(file){
-
-  if(!file) return "";
-
-  if(!file.type.startsWith("image/")){
-    throw new Error("Please select an image.");
-  }
+  if(!file.type.startsWith("image/"))
+    throw new Error(
+      "Please select an image."
+    );
 
   const bitmap =
     await createImageBitmap(file);
@@ -1149,16 +1560,17 @@ async function compressImage(file){
   let width = bitmap.width;
   let height = bitmap.height;
 
-  const maxSize = 350;
-
   const scale =
     Math.min(
       1,
-      maxSize / Math.max(width,height)
+      900 / Math.max(width,height)
     );
 
-  width = Math.round(width * scale);
-  height = Math.round(height * scale);
+  width =
+    Math.round(width * scale);
+
+  height =
+    Math.round(height * scale);
 
   const canvas =
     document.createElement("canvas");
@@ -1177,32 +1589,50 @@ async function compressImage(file){
     height
   );
 
-  let quality = 0.75;
+  let quality = .86;
 
-  let dataUrl =
-    canvas.toDataURL(
-      "image/jpeg",
-      quality
-    );
-
-  /* Keep avatar small */
-  while(
-    dataUrl.length > 180000 &&
-    quality > 0.35
-  ){
-
-    quality -= 0.08;
-
-    dataUrl =
-      canvas.toDataURL(
+  let blob =
+    await new Promise(resolve =>
+      canvas.toBlob(
+        resolve,
         "image/jpeg",
         quality
+      )
+    );
+
+  while(
+    blob &&
+    blob.size > max &&
+    quality > .45
+  ){
+
+    quality -= .08;
+
+    blob =
+      await new Promise(resolve =>
+        canvas.toBlob(
+          resolve,
+          "image/jpeg",
+          quality
+        )
       );
+
   }
 
-  return dataUrl;
+  return new File(
+    [blob],
+    "avatar.jpg",
+    {
+      type:"image/jpeg"
+    }
+  );
+
 }
 
+
+/* =====================================================
+   AVATAR PREVIEW
+===================================================== */
 
 $("avatar").addEventListener(
   "change",
@@ -1210,16 +1640,20 @@ $("avatar").addEventListener(
 
     try{
 
-      const file =
+      const original =
         event.target.files[0];
 
-      if(!file) return;
+      if(!original)
+        return;
 
-      const url =
-        await compressImage(file);
+      const compressed =
+        await compress(original);
 
-      $("preview").src = url;
-      $("preview").style.display = "block";
+      $("preview").src =
+        URL.createObjectURL(compressed);
+
+      $("preview").style.display =
+        "block";
 
     }catch(e){
 
@@ -1227,15 +1661,16 @@ $("avatar").addEventListener(
         "regmsg",
         e.message
       );
+
     }
 
   }
 );
 
 
-/* =========================================================
+/* =====================================================
    REGISTER
-========================================================= */
+===================================================== */
 
 $("reg").addEventListener(
   "submit",
@@ -1243,16 +1678,10 @@ $("reg").addEventListener(
 
     event.preventDefault();
 
-    const button =
-      event.submitter;
-
-    button.disabled = true;
-    button.textContent = "Creating account...";
-
     note(
       "regmsg",
       "Creating your account...",
-      "warning"
+      true
     );
 
     try{
@@ -1275,9 +1704,7 @@ $("reg").addEventListener(
       const device =
         $("device").value.trim();
 
-      let avatarUrl = "";
-
-      /* Create Firebase Auth account */
+      /* CREATE AUTH */
 
       const credential =
         await createUserWithEmailAndPassword(
@@ -1289,7 +1716,8 @@ $("reg").addEventListener(
       const user =
         credential.user;
 
-      /* Update Firebase Auth profile */
+
+      /* DISPLAY NAME */
 
       await updateProfile(
         user,
@@ -1298,18 +1726,45 @@ $("reg").addEventListener(
         }
       );
 
-      /* Compress avatar locally */
 
-      const file =
+      /* AVATAR */
+
+      let avatarUrl = "";
+
+      const avatarFile =
         $("avatar").files[0];
 
-      if(file){
+      if(avatarFile){
+
+        const compressed =
+          await compress(avatarFile);
+
+        const storageRef =
+          ref(
+            storage,
+            "avatars/" +
+            user.uid +
+            ".jpg"
+          );
+
+        await uploadBytes(
+          storageRef,
+          compressed,
+          {
+            contentType:
+              "image/jpeg"
+          }
+        );
 
         avatarUrl =
-          await compressImage(file);
+          await getDownloadURL(
+            storageRef
+          );
+
       }
 
-      /* Player document */
+
+      /* PLAYER DATA */
 
       const playerData = {
 
@@ -1323,68 +1778,108 @@ $("reg").addEventListener(
 
         mobile:mobile,
 
-        device:device,
+        device:
+          device ||
+          navigator.userAgent.slice(
+            0,
+            160
+          ),
 
         avatarUrl:avatarUrl,
 
         role:"user",
 
-        createdAt:serverTimestamp()
+        createdAt:
+          serverTimestamp()
+
       };
 
 
-      /* Save user */
+      /* USERS */
 
       await setDoc(
-        doc(db,"users",user.uid),
+        doc(
+          db,
+          "users",
+          user.uid
+        ),
         playerData
       );
 
 
-      /* Save player */
+      /* PLAYERS */
 
       await setDoc(
-        doc(db,"players",user.uid),
+        doc(
+          db,
+          "players",
+          user.uid
+        ),
         playerData
       );
 
 
-      $("reg").reset();
+      /* IMPORTANT:
+         Set local profile immediately.
+      */
 
-      $("preview").style.display = "none";
+      currentUser = user;
+      profile = playerData;
+
+
+      /* SUCCESS */
 
       note(
         "regmsg",
         "Registration successful!",
-        "success"
+        true
       );
 
-      await load();
+
+      event.target.reset();
+
+      $("preview").style.display =
+        "none";
+
+
+      /* GO PROFILE */
 
       go("profile");
 
+      prof();
+
+
+      /* REFRESH DATA */
+
+      await load();
+
+
+      go("profile");
+
+      prof();
+
+
     }catch(e){
 
-      console.error(e);
+      console.error(
+        "Registration error:",
+        e
+      );
 
       note(
         "regmsg",
-        firebaseError(e)
+        err(e)
       );
 
-    }finally{
-
-      button.disabled = false;
-      button.textContent = "Create Account";
     }
 
   }
 );
 
 
-/* =========================================================
+/* =====================================================
    LOGIN
-========================================================= */
+===================================================== */
 
 $("signin").addEventListener(
   "submit",
@@ -1392,57 +1887,155 @@ $("signin").addEventListener(
 
     event.preventDefault();
 
-    const button =
-      event.submitter;
-
-    button.disabled = true;
-    button.textContent = "Logging in...";
-
     note(
       "loginmsg",
       "Signing in...",
-      "warning"
+      true
     );
 
     try{
 
-      await signInWithEmailAndPassword(
-        auth,
-        $("lemail").value.trim(),
-        $("lpass").value
-      );
+      const email =
+        $("lemail").value.trim();
+
+      const password =
+        $("lpass").value;
+
+
+      const credential =
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+
+      currentUser =
+        credential.user;
+
+
+      /* LOAD PROFILE BEFORE GOING
+         TO DASHBOARD
+      */
+
+      await loadCurrentProfile();
+
 
       note(
         "loginmsg",
         "Login successful!",
-        "success"
+        true
       );
 
-      sessionStorage.setItem("lucc_page", "profile");
+
+      event.target.reset();
+
+
       go("profile");
+
+      prof();
+
 
     }catch(e){
 
-      console.error(e);
+      console.error(
+        "Login error:",
+        e
+      );
 
       note(
         "loginmsg",
-        firebaseError(e)
+        err(e)
       );
 
-    }finally{
-
-      button.disabled = false;
-      button.textContent = "Login";
     }
 
   }
 );
 
 
-/* =========================================================
+/* =====================================================
+   LOAD CURRENT PROFILE
+===================================================== */
+
+async function loadCurrentProfile(){
+
+  if(!currentUser){
+
+    profile = null;
+
+    return;
+
+  }
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        )
+      );
+
+    if(snap.exists()){
+
+      profile = snap.data();
+
+    }else{
+
+      /* fallback if user doc missing */
+
+      profile = {
+
+        uid:currentUser.uid,
+
+        name:
+          currentUser.displayName ||
+          "Player",
+
+        email:
+          currentUser.email ||
+          "",
+
+        role:"user"
+
+      };
+
+    }
+
+  }catch(e){
+
+    console.error(
+      "Profile load error:",
+      e
+    );
+
+    profile = {
+
+      uid:currentUser.uid,
+
+      name:
+        currentUser.displayName ||
+        "Player",
+
+      email:
+        currentUser.email ||
+        "",
+
+      role:"user"
+
+    };
+
+  }
+
+}
+
+
+/* =====================================================
    LOGOUT
-========================================================= */
+===================================================== */
 
 window.logout = async function(){
 
@@ -1450,18 +2043,102 @@ window.logout = async function(){
 
     await signOut(auth);
 
+    currentUser = null;
+    profile = null;
+
     go("home");
 
   }catch(e){
 
-    console.error(e);
+    alert(err(e));
+
   }
+
 };
 
 
-/* =========================================================
-   FIRESTORE COLLECTION
-========================================================= */
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    currentUser = user;
+
+
+    if(user){
+
+      await loadCurrentProfile();
+
+
+      $("loginNav").style.display =
+        "none";
+
+      $("profileNav").style.display =
+        "inline-block";
+
+      $("logoutNav").style.display =
+        "inline-block";
+
+
+      $("adminNav").style.display =
+        profile?.role === "admin"
+        ? "inline-block"
+        : "none";
+
+
+    }else{
+
+      profile = null;
+
+
+      $("loginNav").style.display =
+        "inline-block";
+
+      $("profileNav").style.display =
+        "none";
+
+      $("logoutNav").style.display =
+        "none";
+
+      $("adminNav").style.display =
+        "none";
+
+    }
+
+
+    $("loader").style.display =
+      "none";
+
+
+    await load();
+
+
+    /* If currently on profile,
+       refresh it after auth state.
+    */
+
+    const profilePage =
+      $("profile");
+
+    if(
+      profilePage &&
+      profilePage.classList.contains("active")
+    ){
+
+      prof();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   FIRESTORE COLLECTION LOAD
+===================================================== */
 
 async function col(name){
 
@@ -1473,9 +2150,9 @@ async function col(name){
       );
 
     return snapshot.docs.map(
-      d => ({
-        id:d.id,
-        ...d.data()
+      docSnap => ({
+        id:docSnap.id,
+        ...docSnap.data()
       })
     );
 
@@ -1488,13 +2165,15 @@ async function col(name){
     );
 
     return [];
+
   }
+
 }
 
 
-/* =========================================================
-   LOAD DATA
-========================================================= */
+/* =====================================================
+   LOAD ALL DATA
+===================================================== */
 
 async function load(){
 
@@ -1527,160 +2206,77 @@ async function load(){
     results();
     rules();
     tournaments();
-    prof();
 
-    if(profile?.role === "admin"){
+    if(currentUser)
+      prof();
+
+    if(profile?.role === "admin")
       admin();
-    }
 
   }catch(e){
 
     console.error(
-      "LOAD ERROR",
+      "Main data loading error:",
       e
     );
 
-  }finally{
-
-    /* NEVER keep loading forever */
-
-    hideLoader();
   }
+
 }
 
 
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-onAuthStateChanged(
-  auth,
-  async user => {
-
-    try{
-
-      currentUser = user;
-
-      if(user){
-
-        try{
-
-          const snapshot =
-            await getDoc(
-              doc(db,"users",user.uid)
-            );
-
-          profile =
-            snapshot.exists()
-              ? snapshot.data()
-              : null;
-
-        }catch(e){
-
-          console.error(
-            "Profile error:",
-            e
-          );
-
-          profile = null;
-        }
-
-
-        $("loginNav").style.display =
-          "none";
-
-        $("profileNav").style.display =
-          "inline-block";
-
-        $("logoutNav").style.display =
-          "inline-block";
-
-        $("adminNav").style.display =
-          profile?.role === "admin"
-            ? "inline-block"
-            : "none";
-
-      }else{
-
-        profile = null;
-
-        $("loginNav").style.display =
-          "inline-block";
-
-        $("profileNav").style.display =
-          "none";
-
-        $("logoutNav").style.display =
-          "none";
-
-        $("adminNav").style.display =
-          "none";
-      }
-
-
-      await load();
-
-      const saved = sessionStorage.getItem("lucc_page");
-      const hashPage = location.hash.replace("#", "");
-      let startPage = saved && $(saved) ? saved : (hashPage && $(hashPage) ? hashPage : "home");
-      if(!user && (startPage === "profile" || startPage === "admin")) startPage = "home";
-      if(startPage === "admin" && profile?.role !== "admin") startPage = "home";
-      go(startPage);
-
-    }catch(e){
-
-      console.error(
-        "AUTH STATE ERROR",
-        e
-      );
-
-    }finally{
-
-      /* Critical */
-
-      hideLoader();
-    }
-
-  }
-);
-
-
-/* =========================================================
-   PLAYERS
-========================================================= */
+/* =====================================================
+   PLAYERS PAGE
+===================================================== */
 
 function players(){
 
-  const list = $("plist");
+  const box =
+    $("plist");
+
+  if(!box)
+    return;
+
 
   if(!D.players.length){
 
-    list.innerHTML =
+    box.innerHTML =
       `<div class="empty">
-        No players registered yet.
+        No players yet.
       </div>`;
 
     return;
+
   }
 
-  list.innerHTML =
-    D.players.map(p => {
 
-      const avatar =
-        p.avatarUrl ||
-        "https://ui-avatars.com/api/?name=" +
-        encodeURIComponent(p.name || "Player");
+  box.innerHTML =
+    D.players.map(
+      p => `
 
-      return `
       <div class="card">
 
         <div class="player">
 
-          <img
-            class="avatar"
-            src="${esc(avatar)}"
-            onerror="this.style.display='none'"
-          >
+          ${
+            p.avatarUrl
+            ?
+            `<img
+              class="avatar"
+              src="${esc(p.avatarUrl)}"
+            >`
+            :
+            `<div
+              class="avatar"
+              style="
+                display:grid;
+                place-items:center;
+                font-size:28px
+              "
+            >
+              👤
+            </div>`
+          }
 
           <div>
 
@@ -1698,63 +2294,78 @@ function players(){
 
         <p class="small">
           Device:
-          ${esc(p.device || "Not provided")}
+          ${esc(p.device || "—")}
         </p>
 
       </div>
-      `;
 
-    }).join("");
+    `
+    ).join("");
+
 }
 
 
-/* =========================================================
+/* =====================================================
    RULES
-========================================================= */
+===================================================== */
 
 function rules(){
 
-  const list = $("rul");
+  const box =
+    $("rul");
+
+  if(!box)
+    return;
+
 
   if(!D.rules.length){
 
-    list.innerHTML = `
+    box.innerHTML = `
 
       <div class="card">
-        <h3>🤝 Fair Play</h3>
+        <h3>Fair Play</h3>
         <p>
-          No cheating, exploits, hacks or abusive behaviour.
+          No cheating, exploits or
+          abusive behavior.
         </p>
       </div>
 
       <div class="card">
-        <h3>🎮 Match Rules</h3>
+        <h3>Match Rules</h3>
         <p>
-          Players must follow the official fixture and match instructions.
+          Follow the official fixture
+          and submit valid proof when
+          requested.
         </p>
       </div>
 
       <div class="card">
-        <h3>📶 Connection</h3>
+        <h3>Connection</h3>
         <p>
-          Players are responsible for maintaining a stable internet connection.
+          Players are responsible for
+          a stable connection unless an
+          admin decides otherwise.
         </p>
       </div>
 
       <div class="card">
-        <h3>⚖️ Admin Decision</h3>
+        <h3>Admin Decision</h3>
         <p>
-          Admin decisions regarding disputes are final.
+          Admin decisions on disputes
+          are final for the tournament.
         </p>
       </div>
 
     `;
 
     return;
+
   }
 
-  list.innerHTML =
-    D.rules.map(r => `
+
+  box.innerHTML =
+    D.rules.map(
+      r => `
 
       <div class="card">
 
@@ -1768,38 +2379,50 @@ function rules(){
 
       </div>
 
-    `).join("");
+    `
+    ).join("");
+
 }
 
 
-/* =========================================================
+/* =====================================================
    TOURNAMENTS
-========================================================= */
+===================================================== */
 
 function tournaments(){
 
-  const list = $("tour");
+  const box =
+    $("tour");
+
+  if(!box)
+    return;
+
 
   if(!D.tournaments.length){
 
-    list.innerHTML =
+    box.innerHTML =
       `<div class="empty">
         No tournament published yet.
       </div>`;
 
     return;
+
   }
 
-  list.innerHTML =
-    D.tournaments.map(t => `
+
+  box.innerHTML =
+    D.tournaments.map(
+      t => `
 
       <div class="card">
 
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          gap:10px;
-        ">
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            gap:10px
+          "
+        >
 
           <h3>
             ${esc(t.name)}
@@ -1837,95 +2460,179 @@ function tournaments(){
 
       </div>
 
-    `).join("");
+    `
+    ).join("");
+
 }
 
 
-/* =========================================================
+/* =====================================================
    RESULTS
-========================================================= */
+===================================================== */
 
 function results(){
 
-  const list = $("res");
+  const box =
+    $("res");
+
+  if(!box)
+    return;
+
 
   if(!D.results.length){
 
-    list.innerHTML =
+    box.innerHTML =
       `<div class="empty">
         No results published yet.
       </div>`;
 
     return;
+
   }
 
-  list.innerHTML =
+
+  box.innerHTML =
     [...D.results]
       .reverse()
-      .map(r => `
+      .map(
+        r => `
 
-      <div class="row">
+        <div class="row">
 
-        <div>
+          <div>
 
-          <b>
-            ${esc(r.playerA)}
-          </b>
+            <b>
+              ${esc(r.playerA)}
+            </b>
+
+            <span class="badge">
+              ${esc(r.scoreA)}
+              -
+              ${esc(r.scoreB)}
+            </span>
+
+            <b>
+              ${esc(r.playerB)}
+            </b>
+
+            <div class="small muted">
+
+              ${esc(r.tournament || "")}
+
+              •
+
+              ${esc(r.date || "")}
+
+            </div>
+
+          </div>
 
           <span class="badge">
-            ${esc(r.scoreA)}
-            -
-            ${esc(r.scoreB)}
+            ${esc(r.status || "Final")}
           </span>
 
-          <b>
-            ${esc(r.playerB)}
-          </b>
+        </div>
 
-          <div class="small muted">
-            ${esc(r.tournament || "")}
-            •
-            ${esc(r.date || "")}
+      `
+      )
+      .join("");
+
+}
+
+
+/* =====================================================
+   PLAYER DASHBOARD
+===================================================== */
+
+function prof(){
+
+  const box =
+    $("prof");
+
+  if(!box)
+    return;
+
+
+  /* NOT LOGGED IN */
+
+  if(!currentUser){
+
+    box.innerHTML = `
+
+      <div class="card">
+
+        <div
+          style="
+            text-align:center;
+            padding:20px 5px
+          "
+        >
+
+          <div
+            style="
+              font-size:60px;
+              margin-bottom:10px
+            "
+          >
+            👤
+          </div>
+
+          <h2>
+            Welcome to LUCC
+          </h2>
+
+          <p>
+            Login to access your
+            player dashboard.
+          </p>
+
+          <div class="actions"
+               style="
+                 justify-content:center
+               "
+          >
+
+            <button
+              class="btn primary"
+              onclick="go('login')"
+            >
+              🔐 Login
+            </button>
+
+            <button
+              class="btn"
+              onclick="go('register')"
+            >
+              🚀 Register
+            </button>
+
           </div>
 
         </div>
 
-        <span class="badge">
-          ${esc(r.status || "Final")}
-        </span>
-
       </div>
 
-    `).join("");
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-function prof(){
-
-  const box = $("prof");
-
-  if(!currentUser){
-
-    box.innerHTML =
-      `<div class="card">
-        Please login first.
-      </div>`;
+    `;
 
     return;
+
   }
+
+
+  const name =
+    profile?.name ||
+    currentUser.displayName ||
+    "Player";
+
 
   const avatar =
     profile?.avatarUrl ||
-    "https://ui-avatars.com/api/?name=" +
-    encodeURIComponent(
-      profile?.name ||
-      currentUser.displayName ||
-      "Player"
-    );
+    "";
+
+
+  const isAdmin =
+    profile?.role === "admin";
+
 
   box.innerHTML = `
 
@@ -1933,153 +2640,362 @@ function prof(){
 
       <div class="player">
 
-        <img
-          class="avatar"
-          src="${esc(avatar)}"
-        >
+        ${
+          avatar
+
+          ?
+
+          `<img
+            class="avatar"
+            src="${esc(avatar)}"
+            alt="Avatar"
+          >`
+
+          :
+
+          `<div
+            class="avatar"
+            style="
+              display:grid;
+              place-items:center;
+              font-size:28px
+            "
+          >
+            👤
+          </div>`
+        }
 
         <div>
 
           <h2>
-            ${esc(
-              profile?.name ||
-              currentUser.displayName ||
-              "Player"
-            )}
+            ${esc(name)}
           </h2>
 
           <span class="badge">
-            ${
-              profile?.role === "admin"
-              ? "ADMIN"
-              : "PLAYER"
-            }
+            ${isAdmin ? "ADMIN" : "PLAYER"}
           </span>
 
         </div>
 
       </div>
 
+
       <div
         class="grid2"
         style="margin-top:18px"
       >
 
-        <div>
-          Email<br>
+        <div class="card">
+
+          <span class="muted small">
+            Email
+          </span>
+
+          <br>
+
           <b>
             ${esc(
               profile?.email ||
-              currentUser.email
+              currentUser.email ||
+              "—"
             )}
           </b>
+
         </div>
 
-        <div>
-          Konami UID<br>
+
+        <div class="card">
+
+          <span class="muted small">
+            Konami UID
+          </span>
+
+          <br>
+
           <b>
             ${esc(
               profile?.konamiUid ||
               "—"
             )}
           </b>
+
         </div>
 
-        <div>
-          Mobile<br>
+
+        <div class="card">
+
+          <span class="muted small">
+            Mobile
+          </span>
+
+          <br>
+
           <b>
             ${esc(
               profile?.mobile ||
               "—"
             )}
           </b>
+
         </div>
 
-        <div>
-          Device<br>
+
+        <div class="card">
+
+          <span class="muted small">
+            Device
+          </span>
+
+          <br>
+
           <b>
             ${esc(
               profile?.device ||
               "—"
             )}
           </b>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        ${
+          isAdmin
+
+          ?
+
+          `<button
+            class="btn primary"
+            onclick="go('admin')"
+          >
+            ⚙️ Admin Panel
+          </button>`
+
+          :
+
+          ""
+        }
+
+
+        <button
+          class="btn"
+          onclick="go('profile')"
+        >
+          👤 My Profile
+        </button>
+
+
+        <button
+          class="btn danger"
+          onclick="logout()"
+        >
+          🚪 Logout
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PLAYER DASHBOARD STATS -->
+
+    <div class="head">
+
+      <div>
+
+        <h2>
+          Player Dashboard
+        </h2>
+
+        <p>
+          Your tournament overview.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="card">
+
+        <span class="muted">
+          Total Players
+        </span>
+
+        <div class="stat">
+          ${D.players.length}
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <span class="muted">
+          Published Results
+        </span>
+
+        <div class="stat">
+          ${D.results.length}
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <span class="muted">
+          Tournaments
+        </span>
+
+        <div class="stat">
+          ${D.tournaments.length}
         </div>
 
       </div>
 
     </div>
+
   `;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    ADMIN
-========================================================= */
+===================================================== */
 
 function admin(){
 
-  if(profile?.role !== "admin"){
+  const guard =
+    $("aguard");
 
-    $("aguard").innerHTML = `
+  const content =
+    $("acont");
+
+
+  if(!guard || !content)
+    return;
+
+
+  if(!currentUser){
+
+    guard.innerHTML = `
 
       <div class="admin">
 
         <b>
-          🔒 Admin access required
+          Login required.
         </b>
 
-        <p class="small">
-          Your Firebase user document must contain:
+        <p>
+          Please login as admin.
         </p>
 
-        <code>
-          users/${esc(currentUser?.uid || "UID")}
-        </code>
-
-        <p class="small">
-          with:
-        </p>
-
-        <code>
-          role: "admin"
-        </code>
+        <button
+          class="btn primary"
+          onclick="go('login')"
+        >
+          🔐 Login
+        </button>
 
       </div>
 
     `;
 
-    $("acont").style.display =
+    content.style.display =
       "none";
 
     return;
+
   }
 
-  $("aguard").innerHTML =
-    `<div class="notice success">
-      🛡️ Admin authenticated successfully.
-    </div>`;
 
-  $("acont").style.display =
+  if(profile?.role !== "admin"){
+
+    guard.innerHTML = `
+
+      <div class="admin">
+
+        <b>
+          Admin access required.
+        </b>
+
+        <p class="small">
+          Your user document must be:
+        </p>
+
+        <div class="notice">
+
+          users/${esc(currentUser.uid)}
+
+          <br><br>
+
+          <b>
+            role: "admin"
+          </b>
+
+        </div>
+
+      </div>
+
+    `;
+
+    content.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  guard.innerHTML = `
+
+    <div class="notice success">
+      ✅ Admin authenticated.
+    </div>
+
+  `;
+
+  content.style.display =
     "block";
+
+
+  const activeTab =
+    document.querySelector(
+      ".tab.active"
+    );
 
   atab(
     "players",
-    document.querySelector(".tab")
+    activeTab
   );
+
 }
 
+
+/* =====================================================
+   ADMIN TABS
+===================================================== */
 
 window.atab = function(type,button){
 
   document
     .querySelectorAll(".tab")
-    .forEach(x =>
-      x.classList.remove("active")
+    .forEach(
+      x =>
+        x.classList.remove("active")
     );
 
-  if(button){
+
+  if(button)
     button.classList.add("active");
-  }
+
 
   if(type === "players")
     aplayers();
@@ -2092,12 +3008,13 @@ window.atab = function(type,button){
 
   if(type === "rules")
     arules();
+
 };
 
 
-/* =========================================================
+/* =====================================================
    ADMIN PLAYERS
-========================================================= */
+===================================================== */
 
 function aplayers(){
 
@@ -2105,12 +3022,19 @@ function aplayers(){
 
     <div class="card">
 
-      <h3>Players</h3>
+      <h3>
+        Players
+      </h3>
 
       <div class="list">
 
         ${
-          D.players.map(p => `
+          D.players.length
+
+          ?
+
+          D.players.map(
+            p => `
 
             <div class="row">
 
@@ -2148,19 +3072,29 @@ function aplayers(){
 
             </div>
 
-          `).join("")
-          ||
+          `
+          ).join("")
+
+          :
+
           `<div class="empty">
             No players.
           </div>`
+
         }
 
       </div>
 
     </div>
+
   `;
+
 }
 
+
+/* =====================================================
+   EDIT PLAYER
+===================================================== */
 
 window.editP = function(id){
 
@@ -2169,55 +3103,91 @@ window.editP = function(id){
       x => x.id === id
     );
 
-  if(!p) return;
+  if(!p)
+    return;
+
 
   $("mc").innerHTML = `
 
-    <h2>Edit Player</h2>
+    <h2>
+      Edit Player
+    </h2>
 
     <div class="field">
-      <label>Name</label>
+
+      <label>
+        Name
+      </label>
+
       <input
         id="mn"
         value="${esc(p.name)}"
       >
+
     </div>
 
+
     <div class="field">
-      <label>Konami UID</label>
+
+      <label>
+        Konami UID
+      </label>
+
       <input
         id="mu"
         value="${esc(p.konamiUid)}"
       >
+
     </div>
 
+
     <div class="field">
-      <label>Mobile</label>
+
+      <label>
+        Mobile
+      </label>
+
       <input
         id="mm"
         value="${esc(p.mobile)}"
       >
+
     </div>
 
+
     <div class="field">
-      <label>Device</label>
+
+      <label>
+        Device
+      </label>
+
       <input
         id="md"
         value="${esc(p.device)}"
       >
+
     </div>
+
 
     <button
       class="btn primary"
       onclick="saveP('${id}')"
     >
-      Save Changes
+      💾 Save
     </button>
+
   `;
 
-  $("modal").classList.add("show");
+
+  $("modal")
+    .classList.add("show");
+
 };
 
+
+/* =====================================================
+   SAVE PLAYER
+===================================================== */
 
 window.saveP = async function(id){
 
@@ -2228,67 +3198,99 @@ window.saveP = async function(id){
         x => x.id === id
       );
 
+
     const data = {
 
-      name:$("mn").value.trim(),
+      name:
+        $("mn").value.trim(),
 
-      konamiUid:$("mu").value.trim(),
+      konamiUid:
+        $("mu").value.trim(),
 
-      mobile:$("mm").value.trim(),
+      mobile:
+        $("mm").value.trim(),
 
-      device:$("md").value.trim()
+      device:
+        $("md").value.trim()
+
     };
 
+
     await updateDoc(
-      doc(db,"players",id),
+      doc(
+        db,
+        "players",
+        id
+      ),
       data
     );
+
 
     if(p?.uid){
 
       await updateDoc(
-        doc(db,"users",p.uid),
+        doc(
+          db,
+          "users",
+          p.uid
+        ),
         data
       );
+
     }
+
 
     closeModal();
 
     await load();
 
-    alert("Player updated.");
-
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
+/* =====================================================
+   DELETE PLAYER
+===================================================== */
+
 window.delP = async function(id){
 
-  if(!confirm(
-    "Remove this player from the public player list?"
-  )) return;
+  if(
+    !confirm(
+      "Remove this player?"
+    )
+  )
+    return;
+
 
   try{
 
     await deleteDoc(
-      doc(db,"players",id)
+      doc(
+        db,
+        "players",
+        id
+      )
     );
 
     await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
-/* =========================================================
+/* =====================================================
    ADMIN TOURNAMENTS
-========================================================= */
+===================================================== */
 
 function atours(){
 
@@ -2303,44 +3305,88 @@ function atours(){
       <div class="grid2">
 
         <div class="field">
-          <label>Name</label>
+
+          <label>
+            Name
+          </label>
+
           <input id="tn">
+
         </div>
 
-        <div class="field">
-          <label>Date</label>
-          <input id="td">
-        </div>
 
         <div class="field">
-          <label>Status</label>
+
+          <label>
+            Date
+          </label>
+
+          <input
+            id="td"
+            type="date"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Status
+          </label>
 
           <select id="ts">
-            <option>Registration Open</option>
-            <option>Upcoming</option>
-            <option>Live</option>
-            <option>Completed</option>
+
+            <option>
+              Registration Open
+            </option>
+
+            <option>
+              Upcoming
+            </option>
+
+            <option>
+              Live
+            </option>
+
+            <option>
+              Completed
+            </option>
+
           </select>
 
         </div>
 
+
         <div class="field">
-          <label>Prize</label>
+
+          <label>
+            Prize
+          </label>
+
           <input id="tp">
+
         </div>
 
       </div>
 
+
       <div class="field">
-        <label>Description</label>
+
+        <label>
+          Description
+        </label>
+
         <textarea id="tx"></textarea>
+
       </div>
+
 
       <button
         class="btn primary"
         onclick="addT()"
       >
-        Publish Tournament
+        🏆 Publish
       </button>
 
     </div>
@@ -2356,12 +3402,13 @@ function atours(){
       </h3>
 
       ${
-        D.tournaments.map(t => `
+        D.tournaments.map(
+          t => `
 
           <div class="row">
 
             <span>
-              <b>${esc(t.name)}</b>
+              ${esc(t.name)}
             </span>
 
             <button
@@ -2373,75 +3420,103 @@ function atours(){
 
           </div>
 
-        `).join("")
+        `
+        ).join("")
       }
 
     </div>
+
   `;
+
 }
 
+
+/* =====================================================
+   ADD TOURNAMENT
+===================================================== */
 
 window.addT = async function(){
 
   try{
 
-    const name =
-      $("tn").value.trim();
-
-    if(!name){
-
-      alert("Tournament name required.");
-
-      return;
-    }
-
     await addDoc(
-      collection(db,"tournaments"),
+      collection(
+        db,
+        "tournaments"
+      ),
       {
-        name:name,
-        date:$("td").value,
-        status:$("ts").value,
-        prize:$("tp").value,
-        description:$("tx").value,
-        createdAt:serverTimestamp()
+
+        name:
+          $("tn").value.trim(),
+
+        date:
+          $("td").value,
+
+        status:
+          $("ts").value,
+
+        prize:
+          $("tp").value.trim(),
+
+        description:
+          $("tx").value.trim(),
+
+        createdAt:
+          serverTimestamp()
+
       }
     );
 
-    await load();
 
-    alert("Tournament published.");
+    await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
+/* =====================================================
+   DELETE TOURNAMENT
+===================================================== */
+
 window.delT = async function(id){
 
-  if(!confirm(
-    "Remove tournament?"
-  )) return;
+  if(
+    !confirm(
+      "Remove tournament?"
+    )
+  )
+    return;
+
 
   try{
 
     await deleteDoc(
-      doc(db,"tournaments",id)
+      doc(
+        db,
+        "tournaments",
+        id
+      )
     );
 
     await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
-/* =========================================================
+/* =====================================================
    ADMIN RESULTS
-========================================================= */
+===================================================== */
 
 function aresults(){
 
@@ -2450,56 +3525,97 @@ function aresults(){
     <div class="card">
 
       <h3>
-        Publish Match Result
+        Publish Result
       </h3>
 
       <div class="grid2">
 
         <div class="field">
-          <label>Player A</label>
+
+          <label>
+            Player A
+          </label>
+
           <input id="ra">
+
         </div>
 
+
         <div class="field">
-          <label>Player B</label>
+
+          <label>
+            Player B
+          </label>
+
           <input id="rb">
+
         </div>
 
+
         <div class="field">
-          <label>Score A</label>
+
+          <label>
+            Score A
+          </label>
+
           <input
             id="rsa"
             type="number"
             value="0"
+            min="0"
           >
+
         </div>
 
+
         <div class="field">
-          <label>Score B</label>
+
+          <label>
+            Score B
+          </label>
+
           <input
             id="rsb"
             type="number"
             value="0"
+            min="0"
           >
+
         </div>
 
+
         <div class="field">
-          <label>Tournament</label>
+
+          <label>
+            Tournament
+          </label>
+
           <input id="rt">
+
         </div>
 
+
         <div class="field">
-          <label>Date</label>
-          <input id="rd">
+
+          <label>
+            Date
+          </label>
+
+          <input
+            id="rd"
+            type="date"
+          >
+
         </div>
 
       </div>
+
 
       <button
         class="btn primary"
         onclick="addR()"
       >
-        Publish Result
+        📊 Publish Result
       </button>
 
     </div>
@@ -2511,20 +3627,27 @@ function aresults(){
     >
 
       <h3>
-        Published Results
+        Results
       </h3>
 
       ${
-        D.results.map(r => `
+        D.results.map(
+          r => `
 
           <div class="row">
 
             <span>
+
               ${esc(r.playerA)}
+
               ${esc(r.scoreA)}
+
               -
+
               ${esc(r.scoreB)}
+
               ${esc(r.playerB)}
+
             </span>
 
             <button
@@ -2536,79 +3659,113 @@ function aresults(){
 
           </div>
 
-        `).join("")
+        `
+        ).join("")
       }
 
     </div>
+
   `;
+
 }
 
+
+/* =====================================================
+   ADD RESULT
+===================================================== */
 
 window.addR = async function(){
 
   try{
 
     await addDoc(
-      collection(db,"results"),
+      collection(
+        db,
+        "results"
+      ),
       {
 
-        playerA:$("ra").value.trim(),
+        playerA:
+          $("ra").value.trim(),
 
-        playerB:$("rb").value.trim(),
+        playerB:
+          $("rb").value.trim(),
 
-        scoreA:Number(
-          $("rsa").value
-        ),
+        scoreA:
+          Number(
+            $("rsa").value
+          ),
 
-        scoreB:Number(
-          $("rsb").value
-        ),
+        scoreB:
+          Number(
+            $("rsb").value
+          ),
 
-        tournament:$("rt").value.trim(),
+        tournament:
+          $("rt").value.trim(),
 
-        date:$("rd").value,
+        date:
+          $("rd").value,
 
-        status:"Final",
+        status:
+          "Final",
 
-        createdAt:serverTimestamp()
+        createdAt:
+          serverTimestamp()
+
       }
     );
 
-    await load();
 
-    alert("Result published.");
+    await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
+/* =====================================================
+   DELETE RESULT
+===================================================== */
+
 window.delR = async function(id){
 
-  if(!confirm(
-    "Remove result?"
-  )) return;
+  if(
+    !confirm(
+      "Remove result?"
+    )
+  )
+    return;
+
 
   try{
 
     await deleteDoc(
-      doc(db,"results",id)
+      doc(
+        db,
+        "results",
+        id
+      )
     );
 
     await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
-/* =========================================================
+/* =====================================================
    ADMIN RULES
-========================================================= */
+===================================================== */
 
 function arules(){
 
@@ -2621,20 +3778,32 @@ function arules(){
       </h3>
 
       <div class="field">
-        <label>Title</label>
+
+        <label>
+          Title
+        </label>
+
         <input id="rtitle">
+
       </div>
 
+
       <div class="field">
-        <label>Rule</label>
+
+        <label>
+          Rule
+        </label>
+
         <textarea id="rbody"></textarea>
+
       </div>
+
 
       <button
         class="btn primary"
         onclick="addRule()"
       >
-        Publish Rule
+        📋 Publish Rule
       </button>
 
     </div>
@@ -2650,7 +3819,8 @@ function arules(){
       </h3>
 
       ${
-        D.rules.map(r => `
+        D.rules.map(
+          r => `
 
           <div class="row">
 
@@ -2669,87 +3839,107 @@ function arules(){
 
           </div>
 
-        `).join("")
+        `
+        ).join("")
       }
 
     </div>
+
   `;
+
 }
 
+
+/* =====================================================
+   ADD RULE
+===================================================== */
 
 window.addRule = async function(){
 
   try{
 
-    const title =
-      $("rtitle").value.trim();
-
-    const body =
-      $("rbody").value.trim();
-
-    if(!title || !body){
-
-      alert(
-        "Title and rule are required."
-      );
-
-      return;
-    }
-
     await addDoc(
-      collection(db,"rules"),
+      collection(
+        db,
+        "rules"
+      ),
       {
-        title:title,
-        body:body,
-        createdAt:serverTimestamp()
+
+        title:
+          $("rtitle").value.trim(),
+
+        body:
+          $("rbody").value.trim(),
+
+        createdAt:
+          serverTimestamp()
+
       }
     );
 
-    await load();
 
-    alert("Rule published.");
+    await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
+/* =====================================================
+   DELETE RULE
+===================================================== */
+
 window.delRule = async function(id){
 
-  if(!confirm(
-    "Remove rule?"
-  )) return;
+  if(
+    !confirm(
+      "Remove rule?"
+    )
+  )
+    return;
+
 
   try{
 
     await deleteDoc(
-      doc(db,"rules",id)
+      doc(
+        db,
+        "rules",
+        id
+      )
     );
 
     await load();
 
   }catch(e){
 
-    alert(firebaseError(e));
+    alert(err(e));
+
   }
+
 };
 
 
-/* =========================================================
+/* =====================================================
    MODAL
-========================================================= */
+===================================================== */
 
-window.closeModal = function(){
+window.closeModal =
+  function(){
 
-  $("modal").classList.remove("show");
-};
+    $("modal")
+      .classList.remove("show");
+
+  };
 
 
-/* =========================================================
-   START
-========================================================= */
+/* =====================================================
+   INITIAL
+===================================================== */
 
 go("home");
 
