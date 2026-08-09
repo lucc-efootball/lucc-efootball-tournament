@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LUCC eFootball Tournament</title>
+  <style>
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#0f1115;color:#f4f4f5}
+    .wrap{max-width:1050px;margin:auto;padding:20px}.card{background:#191c22;border:1px solid #2d323b;border-radius:16px;padding:20px;margin:14px 0}
+    h1,h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    input,button,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #3a404b;background:#101217;color:#fff;margin:6px 0}
+    button{background:#5f8df7;border:0;font-weight:700;cursor:pointer}.danger{background:#d94b5b}.muted{color:#a9afb9}
+    .hidden{display:none}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
+    img.avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid #5f8df7}
+    table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #30353e;text-align:left;vertical-align:top}
+    .small{font-size:12px}.success{color:#6ee7a8}.error{color:#ff7b89}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚽ LUCC eFootball Tournament</h1>
+
+  <div id="authCard" class="card">
+    <div class="grid">
+      <section>
+        <h2>Player Registration</h2>
+        <form id="registerForm">
+          <input id="rName" placeholder="Full name" required>
+          <input id="rUid" placeholder="Konami UID" required>
+          <input id="rMobile" placeholder="Mobile model" required>
+          <input id="rEmail" type="email" placeholder="Email" required>
+          <input id="rPass" type="password" placeholder="Password (min 6)" minlength="6" required>
+          <label class="muted">Avatar (will be compressed automatically)</label>
+          <input id="rAvatar" type="file" accept="image/*">
+          <button>Create account</button>
+        </form>
+      </section>
+
+      <section>
+        <h2>Login</h2>
+        <form id="loginForm">
+          <input id="lEmail" type="email" placeholder="Email" required>
+          <input id="lPass" type="password" placeholder="Password" required>
+          <button>Login</button>
+        </form>
+        <p class="muted small">Admin login uses the same Firebase Email/Password login. Admin access is controlled by the player's Firestore role.</p>
+      </section>
+    </div>
+    <p id="authMsg"></p>
+  </div>
+
+  <div id="appCard" class="hidden">
+    <div class="card">
+      <div class="row">
+        <div>
+          <h2 id="welcome"></h2>
+          <p id="accountInfo" class="muted"></p>
+        </div>
+        <button id="logoutBtn" class="danger" style="max-width:150px">Logout</button>
+      </div>
+    </div>
+
+    <div id="profileCard" class="card"></div>
+
+    <div id="adminCard" class="card hidden">
+      <h2>🛠 Admin Panel</h2>
+      <div class="grid">
+        <section>
+          <h3>Players</h3>
+          <div id="playersList">Loading...</div>
+        </section>
+        <section>
+          <h3>Add Result</h3>
+          <form id="resultForm">
+            <input id="matchId" placeholder="Match ID" required>
+            <input id="playerName" placeholder="Player / team" required>
+            <input id="score" placeholder="Score" required>
+            <textarea id="note" placeholder="Note (optional)"></textarea>
+            <button>Add result</button>
+          </form>
+          <div id="resultsList"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, collection, getDocs,
+  updateDoc, deleteDoc, addDoc, query, orderBy
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDKU2meBGjk9J9AixVaLGEPCVT1wqo5vMik",
+  authDomain: "lucc-efootball-tournamen-a2eef.firebaseapp.com",
+  projectId: "lucc-efootball-tournamen-a2eef",
+  storageBucket: "lucc-efootball-tournamen-a2eef.firebasestorage.app",
+  messagingSenderId: "562916468135",
+  appId: "1:562916468135:web:8e8b72af92757f407dc282",
+  measurementId: "G-HRMKH8HFQZ"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+const msg = (text, ok=false) => {
+  $("authMsg").textContent = text;
+  $("authMsg").className = ok ? "success" : "error";
+};
+
+async function compressAvatar(file) {
+  if (!file) return "";
+  if (!file.type.startsWith("image/")) throw new Error("Avatar must be an image.");
+
+  const bitmap = await createImageBitmap(file);
+  const maxSide = 700;
+  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+  // Keep the encoded image comfortably below Firestore's ~1 MiB document limit.
+  let quality = 0.82;
+  let data = canvas.toDataURL("image/jpeg", quality);
+  while (data.length > 700000 && quality > 0.35) {
+    quality -= 0.07;
+    data = canvas.toDataURL("image/jpeg", quality);
+  }
+  if (data.length > 700000) throw new Error("Image is too large after compression. Choose another image.");
+  return data;
+}
+
+$("registerForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    msg("Creating account...", true);
+    const email = $("rEmail").value.trim();
+    const pass = $("rPass").value;
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    const avatar = await compressAvatar($("rAvatar").files[0]);
+
+    await setDoc(doc(db, "players", cred.user.uid), {
+      name: $("rName").value.trim(),
+      konamiUid: $("rUid").value.trim(),
+      mobileModel: $("rMobile").value.trim(),
+      email,
+      avatar,
+      role: "player",
+      createdAt: Date.now()
+    });
+    msg("Registration complete.", true);
+  } catch (err) {
+    msg(err.message);
+  }
+});
+
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    msg("Logging in...", true);
+    await signInWithEmailAndPassword(auth, $("lEmail").value.trim(), $("lPass").value);
+    msg("Login successful.", true);
+  } catch (err) {
+    msg(err.message);
+  }
+});
+
+$("logoutBtn").onclick = () => signOut(auth);
+
+async function loadProfile(user) {
+  const snap = await getDoc(doc(db, "players", user.uid));
+  if (!snap.exists()) {
+    $("profileCard").innerHTML = "<h2>Profile missing</h2><p class='error'>Your account exists, but its player profile is missing.</p>";
+    return null;
+  }
+  const p = snap.data();
+  $("welcome").textContent = `Welcome, ${p.name || "Player"}`;
+  $("accountInfo").textContent = `${p.email || user.email} • ${p.role || "player"}`;
+  $("profileCard").innerHTML = `
+    <div class="row">
+      ${p.avatar ? `<img class="avatar" src="${p.avatar}" alt="Avatar">` : ""}
+      <div>
+        <h2>My Profile</h2>
+        <div>Name: ${escapeHtml(p.name)}</div>
+        <div>Konami UID: ${escapeHtml(p.konamiUid)}</div>
+        <div>Mobile: ${escapeHtml(p.mobileModel)}</div>
+      </div>
+    </div>`;
+  return p;
+}
+
+function escapeHtml(s="") {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+async function loadAdmin() {
+  $("adminCard").classList.remove("hidden");
+  const snap = await getDocs(collection(db, "players"));
+  let html = `<table><tr><th>Player</th><th>UID</th><th>Role</th><th>Actions</th></tr>`;
+  snap.forEach(d => {
+    const p = d.data();
+    html += `<tr>
+      <td>${escapeHtml(p.name || "")}<br><span class="small muted">${escapeHtml(p.email || "")}</span></td>
+      <td>${escapeHtml(p.konamiUid || "")}</td>
+      <td>${escapeHtml(p.role || "player")}</td>
+      <td>
+        <button data-edit="${d.id}">Edit</button>
+        <button class="danger" data-del="${d.id}">Delete</button>
+      </td>
+    </tr>`;
+  });
+  html += "</table>";
+  $("playersList").innerHTML = html;
+
+  $("playersList").querySelectorAll("[data-edit]").forEach(btn => btn.onclick = async () => {
+    const id = btn.dataset.edit;
+    const name = prompt("New name:");
+    if (name === null) return;
+    const uid = prompt("New Konami UID:");
+    if (uid === null) return;
+    const mobile = prompt("New mobile model:");
+    if (mobile === null) return;
+    await updateDoc(doc(db, "players", id), {name, konamiUid: uid, mobileModel: mobile});
+    await loadAdmin();
+  });
+
+  $("playersList").querySelectorAll("[data-del]").forEach(btn => btn.onclick = async () => {
+    const id = btn.dataset.del;
+    if (!confirm("Delete this player profile? This does NOT delete the Firebase Authentication account.")) return;
+    await deleteDoc(doc(db, "players", id));
+    await loadAdmin();
+  });
+
+  const results = await getDocs(query(collection(db, "results"), orderBy("createdAt", "desc")));
+  let rh = "<h3>Results</h3>";
+  results.forEach(d => {
+    const r=d.data();
+    rh += `<div class="card"><b>${escapeHtml(r.playerName)}</b> — ${escapeHtml(r.score)}
+      <div class="small muted">${escapeHtml(r.matchId)} ${r.note ? "• "+escapeHtml(r.note):""}</div>
+      <button class="danger" data-rdel="${d.id}">Delete result</button></div>`;
+  });
+  $("resultsList").innerHTML = rh;
+  $("resultsList").querySelectorAll("[data-rdel]").forEach(btn => btn.onclick = async () => {
+    if (!confirm("Delete this result?")) return;
+    await deleteDoc(doc(db,"results",btn.dataset.rdel));
+    await loadAdmin();
+  });
+}
+
+$("resultForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    await addDoc(collection(db,"results"), {
+      matchId: $("matchId").value.trim(),
+      playerName: $("playerName").value.trim(),
+      score: $("score").value.trim(),
+      note: $("note").value.trim(),
+      createdAt: Date.now()
+    });
+    e.target.reset();
+    await loadAdmin();
+  } catch(err) { alert(err.message); }
+});
+
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    $("authCard").classList.remove("hidden");
+    $("appCard").classList.add("hidden");
+    return;
+  }
+  $("authCard").classList.add("hidden");
+  $("appCard").classList.remove("hidden");
+  const p = await loadProfile(user);
+  if (p?.role === "admin") await loadAdmin();
+});
+</script>
+</body>
+</html>
