@@ -3,90 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080a0f">
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<title>LUCC eFootball Tournament</title>
+<meta name="theme-color" content="#080a10">
+<title>Lucc presents eFootball tournament</title>
 
 <style>
 :root{
-  --bg:#080a0f;
-  --card:#11151d;
-  --card2:#151a23;
-  --line:#252b38;
-  --txt:#f6f7fb;
-  --muted:#9aa4b5;
-  --p:#735cff;
-  --p2:#4e3bdd;
-  --ok:#20c997;
-  --bad:#ff5c7a;
+  --bg:#070910;
+  --bg2:#0d111a;
+  --card:#111722;
+  --card2:#0c1018;
+  --line:#242c3b;
+  --text:#f7f8fc;
+  --muted:#98a2b3;
+  --primary:#755cff;
+  --primary2:#4c38e8;
+  --cyan:#20cfff;
+  --green:#20d39b;
+  --red:#ff5d78;
+  --yellow:#ffc857;
 }
 
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
   background:
-    radial-gradient(circle at 20% 0,#211849 0,#080a0f 36%),
-    #080a0f;
-  color:var(--txt);
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+    radial-gradient(circle at 10% 0%,#251b52 0,transparent 32%),
+    radial-gradient(circle at 100% 10%,#062b3c 0,transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,
-input,
-textarea,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-  cursor:pointer;
-}
-
-/* ================= HEADER ================= */
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
 
 header{
   position:sticky;
   top:0;
-  z-index:20;
-  background:#080a0fdc;
+  z-index:50;
+  background:#070910df;
   backdrop-filter:blur(18px);
-  border-bottom:1px solid #ffffff10;
+  border-bottom:1px solid #ffffff0d;
 }
 
 .bar{
-  max-width:1150px;
-  margin:auto;
+  max-width:1180px;
   height:68px;
-  padding:0 15px;
+  margin:auto;
+  padding:0 14px;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 .brand{
-  font-weight:900;
   display:flex;
-  gap:9px;
   align-items:center;
+  gap:9px;
+  font-weight:900;
   white-space:nowrap;
 }
 
@@ -96,8 +73,8 @@ header{
   border-radius:13px;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#735cff,#00cfff);
-  font-size:21px;
+  background:linear-gradient(135deg,var(--primary),var(--cyan));
+  box-shadow:0 8px 30px #755cff30;
 }
 
 .nav{
@@ -106,88 +83,85 @@ header{
   gap:3px;
 }
 
-.nav button,
-.bottom button{
+.nav button{
   border:0;
   background:transparent;
   color:var(--muted);
-  padding:10px 11px;
-  border-radius:12px;
+  padding:10px 10px;
+  border-radius:11px;
 }
 
 .nav button:hover,
-.nav button.active,
-.bottom button.active{
-  background:#ffffff0b;
+.nav button.active{
   color:#fff;
+  background:#ffffff0b;
 }
 
 .menu{
   display:none;
   margin-left:auto;
-  background:#151923;
   border:1px solid var(--line);
+  background:#111621;
   color:#fff;
-  border-radius:12px;
-  padding:9px 12px;
-  font-size:20px;
+  border-radius:11px;
+  padding:9px 11px;
 }
-
-/* ================= MAIN ================= */
 
 main{
-  max-width:1150px;
+  max-width:1180px;
   margin:auto;
-  padding:24px 15px 100px;
+  padding:24px 14px 100px;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-/* ================= HERO ================= */
+.page{display:none}
+.page.active{display:block}
 
 .hero{
-  min-height:410px;
+  min-height:470px;
   border:1px solid #ffffff10;
   border-radius:30px;
   padding:38px;
   display:flex;
   align-items:center;
-  background:
-    linear-gradient(
-      120deg,
-      #17112e,
-      #101722 65%,
-      #071017
-    );
   overflow:hidden;
+  background:
+    linear-gradient(120deg,#1b1235,#101721 58%,#06131a);
+  position:relative;
 }
 
-.hero>div{
-  max-width:700px;
+.hero:after{
+  content:"";
+  position:absolute;
+  width:330px;
+  height:330px;
+  border-radius:50%;
+  right:-100px;
+  top:-100px;
+  background:radial-gradient(circle,#755cff55,transparent 65%);
+}
+
+.heroContent{
+  max-width:720px;
+  position:relative;
+  z-index:2;
 }
 
 .tag{
   display:inline-block;
-  color:#bcb4ff;
-  background:#735cff1c;
-  border:1px solid #735cff55;
   padding:7px 11px;
   border-radius:999px;
-  font-size:12px;
-  font-weight:800;
+  color:#c5beff;
+  background:#755cff17;
+  border:1px solid #755cff55;
+  font-size:11px;
+  font-weight:900;
 }
 
 h1{
-  font-size:clamp(42px,8vw,76px);
-  line-height:.95;
-  letter-spacing:-3px;
   margin:18px 0;
+  font-size:clamp(44px,8vw,78px);
+  line-height:.92;
+  letter-spacing:-4px;
 }
 
 h2{
@@ -211,46 +185,48 @@ p{
   margin-top:20px;
 }
 
-/* ================= BUTTON ================= */
-
 .btn{
   border:1px solid var(--line);
-  background:#151923;
+  background:#141925;
   color:#fff;
   padding:11px 15px;
-  border-radius:13px;
+  border-radius:12px;
   font-weight:800;
 }
 
 .btn:hover{
-  filter:brightness(1.12);
+  transform:translateY(-1px);
 }
 
 .primary{
-  background:linear-gradient(135deg,var(--p),var(--p2));
   border:0;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+.success{
+  color:#69e6b8;
+  background:#20d39b12;
+  border-color:#20d39b44;
 }
 
 .danger{
-  color:#ff93a6;
-  background:#ff5c7a12;
-  border-color:#ff5c7a44;
+  color:#ff9aad;
+  background:#ff5d7812;
+  border-color:#ff5d7844;
 }
 
-.ok{
-  color:#61e0b2;
-  background:#20c99712;
-  border-color:#20c99744;
+.warning{
+  color:#ffd978;
+  background:#ffc85712;
+  border-color:#ffc85744;
 }
-
-/* ================= GRID ================= */
 
 .head{
+  margin:36px 0 15px;
   display:flex;
   justify-content:space-between;
   align-items:end;
-  gap:10px;
-  margin:35px 0 15px;
+  gap:12px;
 }
 
 .grid{
@@ -266,8 +242,7 @@ p{
 }
 
 .card{
-  background:
-    linear-gradient(180deg,#121720,#0f1218);
+  background:linear-gradient(180deg,#121822,#0e131c);
   border:1px solid var(--line);
   border-radius:20px;
   padding:18px;
@@ -278,15 +253,8 @@ p{
   font-weight:900;
 }
 
-.muted{
-  color:var(--muted);
-}
-
-.small{
-  font-size:12px;
-}
-
-/* ================= FORM ================= */
+.muted{color:var(--muted)}
+.small{font-size:12px}
 
 .form{
   max-width:720px;
@@ -300,27 +268,25 @@ p{
 .field label{
   display:block;
   font-size:13px;
-  font-weight:700;
-  color:#cbd2de;
+  font-weight:800;
+  color:#ccd3df;
   margin-bottom:6px;
 }
 
-input,
-textarea,
-select{
+input,textarea,select{
   width:100%;
-  background:#090c11;
+  background:#080b11;
+  color:#fff;
   border:1px solid var(--line);
   border-radius:12px;
   padding:12px;
-  color:#fff;
   outline:0;
 }
 
 input:focus,
 textarea:focus,
 select:focus{
-  border-color:#735cff88;
+  border-color:#755cff88;
 }
 
 textarea{
@@ -328,60 +294,171 @@ textarea{
   resize:vertical;
 }
 
-/* ================= NOTICE ================= */
-
 .notice{
-  margin:10px 0;
   padding:12px 14px;
+  margin:10px 0;
   border-radius:12px;
-  background:#ffffff08;
+  background:#ffffff07;
   border:1px solid var(--line);
 }
 
-.error{
-  color:#ff9aad;
-  background:#ff5c7a12;
-  border-color:#ff5c7a33;
+.notice.error{
+  color:#ff9aac;
+  background:#ff5d7810;
 }
 
-.success{
-  color:#70e5b8;
-  background:#20c99712;
-  border-color:#20c99733;
+.notice.success{
+  color:#71e7b9;
+  background:#20d39b10;
 }
 
-/* ================= PLAYER ================= */
+.searchBox{
+  margin-bottom:14px;
+}
 
-.player{
+.searchBox input{
+  font-size:15px;
+  padding:14px;
+}
+
+.playerList{
+  display:grid;
+  gap:9px;
+}
+
+.playerRow{
   display:flex;
   align-items:center;
   gap:12px;
+  padding:12px;
+  border:1px solid var(--line);
+  background:#0c1017;
+  border-radius:16px;
+  transition:.2s;
+}
+
+.playerRow:hover{
+  border-color:#755cff66;
+  transform:translateY(-1px);
 }
 
 .avatar{
-  width:58px;
-  height:58px;
+  width:52px;
+  height:52px;
+  border-radius:15px;
   object-fit:cover;
-  border-radius:17px;
-  background:#1b2130;
+  background:#1a2030;
   border:1px solid var(--line);
+  flex:none;
+}
+
+.avatarLarge{
+  width:100px;
+  height:100px;
+  border-radius:25px;
+  object-fit:cover;
+  background:#1a2030;
+  border:1px solid var(--line);
+}
+
+.playerInfo{
+  min-width:0;
+  flex:1;
+}
+
+.playerName{
+  font-weight:900;
+  color:#fff;
+  cursor:pointer;
+}
+
+.playerName:hover{
+  color:#9a8eff;
 }
 
 .badge{
   display:inline-block;
   padding:4px 8px;
   border-radius:999px;
-  background:#ffffff0b;
+  background:#ffffff0a;
   color:#b9c2d0;
-  font-size:11px;
-  font-weight:800;
+  font-size:10px;
+  font-weight:900;
 }
 
-/* ================= LIST ================= */
+.profileTop{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  flex-wrap:wrap;
+}
 
-.list{
+.profileStats{
   display:grid;
+  grid-template-columns:repeat(4,1fr);
   gap:10px;
+  margin-top:20px;
+}
+
+.statBox{
+  padding:15px;
+  background:#0b0f16;
+  border:1px solid var(--line);
+  border-radius:15px;
+}
+
+.statBox strong{
+  display:block;
+  font-size:25px;
+}
+
+.statBox span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.matchHistory{
+  display:grid;
+  gap:8px;
+  margin-top:14px;
+}
+
+.matchItem{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:13px;
+  background:#0b0f15;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.win{color:#4ee0ad}
+.draw{color:#ffd166}
+.loss{color:#ff728c}
+
+.tableWrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  min-width:650px;
+  border-collapse:collapse;
+}
+
+th,td{
+  text-align:left;
+  padding:12px 10px;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+
+th{
+  color:#9ca6b6;
+  font-size:11px;
+  text-transform:uppercase;
 }
 
 .row{
@@ -391,11 +468,11 @@ textarea{
   gap:10px;
   padding:13px;
   border:1px solid var(--line);
-  background:#0b0e14;
-  border-radius:15px;
+  background:#0b0f15;
+  border-radius:14px;
 }
 
-.rowactions{
+.rowActions{
   display:flex;
   gap:5px;
   flex-wrap:wrap;
@@ -409,22 +486,9 @@ textarea{
   color:var(--muted);
 }
 
-/* ================= IMAGE PREVIEW ================= */
-
-.preview{
-  max-width:110px;
-  max-height:110px;
-  border-radius:16px;
-  margin-top:7px;
-  display:none;
-}
-
-/* ================= ADMIN ================= */
-
-.admin{
-  background:
-    linear-gradient(180deg,#17122b,#11151d);
-  border:1px solid #735cff55;
+.adminBox{
+  background:linear-gradient(180deg,#17112c,#10151d);
+  border:1px solid #755cff55;
   border-radius:22px;
   padding:17px;
 }
@@ -439,7 +503,7 @@ textarea{
 .tab{
   white-space:nowrap;
   border:1px solid var(--line);
-  background:#0d1016;
+  background:#0d1118;
   color:var(--muted);
   padding:9px 12px;
   border-radius:999px;
@@ -447,117 +511,110 @@ textarea{
 
 .tab.active{
   color:#fff;
-  border-color:#735cff66;
-  background:#735cff18;
+  border-color:#755cff66;
+  background:#755cff18;
 }
 
-/* ================= BOTTOM NAV ================= */
+.preview{
+  display:none;
+  max-width:110px;
+  max-height:110px;
+  border-radius:16px;
+  margin-top:8px;
+}
 
 .bottom{
   display:none;
 }
 
-/* ================= MODAL ================= */
-
 .modal{
   position:fixed;
   inset:0;
-  background:#000b;
   z-index:100;
+  background:#000c;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:15px;
+  padding:14px;
 }
 
 .modal.show{
   display:flex;
 }
 
-.modalbox{
-  width:min(550px,100%);
+.modalBox{
+  width:min(600px,100%);
   max-height:90vh;
   overflow:auto;
-  background:#12161e;
+  background:#121721;
   border:1px solid var(--line);
   border-radius:22px;
   padding:18px;
 }
 
-/* ================= LOADER ================= */
+.closeBtn{
+  float:right;
+}
 
 .loader{
   position:fixed;
   inset:0;
-  background:#080a0fee;
   z-index:200;
   display:grid;
   place-items:center;
+  background:#070910f5;
 }
 
-.spin{
-  width:40px;
-  height:40px;
+.spinner{
+  width:42px;
+  height:42px;
   border:4px solid #ffffff18;
-  border-top-color:#8d7fff;
+  border-top-color:#8f82ff;
   border-radius:50%;
   animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+  to{transform:rotate(360deg)}
 }
-
-/* ================= FOOTER ================= */
 
 footer{
   text-align:center;
+  padding:30px;
   color:#687181;
   font-size:12px;
-  padding:25px;
 }
-
-/* ================= MOBILE ================= */
 
 @media(max-width:800px){
 
-  .nav{
-    display:none;
-  }
-
-  .menu{
-    display:block;
-  }
+  .nav{display:none}
+  .menu{display:block}
 
   .bottom{
     position:fixed;
     display:flex;
-    z-index:50;
-    bottom:0;
+    z-index:80;
     left:0;
     right:0;
-    background:#090b10ed;
+    bottom:0;
+    background:#090c12ed;
     backdrop-filter:blur(18px);
     border-top:1px solid var(--line);
     justify-content:space-around;
-    padding:
-      6px
-      3px
-      calc(6px + env(safe-area-inset-bottom));
+    padding:6px 3px calc(6px + env(safe-area-inset-bottom));
   }
 
   .bottom button{
+    border:0;
+    background:transparent;
+    color:var(--muted);
     font-size:10px;
-    padding:6px 8px;
-    min-width:58px;
+    padding:6px;
   }
 
   .bottom b{
     display:block;
     font-size:17px;
-    margin-bottom:2px;
   }
 
   .grid,
@@ -565,8 +622,12 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .profileStats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
   .hero{
-    padding:27px;
+    padding:28px;
     min-height:430px;
   }
 
@@ -576,16 +637,7 @@ footer{
   }
 
   h1{
-    font-size:55px;
-  }
-
-  .row{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .rowactions{
-    width:100%;
+    letter-spacing:-3px;
   }
 }
 </style>
@@ -593,268 +645,130 @@ footer{
 
 <body>
 
-<!-- ================= LOADER ================= -->
-
 <div id="loader" class="loader">
-  <div class="spin"></div>
+  <div class="spinner"></div>
 </div>
-
-<!-- ================= HEADER ================= -->
 
 <header>
   <div class="bar">
 
-    <a
-      class="brand"
-      href="#home"
-      onclick="go('home')"
-    >
+    <a class="brand" href="#home" onclick="go('home')">
       <span class="logo">⚽</span>
-      LUCC eFootball
+      <span>LUCC eFootball</span>
     </a>
 
     <nav class="nav">
-
-      <button
-        data-p="home"
-        onclick="go('home')"
-      >
-        Home
-      </button>
-
-      <button
-        data-p="tournament"
-        onclick="go('tournament')"
-      >
-        Tournament
-      </button>
-
-      <button
-        data-p="players"
-        onclick="go('players')"
-      >
-        Players
-      </button>
-
-      <button
-        data-p="results"
-        onclick="go('results')"
-      >
-        Results
-      </button>
-
-      <button
-        data-p="rules"
-        onclick="go('rules')"
-      >
-        Rules
-      </button>
-
-      <button
-        data-p="login"
-        id="loginNav"
-        onclick="go('login')"
-      >
-        Login
-      </button>
-
-      <button
-        data-p="profile"
-        id="profileNav"
-        style="display:none"
-        onclick="go('profile')"
-      >
-        Profile
-      </button>
-
-      <button
-        data-p="admin"
-        id="adminNav"
-        style="display:none"
-        onclick="go('admin')"
-      >
-        Admin
-      </button>
-
-      <button
-        id="logoutNav"
-        style="display:none"
-        onclick="logout()"
-      >
-        Logout
-      </button>
-
+      <button data-page="home" onclick="go('home')">Home</button>
+      <button data-page="tournament" onclick="go('tournament')">Tournament</button>
+      <button data-page="players" onclick="go('players')">Players</button>
+      <button data-page="results" onclick="go('results')">Results</button>
+      <button data-page="rules" onclick="go('rules')">Rules</button>
+      <button id="loginNav" onclick="go('login')">Login</button>
+      <button id="profileNav" style="display:none" onclick="go('myprofile')">Profile</button>
+      <button id="adminNav" style="display:none" onclick="go('admin')">Admin</button>
+      <button id="logoutNav" style="display:none" onclick="logout()">Logout</button>
     </nav>
 
-    <button
-      class="menu"
-      onclick="go('profile')"
-    >
-      ☰
-    </button>
+    <button class="menu" onclick="go(currentUser?'myprofile':'login')">☰</button>
 
   </div>
 </header>
 
-<!-- ================= MAIN ================= -->
-
 <main>
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
-<section
-  id="home"
-  class="page active"
->
+<section id="home" class="page active">
 
   <div class="hero">
+    <div class="heroContent">
 
-    <div>
-
-      <span class="tag">
-        🏆 OFFICIAL TOURNAMENT PLATFORM
-      </span>
+      <span class="tag">🏆 OFFICIAL ESPORTS TOURNAMENT</span>
 
       <h1>
         LUCC<br>
-        <span style="color:#8d7fff">
-          eFootball
-        </span>
+        <span style="color:#9183ff">eFootball</span>
       </h1>
 
       <p>
-        Register, compete, follow fixtures,
-        check results and climb the leaderboard.
+        Compete. Win. Rise to the top.
+        Register for tournaments, follow fixtures,
+        check results and build your competitive record.
       </p>
 
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="go('register')"
-        >
+        <button class="btn primary" onclick="go('register')">
           🚀 Register Now
         </button>
 
-        <button
-          class="btn"
-          onclick="go('tournament')"
-        >
+        <button class="btn" onclick="go('tournament')">
           🏆 Tournament
         </button>
 
-        <button
-          class="btn"
-          onclick="go('rules')"
-        >
-          📋 Rules
+        <button class="btn" onclick="go('players')">
+          👥 Players
         </button>
-
       </div>
 
     </div>
-
   </div>
 
   <div class="head">
     <div>
       <h2>Live Overview</h2>
-      <p class="small">
-        Tournament platform statistics
-      </p>
+      <p class="small">Tournament platform statistics</p>
     </div>
   </div>
 
   <div class="grid">
 
     <div class="card">
-      <span class="muted">
-        Players
-      </span>
-      <div
-        class="stat"
-        id="sp"
-      >
-        0
-      </div>
+      <span class="muted">Players</span>
+      <div class="stat" id="homePlayers">0</div>
     </div>
 
     <div class="card">
-      <span class="muted">
-        Results
-      </span>
-      <div
-        class="stat"
-        id="sr"
-      >
-        0
-      </div>
+      <span class="muted">Approved Results</span>
+      <div class="stat" id="homeResults">0</div>
     </div>
 
     <div class="card">
-      <span class="muted">
-        Tournaments
-      </span>
-      <div
-        class="stat"
-        id="st"
-      >
-        0
-      </div>
+      <span class="muted">Tournaments</span>
+      <div class="stat" id="homeTournaments">0</div>
     </div>
 
   </div>
 
 </section>
 
-<!-- ================= REGISTER ================= -->
 
-<section
-  id="register"
-  class="page"
->
+<!-- REGISTER -->
+
+<section id="register" class="page">
 
   <div class="head">
-
     <div>
-      <h2>
-        Player Registration
-      </h2>
-
-      <p>
-        Create your tournament account.
-      </p>
+      <h2>Player Registration</h2>
+      <p>Create your tournament account.</p>
     </div>
-
   </div>
 
   <div class="card form">
 
-    <div id="regmsg"></div>
+    <div id="registerMessage"></div>
 
-    <form id="reg">
+    <form id="registerForm">
 
       <div class="grid2">
 
         <div class="field">
-          <label>Name *</label>
-          <input
-            id="name"
-            required
-            maxlength="60"
-          >
+          <label>Player Name *</label>
+          <input id="regName" maxlength="60" required>
         </div>
 
         <div class="field">
-          <label>
-            Konami/eFootball UID *
-          </label>
-
-          <input
-            id="uid"
-            required
-            maxlength="50"
-          >
+          <label>Konami/eFootball UID *</label>
+          <input id="regUid" maxlength="60" required>
         </div>
 
       </div>
@@ -863,86 +777,52 @@ footer{
 
         <div class="field">
           <label>Email *</label>
-
-          <input
-            id="email"
-            type="email"
-            required
-          >
+          <input id="regEmail" type="email" required>
         </div>
 
         <div class="field">
           <label>Mobile</label>
-
-          <input
-            id="mobile"
-          >
+          <input id="regMobile">
         </div>
 
       </div>
 
       <div class="field">
+        <label>Password *</label>
+        <input id="regPassword" type="password" minlength="6" required>
+      </div>
 
-        <label>
-          Password *
-        </label>
-
-        <input
-          id="pass"
-          type="password"
-          minlength="6"
-          required
-        >
-
+      <div class="field">
+        <label>Device Model *</label>
+        <input id="regDevice" placeholder="Example: Pixel 7" required>
       </div>
 
       <div class="field">
 
         <label>
-          Mobile / Device Model
+          Player Avatar
+          <span class="small muted">(automatically compressed)</span>
         </label>
 
         <input
-          id="device"
-          placeholder="e.g. Pixel 7"
-        >
-
-      </div>
-
-      <div class="field">
-
-        <label>
-          Avatar
-        </label>
-
-        <input
-          id="avatar"
+          id="regAvatar"
           type="file"
           accept="image/*"
         >
 
-        <img
-          id="preview"
-          class="preview"
-        >
+        <img id="avatarPreview" class="preview">
 
       </div>
 
-      <button
-        class="btn primary"
-        type="submit"
-      >
-        🚀 Create Account
+      <button class="btn primary" type="submit">
+        Create Player Account
       </button>
 
     </form>
 
     <p class="small">
       Already registered?
-      <a
-        onclick="go('login')"
-        style="color:#a79cff"
-      >
+      <a href="#login" onclick="go('login')" style="color:#9d91ff">
         Login
       </a>
     </p>
@@ -951,499 +831,376 @@ footer{
 
 </section>
 
-<!-- ================= LOGIN ================= -->
 
-<section
-  id="login"
-  class="page"
->
+<!-- LOGIN -->
+
+<section id="login" class="page">
 
   <div class="head">
-
     <div>
       <h2>Login</h2>
-
-      <p>
-        Player and admin login.
-      </p>
+      <p>Player and admin login.</p>
     </div>
-
   </div>
 
   <div class="card form">
 
-    <div id="loginmsg"></div>
+    <div id="loginMessage"></div>
 
-    <form id="signin">
+    <form id="loginForm">
 
       <div class="field">
-
         <label>Email</label>
-
-        <input
-          id="lemail"
-          type="email"
-          required
-        >
-
+        <input id="loginEmail" type="email" required>
       </div>
 
       <div class="field">
-
         <label>Password</label>
-
-        <input
-          id="lpass"
-          type="password"
-          required
-        >
-
+        <input id="loginPassword" type="password" required>
       </div>
 
-      <button
-        class="btn primary"
-        type="submit"
-      >
-        🔐 Login
+      <button class="btn primary" type="submit">
+        Login
       </button>
 
     </form>
 
-    <div class="notice">
-
-      Admin access is controlled by:
-
-      <br>
-
-      <b>
-        users/{uid}.role = "admin"
-      </b>
-
-    </div>
-
   </div>
 
 </section>
 
-<!-- ================= PLAYERS ================= -->
 
-<section
-  id="players"
-  class="page"
->
+<!-- PLAYERS -->
+
+<section id="players" class="page">
 
   <div class="head">
-
     <div>
       <h2>Players</h2>
-
-      <p>
-        Registered players.
-      </p>
+      <p>Find a tournament player.</p>
     </div>
-
   </div>
 
-  <div
-    id="plist"
-    class="grid"
-  ></div>
+  <div class="searchBox">
+    <input
+      id="playerSearch"
+      placeholder="🔍 Search player name, UID or device..."
+      oninput="renderPlayers()"
+    >
+  </div>
+
+  <div id="playerList" class="playerList"></div>
 
 </section>
 
-<!-- ================= RULES ================= -->
 
-<section
-  id="rules"
-  class="page"
->
+<!-- PUBLIC PROFILE -->
+
+<section id="publicProfile" class="page">
 
   <div class="head">
-
     <div>
-      <h2>Tournament Rules</h2>
-
-      <p>
-        Rules every player must follow.
-      </p>
-
+      <button class="btn" onclick="go('players')">
+        ← Back to Players
+      </button>
     </div>
-
   </div>
 
-  <div
-    id="rul"
-    class="grid2"
-  ></div>
+  <div id="publicProfileContent"></div>
 
 </section>
 
-<!-- ================= TOURNAMENT ================= -->
 
-<section
-  id="tournament"
-  class="page"
->
+<!-- MY PROFILE -->
+
+<section id="myprofile" class="page">
 
   <div class="head">
-
-    <div>
-      <h2>Tournament</h2>
-
-      <p>
-        Current and upcoming tournaments.
-      </p>
-
-    </div>
-
-  </div>
-
-  <div
-    id="tour"
-    class="list"
-  ></div>
-
-</section>
-
-<!-- ================= RESULTS ================= -->
-
-<section
-  id="results"
-  class="page"
->
-
-  <div class="head">
-
-    <div>
-      <h2>Results & Leaderboard</h2>
-
-      <p>
-        Published match results.
-      </p>
-
-    </div>
-
-  </div>
-
-  <div
-    id="res"
-    class="list"
-  ></div>
-
-</section>
-
-<!-- ================= PROFILE ================= -->
-
-<section
-  id="profile"
-  class="page"
->
-
-  <div class="head">
-
     <div>
       <h2>My Profile</h2>
-
-      <p>
-        Your player dashboard.
-      </p>
-
+      <p>Your account information.</p>
     </div>
-
   </div>
 
-  <div id="prof"></div>
+  <div id="myProfileContent"></div>
 
 </section>
 
-<!-- ================= ADMIN ================= -->
 
-<section
-  id="admin"
-  class="page"
->
+<!-- TOURNAMENT -->
+
+<section id="tournament" class="page">
 
   <div class="head">
-
     <div>
-      <h2>Admin Panel</h2>
-
-      <p>
-        Manage players, tournaments,
-        results and rules.
-      </p>
-
+      <h2>Tournaments</h2>
+      <p>Current and upcoming competitions.</p>
     </div>
-
   </div>
 
-  <div id="aguard"></div>
+  <div id="tournamentList" class="list"></div>
 
-  <div
-    id="acont"
-    style="display:none"
-  >
+</section>
+
+
+<!-- RESULTS -->
+
+<section id="results" class="page">
+
+  <div class="head">
+    <div>
+      <h2>Results</h2>
+      <p>Official approved match results.</p>
+    </div>
+  </div>
+
+  <div id="resultsList" class="list"></div>
+
+</section>
+
+
+<!-- RULES -->
+
+<section id="rules" class="page">
+
+  <div class="head">
+    <div>
+      <h2>Tournament Rules</h2>
+      <p>Rules every participant must follow.</p>
+    </div>
+  </div>
+
+  <div id="rulesList" class="grid2"></div>
+
+</section>
+
+
+<!-- ADMIN -->
+
+<section id="admin" class="page">
+
+  <div class="head">
+    <div>
+      <h2>Admin Panel</h2>
+      <p>Manage the tournament system.</p>
+    </div>
+  </div>
+
+  <div id="adminGuard"></div>
+
+  <div id="adminContent" style="display:none">
 
     <div class="tabs">
 
       <button
         class="tab active"
-        onclick="atab('players',this)"
+        onclick="adminTab('players',this)"
       >
         Players
       </button>
 
       <button
         class="tab"
-        onclick="atab('tournaments',this)"
+        onclick="adminTab('tournaments',this)"
       >
         Tournaments
       </button>
 
       <button
         class="tab"
-        onclick="atab('results',this)"
+        onclick="adminTab('fixtures',this)"
+      >
+        Fixtures
+      </button>
+
+      <button
+        class="tab"
+        onclick="adminTab('results',this)"
       >
         Results
       </button>
 
       <button
         class="tab"
-        onclick="atab('rules',this)"
+        onclick="adminTab('rules',this)"
       >
         Rules
       </button>
 
     </div>
 
-    <div id="apanel"></div>
+    <div id="adminPanel"></div>
 
   </div>
 
 </section>
 
 <footer>
-  LUCC eFootball Tournament • Firebase • GitHub Pages
+  Lucc presents eFootball tournament
 </footer>
 
 </main>
 
-<!-- ================= MOBILE NAV ================= -->
+
+<!-- MOBILE NAV -->
 
 <nav class="bottom">
 
-  <button
-    id="bottomHome"
-    onclick="go('home')"
-  >
+  <button onclick="go('home')">
     <b>⌂</b>
     Home
   </button>
 
-  <button
-    onclick="go('tournament')"
-  >
+  <button onclick="go('tournament')">
     <b>🏆</b>
     Tournament
   </button>
 
-  <button
-    onclick="go('players')"
-  >
+  <button onclick="go('players')">
     <b>👥</b>
     Players
   </button>
 
-  <button
-    onclick="go('results')"
-  >
+  <button onclick="go('results')">
     <b>📊</b>
     Results
   </button>
 
-  <button
-    onclick="go(currentUser ? 'profile' : 'login')"
-  >
+  <button onclick="go(currentUser?'myprofile':'login')">
     <b>👤</b>
-    Account
+    Profile
   </button>
 
 </nav>
 
-<!-- ================= MODAL ================= -->
 
-<div
-  id="modal"
-  class="modal"
->
+<!-- MODAL -->
 
-  <div class="modalbox">
+<div id="modal" class="modal">
+
+  <div class="modalBox">
 
     <button
-      class="btn"
-      style="float:right"
+      class="btn closeBtn"
       onclick="closeModal()"
     >
       ✕
     </button>
 
-    <div id="mc"></div>
+    <div id="modalContent"></div>
 
   </div>
 
 </div>
 
 
-<!-- ================= FIREBASE ================= -->
-
 <script type="module">
 
 import {
   initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
-  updateProfile
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 import {
   getFirestore,
+  collection,
   doc,
   getDoc,
+  getDocs,
   setDoc,
   updateDoc,
   deleteDoc,
-  collection,
-  getDocs,
   addDoc,
+  query,
+  where,
   serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 import {
   getStorage,
   ref,
   uploadBytes,
   getDownloadURL
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 
-/* =====================================================
+/* =========================
    FIREBASE CONFIG
-===================================================== */
+========================= */
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDKU2meBGjkJ9AixVaLGEPCVT1wqo5vMik",
-
-  authDomain:
-    "lucc-efootball-tournamen-a2eef.firebaseapp.com",
-
-  projectId:
-    "lucc-efootball-tournamen-a2eef",
-
-  storageBucket:
-    "lucc-efootball-tournamen-a2eef.firebasestorage.app",
-
-  messagingSenderId:
-    "562916468135",
-
-  appId:
-    "1:562916468135:web:8e8b72af92757f407dc282",
-
-  measurementId:
-    "G-HRMKH8HFQZ"
-
+  apiKey:"AIzaSyDKU2meBGjkJ9AixVaLGEPCVT1wqo5vMik",
+  authDomain:"lucc-efootball-tournamen-a2eef.firebaseapp.com",
+  projectId:"lucc-efootball-tournamen-a2eef",
+  storageBucket:"lucc-efootball-tournamen-a2eef.firebasestorage.app",
+  messagingSenderId:"562916468135",
+  appId:"1:562916468135:web:8e8b72af92757f407dc282",
+  measurementId:"G-HRMKH8HFQZ"
 };
 
 
-/* =====================================================
-   FIREBASE INIT
-===================================================== */
+const app = initializeApp(firebaseConfig);
 
-const app =
-  initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-const auth =
-  getAuth(app);
+const db = getFirestore(app);
 
-const db =
-  getFirestore(app);
-
-const storage =
-  getStorage(app);
+const storage = getStorage(app);
 
 
-/* =====================================================
-   GLOBAL STATE
-===================================================== */
+/* =========================
+   GLOBAL DATA
+========================= */
 
 let currentUser = null;
-let profile = null;
+let currentProfile = null;
 
-let D = {
-  players: [],
-  results: [],
-  tournaments: [],
-  rules: []
+let DATA = {
+  players:[],
+  results:[],
+  tournaments:[],
+  rules:[]
 };
 
 
-/* =====================================================
+/* =========================
    HELPERS
-===================================================== */
+========================= */
 
-const $ = id =>
-  document.getElementById(id);
+const $ = id => document.getElementById(id);
 
+function escapeHTML(value){
 
-const esc = value =>
-  String(value ?? "")
+  return String(value ?? "")
     .replace(/[&<>"']/g, char => ({
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
       '"':"&quot;",
-      "'":"&#39;"
+      "'":"&#039;"
     }[char]));
 
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-function note(id,text,success=false){
-
-  const el = $(id);
-
-  if(!el) return;
-
-  el.innerHTML = `
-    <div class="notice ${success ? "success" : "error"}">
-      ${esc(text)}
-    </div>
-  `;
 }
 
 
-/* =====================================================
-   ERROR HANDLER
-===================================================== */
+function showMessage(id,message,type="error"){
 
-function err(e){
+  $(id).innerHTML =
+    `<div class="notice ${type}">
+      ${escapeHTML(message)}
+    </div>`;
+
+}
+
+
+function firebaseError(error){
 
   const messages = {
 
@@ -1459,41 +1216,30 @@ function err(e){
     "auth/invalid-credential":
       "Wrong email or password.",
 
-    "auth/user-not-found":
-      "No account found with this email.",
-
-    "auth/wrong-password":
-      "Wrong password.",
-
     "auth/network-request-failed":
-      "Network error. Check your internet connection.",
+      "Network problem. Please check your internet.",
 
     "permission-denied":
-      "Firebase permission denied.",
-
-    "storage/unauthorized":
-      "You don't have permission to upload the avatar."
+      "Firebase permission denied."
 
   };
 
-  return messages[e?.code]
-    || e?.message
-    || "Something went wrong.";
+  return messages[error.code] ||
+         error.message ||
+         "Something went wrong.";
 
 }
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
 window.go = function(page){
 
   document
     .querySelectorAll(".page")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
+    .forEach(x => x.classList.remove("active"));
 
   const target = $(page);
 
@@ -1502,13 +1248,13 @@ window.go = function(page){
   }
 
   document
-    .querySelectorAll("[data-p]")
-    .forEach(x =>
+    .querySelectorAll("[data-page]")
+    .forEach(x => {
       x.classList.toggle(
         "active",
-        x.dataset.p === page
-      )
-    );
+        x.dataset.page === page
+      );
+    });
 
   window.scrollTo({
     top:0,
@@ -1516,61 +1262,60 @@ window.go = function(page){
   });
 
 
-  if(page === "players")
-    players();
+  if(page==="players"){
+    renderPlayers();
+  }
 
-  if(page === "results")
-    results();
+  if(page==="tournament"){
+    renderTournaments();
+  }
 
-  if(page === "rules")
-    rules();
+  if(page==="results"){
+    renderResults();
+  }
 
-  if(page === "tournament")
-    tournaments();
+  if(page==="rules"){
+    renderRules();
+  }
 
-  if(page === "profile")
-    prof();
+  if(page==="myprofile"){
+    renderMyProfile();
+  }
 
-  if(page === "admin")
-    admin();
+  if(page==="admin"){
+    renderAdmin();
+  }
 
 };
 
 
-/* =====================================================
-   IMAGE COMPRESS
-===================================================== */
+/* =========================
+   IMAGE COMPRESSION
+========================= */
 
-async function compress(
-  file,
-  max = 900000
-){
+async function compressImage(file){
 
-  if(!file)
-    return null;
+  if(!file) return null;
 
-  if(!file.type.startsWith("image/"))
-    throw new Error(
-      "Please select an image."
-    );
+  if(!file.type.startsWith("image/")){
+    throw new Error("Please select an image.");
+  }
 
-  const bitmap =
-    await createImageBitmap(file);
+  const bitmap = await createImageBitmap(file);
 
   let width = bitmap.width;
   let height = bitmap.height;
 
+  const maxSide = 900;
+
   const scale =
     Math.min(
       1,
-      900 / Math.max(width,height)
+      maxSide / Math.max(width,height)
     );
 
-  width =
-    Math.round(width * scale);
-
-  height =
-    Math.round(height * scale);
+  width = Math.round(width * scale);
+  height = Math.round(height * scale);
 
   const canvas =
     document.createElement("canvas");
@@ -1578,8 +1323,7 @@ async function compress(
   canvas.width = width;
   canvas.height = height;
 
-  const ctx =
-    canvas.getContext("2d");
+  const ctx = canvas.getContext("2d");
 
   ctx.drawImage(
     bitmap,
@@ -1602,8 +1346,8 @@ async function compress(
 
   while(
     blob &&
-    blob.size > max &&
-    quality > .45
+    blob.size > 900000 &&
+    quality > .4
   ){
 
     quality -= .08;
@@ -1630,36 +1374,33 @@ async function compress(
 }
 
 
-/* =====================================================
+/* =========================
    AVATAR PREVIEW
-===================================================== */
+========================= */
 
-$("avatar").addEventListener(
+$("regAvatar").addEventListener(
   "change",
   async event => {
 
     try{
 
-      const original =
+      const file =
         event.target.files[0];
 
-      if(!original)
-        return;
-
       const compressed =
-        await compress(original);
+        await compressImage(file);
 
-      $("preview").src =
+      $("avatarPreview").src =
         URL.createObjectURL(compressed);
 
-      $("preview").style.display =
+      $("avatarPreview").style.display =
         "block";
 
-    }catch(e){
+    }catch(error){
 
-      note(
-        "regmsg",
-        e.message
+      showMessage(
+        "registerMessage",
+        error.message
       );
 
     }
@@ -1668,43 +1409,45 @@ $("avatar").addEventListener(
 );
 
 
-/* =====================================================
+/* =========================
    REGISTER
-===================================================== */
+========================= */
 
-$("reg").addEventListener(
+$("registerForm").addEventListener(
   "submit",
   async event => {
 
     event.preventDefault();
 
-    note(
-      "regmsg",
+    showMessage(
+      "registerMessage",
       "Creating your account...",
-      true
+      "success"
     );
 
     try{
 
       const name =
-        $("name").value.trim();
+        $("regName").value.trim();
 
       const konamiUid =
-        $("uid").value.trim();
+        $("regUid").value.trim();
 
       const email =
-        $("email").value.trim();
-
-      const password =
-        $("pass").value;
+        $("regEmail").value.trim();
 
       const mobile =
-        $("mobile").value.trim();
+        $("regMobile").value.trim();
+
+      const password =
+        $("regPassword").value;
 
       const device =
-        $("device").value.trim();
+        $("regDevice").value.trim();
 
-      /* CREATE AUTH */
+      const avatarFile =
+        $("regAvatar").files[0];
+
 
       const credential =
         await createUserWithEmailAndPassword(
@@ -1717,27 +1460,13 @@ $("reg").addEventListener(
         credential.user;
 
 
-      /* DISPLAY NAME */
-
-      await updateProfile(
-        user,
-        {
-          displayName:name
-        }
-      );
-
-
-      /* AVATAR */
-
       let avatarUrl = "";
 
-      const avatarFile =
-        $("avatar").files[0];
 
       if(avatarFile){
 
         const compressed =
-          await compress(avatarFile);
+          await compressImage(avatarFile);
 
         const storageRef =
           ref(
@@ -1751,8 +1480,7 @@ $("reg").addEventListener(
           storageRef,
           compressed,
           {
-            contentType:
-              "image/jpeg"
+            contentType:"image/jpeg"
           }
         );
 
@@ -1764,8 +1492,6 @@ $("reg").addEventListener(
       }
 
 
-      /* PLAYER DATA */
-
       const playerData = {
 
         uid:user.uid,
@@ -1774,28 +1500,20 @@ $("reg").addEventListener(
 
         konamiUid:konamiUid,
 
-        email:user.email,
+        email:email,
 
         mobile:mobile,
 
-        device:
-          device ||
-          navigator.userAgent.slice(
-            0,
-            160
-          ),
+        device:device,
 
         avatarUrl:avatarUrl,
 
-        role:"user",
+        role:"player",
 
-        createdAt:
-          serverTimestamp()
+        createdAt:serverTimestamp()
 
       };
 
-
-      /* USERS */
 
       await setDoc(
         doc(
@@ -1806,8 +1524,6 @@ $("reg").addEventListener(
         playerData
       );
 
-
-      /* PLAYERS */
 
       await setDoc(
         doc(
@@ -1819,56 +1535,29 @@ $("reg").addEventListener(
       );
 
 
-      /* IMPORTANT:
-         Set local profile immediately.
-      */
-
-      currentUser = user;
-      profile = playerData;
-
-
-      /* SUCCESS */
-
-      note(
-        "regmsg",
+      showMessage(
+        "registerMessage",
         "Registration successful!",
-        true
+        "success"
       );
-
 
       event.target.reset();
 
-      $("preview").style.display =
+      $("avatarPreview").style.display =
         "none";
 
+      await loadAll();
 
-      /* GO PROFILE */
-
-      go("profile");
-
-      prof();
+      go("myprofile");
 
 
-      /* REFRESH DATA */
+    }catch(error){
 
-      await load();
+      console.error(error);
 
-
-      go("profile");
-
-      prof();
-
-
-    }catch(e){
-
-      console.error(
-        "Registration error:",
-        e
-      );
-
-      note(
-        "regmsg",
-        err(e)
+      showMessage(
+        "registerMessage",
+        firebaseError(error)
       );
 
     }
@@ -1877,75 +1566,43 @@ $("reg").addEventListener(
 );
 
 
-/* =====================================================
+/* =========================
    LOGIN
-===================================================== */
+========================= */
 
-$("signin").addEventListener(
+$("loginForm").addEventListener(
   "submit",
   async event => {
 
     event.preventDefault();
 
-    note(
-      "loginmsg",
+    showMessage(
+      "loginMessage",
       "Signing in...",
-      true
+      "success"
     );
 
     try{
 
-      const email =
-        $("lemail").value.trim();
+      await signInWithEmailAndPassword(
+        auth,
+        $("loginEmail").value.trim(),
+        $("loginPassword").value
+      );
 
-      const password =
-        $("lpass").value;
-
-
-      const credential =
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-
-      currentUser =
-        credential.user;
-
-
-      /* LOAD PROFILE BEFORE GOING
-         TO DASHBOARD
-      */
-
-      await loadCurrentProfile();
-
-
-      note(
-        "loginmsg",
+      showMessage(
+        "loginMessage",
         "Login successful!",
-        true
+        "success"
       );
 
+      go("myprofile");
 
-      event.target.reset();
+    }catch(error){
 
-
-      go("profile");
-
-      prof();
-
-
-    }catch(e){
-
-      console.error(
-        "Login error:",
-        e
-      );
-
-      note(
-        "loginmsg",
-        err(e)
+      showMessage(
+        "loginMessage",
+        firebaseError(error)
       );
 
     }
@@ -1954,88 +1611,9 @@ $("signin").addEventListener(
 );
 
 
-/* =====================================================
-   LOAD CURRENT PROFILE
-===================================================== */
-
-async function loadCurrentProfile(){
-
-  if(!currentUser){
-
-    profile = null;
-
-    return;
-
-  }
-
-  try{
-
-    const snap =
-      await getDoc(
-        doc(
-          db,
-          "users",
-          currentUser.uid
-        )
-      );
-
-    if(snap.exists()){
-
-      profile = snap.data();
-
-    }else{
-
-      /* fallback if user doc missing */
-
-      profile = {
-
-        uid:currentUser.uid,
-
-        name:
-          currentUser.displayName ||
-          "Player",
-
-        email:
-          currentUser.email ||
-          "",
-
-        role:"user"
-
-      };
-
-    }
-
-  }catch(e){
-
-    console.error(
-      "Profile load error:",
-      e
-    );
-
-    profile = {
-
-      uid:currentUser.uid,
-
-      name:
-        currentUser.displayName ||
-        "Player",
-
-      email:
-        currentUser.email ||
-        "",
-
-      role:"user"
-
-    };
-
-  }
-
-}
-
-
-/* =====================================================
+/* =========================
    LOGOUT
-===================================================== */
+========================= */
 
 window.logout = async function(){
 
@@ -2043,23 +1621,20 @@ window.logout = async function(){
 
     await signOut(auth);
 
-    currentUser = null;
-    profile = null;
-
     go("home");
 
-  }catch(e){
+  }catch(error){
 
-    alert(err(e));
+    alert(firebaseError(error));
 
   }
 
 };
 
 
-/* =====================================================
+/* =========================
    AUTH STATE
-===================================================== */
+========================= */
 
 onAuthStateChanged(
   auth,
@@ -2067,10 +1642,31 @@ onAuthStateChanged(
 
     currentUser = user;
 
-
     if(user){
 
-      await loadCurrentProfile();
+      try{
+
+        const snap =
+          await getDoc(
+            doc(
+              db,
+              "users",
+              user.uid
+            )
+          );
+
+        currentProfile =
+          snap.exists()
+            ? snap.data()
+            : null;
+
+      }catch(error){
+
+        console.error(error);
+
+        currentProfile = null;
+
+      }
 
 
       $("loginNav").style.display =
@@ -2084,15 +1680,14 @@ onAuthStateChanged(
 
 
       $("adminNav").style.display =
-        profile?.role === "admin"
-        ? "inline-block"
-        : "none";
+        currentProfile?.role === "admin"
+          ? "inline-block"
+          : "none";
 
 
     }else{
 
-      profile = null;
-
+      currentProfile = null;
 
       $("loginNav").style.display =
         "inline-block";
@@ -2112,56 +1707,38 @@ onAuthStateChanged(
     $("loader").style.display =
       "none";
 
-
-    await load();
-
-
-    /* If currently on profile,
-       refresh it after auth state.
-    */
-
-    const profilePage =
-      $("profile");
-
-    if(
-      profilePage &&
-      profilePage.classList.contains("active")
-    ){
-
-      prof();
-
-    }
+    await loadAll();
 
   }
 );
 
 
-/* =====================================================
-   FIRESTORE COLLECTION LOAD
-===================================================== */
+/* =========================
+   FIRESTORE LOAD
+========================= */
 
-async function col(name){
+async function loadCollection(name){
 
   try{
 
-    const snapshot =
+    const snap =
       await getDocs(
         collection(db,name)
       );
 
-    return snapshot.docs.map(
-      docSnap => ({
-        id:docSnap.id,
-        ...docSnap.data()
+    return snap.docs.map(
+      d => ({
+        id:d.id,
+        ...d.data()
       })
     );
 
-  }catch(e){
+  }catch(error){
 
     console.error(
       "Collection error:",
       name,
-      e
+      error
     );
 
     return [];
@@ -2171,78 +1748,88 @@ async function col(name){
 }
 
 
-/* =====================================================
-   LOAD ALL DATA
-===================================================== */
+async function loadAll(){
 
-async function load(){
+  DATA.players =
+    await loadCollection("players");
 
-  try{
+  DATA.results =
+    await loadCollection("results");
 
-    D.players =
-      await col("players");
+  DATA.tournaments =
+    await loadCollection("tournaments");
 
-    D.results =
-      await col("results");
-
-    D.tournaments =
-      await col("tournaments");
-
-    D.rules =
-      await col("rules");
+  DATA.rules =
+    await loadCollection("rules");
 
 
-    $("sp").textContent =
-      D.players.length;
+  $("homePlayers").textContent =
+    DATA.players.length;
 
-    $("sr").textContent =
-      D.results.length;
+  $("homeResults").textContent =
+    DATA.results.filter(
+      x => x.status === "Approved"
+    ).length;
 
-    $("st").textContent =
-      D.tournaments.length;
+  $("homeTournaments").textContent =
+    DATA.tournaments.length;
 
 
-    players();
-    results();
-    rules();
-    tournaments();
-
-    if(currentUser)
-      prof();
-
-    if(profile?.role === "admin")
-      admin();
-
-  }catch(e){
-
-    console.error(
-      "Main data loading error:",
-      e
-    );
-
-  }
+  renderPlayers();
+  renderResults();
+  renderRules();
+  renderTournaments();
+  renderMyProfile();
+  renderAdmin();
 
 }
 
 
-/* =====================================================
-   PLAYERS PAGE
-===================================================== */
+/* =========================
+   PLAYER SEARCH + LIST
+========================= */
 
-function players(){
+window.renderPlayers = function(){
 
-  const box =
-    $("plist");
+  const search =
+    ($("playerSearch")?.value || "")
+      .trim()
+      .toLowerCase();
 
-  if(!box)
-    return;
+
+  let players =
+    DATA.players.filter(player => {
+
+      if(!search) return true;
+
+      return (
+
+        String(player.name || "")
+          .toLowerCase()
+          .includes(search)
+
+        ||
+
+        String(player.konamiUid || "")
+          .toLowerCase()
+          .includes(search)
+
+        ||
+
+        String(player.device || "")
+          .toLowerCase()
+          .includes(search)
+
+      );
+
+    });
 
 
-  if(!D.players.length){
+  if(!players.length){
 
-    box.innerHTML =
+    $("playerList").innerHTML =
       `<div class="empty">
-        No players yet.
+        No players found.
       </div>`;
 
     return;
@@ -2250,568 +1837,367 @@ function players(){
   }
 
 
-  box.innerHTML =
-    D.players.map(
-      p => `
+  $("playerList").innerHTML =
+    players.map(player => `
 
-      <div class="card">
+      <div class="playerRow">
 
-        <div class="player">
-
-          ${
-            p.avatarUrl
-            ?
-            `<img
-              class="avatar"
-              src="${esc(p.avatarUrl)}"
-            >`
-            :
-            `<div
-              class="avatar"
-              style="
-                display:grid;
-                place-items:center;
-                font-size:28px
-              "
-            >
-              👤
-            </div>`
-          }
-
-          <div>
-
-            <h3>
-              ${esc(p.name)}
-            </h3>
-
-            <span class="badge">
-              UID ${esc(p.konamiUid)}
-            </span>
-
-          </div>
-
-        </div>
-
-        <p class="small">
-          Device:
-          ${esc(p.device || "—")}
-        </p>
-
-      </div>
-
-    `
-    ).join("");
-
-}
-
-
-/* =====================================================
-   RULES
-===================================================== */
-
-function rules(){
-
-  const box =
-    $("rul");
-
-  if(!box)
-    return;
-
-
-  if(!D.rules.length){
-
-    box.innerHTML = `
-
-      <div class="card">
-        <h3>Fair Play</h3>
-        <p>
-          No cheating, exploits or
-          abusive behavior.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Match Rules</h3>
-        <p>
-          Follow the official fixture
-          and submit valid proof when
-          requested.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Connection</h3>
-        <p>
-          Players are responsible for
-          a stable connection unless an
-          admin decides otherwise.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Admin Decision</h3>
-        <p>
-          Admin decisions on disputes
-          are final for the tournament.
-        </p>
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-    D.rules.map(
-      r => `
-
-      <div class="card">
-
-        <h3>
-          ${esc(r.title)}
-        </h3>
-
-        <p>
-          ${esc(r.body)}
-        </p>
-
-      </div>
-
-    `
-    ).join("");
-
-}
-
-
-/* =====================================================
-   TOURNAMENTS
-===================================================== */
-
-function tournaments(){
-
-  const box =
-    $("tour");
-
-  if(!box)
-    return;
-
-
-  if(!D.tournaments.length){
-
-    box.innerHTML =
-      `<div class="empty">
-        No tournament published yet.
-      </div>`;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-    D.tournaments.map(
-      t => `
-
-      <div class="card">
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            gap:10px
-          "
+        <img
+          class="avatar"
+          src="${escapeHTML(
+            player.avatarUrl || ""
+          )}"
+          onerror="this.style.visibility='hidden'"
         >
 
-          <h3>
-            ${esc(t.name)}
-          </h3>
+        <div class="playerInfo">
 
-          <span class="badge">
-            ${esc(t.status || "Upcoming")}
-          </span>
-
-        </div>
-
-        <p>
-          ${esc(t.description || "")}
-        </p>
-
-        <div class="grid2">
-
-          <div>
-            <span class="small muted">
-              Date
-            </span>
-            <br>
-            ${esc(t.date || "TBA")}
+          <div
+            class="playerName"
+            onclick="openPublicProfile('${escapeHTML(player.id)}')"
+          >
+            ${escapeHTML(player.name)}
           </div>
 
-          <div>
-            <span class="small muted">
-              Prize
-            </span>
-            <br>
-            ${esc(t.prize || "TBA")}
+          <div class="small muted">
+            UID: ${escapeHTML(
+              player.konamiUid || "—"
+            )}
+          </div>
+
+          <div class="small muted">
+            ${escapeHTML(
+              player.device || "—"
+            )}
           </div>
 
         </div>
+
+        <button
+          class="btn"
+          onclick="openPublicProfile('${escapeHTML(player.id)}')"
+        >
+          View
+        </button>
 
       </div>
 
-    `
-    ).join("");
+    `).join("");
+
+};
+
+
+/* =========================
+   PLAYER STATS
+========================= */
+
+function getPlayerStats(playerId){
+
+  const approved =
+    DATA.results.filter(
+      r =>
+        r.status === "Approved" &&
+        (
+          r.playerAId === playerId ||
+          r.playerBId === playerId
+        )
+    );
+
+
+  let wins = 0;
+  let draws = 0;
+  let losses = 0;
+
+  let gf = 0;
+  let ga = 0;
+
+
+  approved.forEach(match => {
+
+    const isA =
+      match.playerAId === playerId;
+
+    const ownScore =
+      Number(
+        isA
+          ? match.scoreA
+          : match.scoreB
+      );
+
+    const opponentScore =
+      Number(
+        isA
+          ? match.scoreB
+          : match.scoreA
+      );
+
+
+    gf += ownScore;
+    ga += opponentScore;
+
+
+    if(ownScore > opponentScore){
+
+      wins++;
+
+    }else if(
+      ownScore === opponentScore
+    ){
+
+      draws++;
+
+    }else{
+
+      losses++;
+
+    }
+
+  });
+
+
+  const played =
+    wins + draws + losses;
+
+  const points =
+    wins * 3 + draws;
+
+  const gd =
+    gf - ga;
+
+  const winRate =
+    played
+      ? ((wins / played) * 100).toFixed(1)
+      : "0.0";
+
+
+  return {
+    wins,
+    draws,
+    losses,
+    played,
+    gf,
+    ga,
+    gd,
+    points,
+    winRate,
+    matches:approved
+  };
 
 }
 
 
-/* =====================================================
-   RESULTS
-===================================================== */
+/* =========================
+   PUBLIC PROFILE
+========================= */
 
-function results(){
+window.openPublicProfile = async function(playerId){
 
-  const box =
-    $("res");
+  const player =
+    DATA.players.find(
+      p => p.id === playerId
+    );
 
-  if(!box)
-    return;
+  if(!player){
 
-
-  if(!D.results.length){
-
-    box.innerHTML =
-      `<div class="empty">
-        No results published yet.
-      </div>`;
+    alert("Player not found.");
 
     return;
 
   }
 
 
-  box.innerHTML =
-    [...D.results]
-      .reverse()
-      .map(
-        r => `
+  const stats =
+    getPlayerStats(playerId);
 
-        <div class="row">
+
+  const history =
+    stats.matches.map(match => {
+
+      const isA =
+        match.playerAId === playerId;
+
+      const opponentId =
+        isA
+          ? match.playerBId
+          : match.playerAId;
+
+      const opponent =
+        DATA.players.find(
+          p => p.id === opponentId
+        );
+
+
+      const ownScore =
+        Number(
+          isA
+            ? match.scoreA
+            : match.scoreB
+        );
+
+      const opponentScore =
+        Number(
+          isA
+            ? match.scoreB
+            : match.scoreA
+        );
+
+
+      let result = "DRAW";
+      let resultClass = "draw";
+
+      if(ownScore > opponentScore){
+
+        result = "WIN";
+        resultClass = "win";
+
+      }else if(
+        ownScore < opponentScore
+      ){
+
+        result = "LOSS";
+        resultClass = "loss";
+
+      }
+
+
+      return `
+
+        <div class="matchItem">
 
           <div>
 
             <b>
-              ${esc(r.playerA)}
-            </b>
-
-            <span class="badge">
-              ${esc(r.scoreA)}
-              -
-              ${esc(r.scoreB)}
-            </span>
-
-            <b>
-              ${esc(r.playerB)}
+              ${escapeHTML(
+                opponent?.name || "Unknown Player"
+              )}
             </b>
 
             <div class="small muted">
-
-              ${esc(r.tournament || "")}
-
-              •
-
-              ${esc(r.date || "")}
-
+              ${escapeHTML(
+                match.tournament || "Tournament"
+              )}
             </div>
 
           </div>
 
-          <span class="badge">
-            ${esc(r.status || "Final")}
-          </span>
+          <div style="text-align:right">
 
-        </div>
+            <b class="${resultClass}">
+              ${result}
+            </b>
 
-      `
-      )
-      .join("");
-
-}
-
-
-/* =====================================================
-   PLAYER DASHBOARD
-===================================================== */
-
-function prof(){
-
-  const box =
-    $("prof");
-
-  if(!box)
-    return;
-
-
-  /* NOT LOGGED IN */
-
-  if(!currentUser){
-
-    box.innerHTML = `
-
-      <div class="card">
-
-        <div
-          style="
-            text-align:center;
-            padding:20px 5px
-          "
-        >
-
-          <div
-            style="
-              font-size:60px;
-              margin-bottom:10px
-            "
-          >
-            👤
-          </div>
-
-          <h2>
-            Welcome to LUCC
-          </h2>
-
-          <p>
-            Login to access your
-            player dashboard.
-          </p>
-
-          <div class="actions"
-               style="
-                 justify-content:center
-               "
-          >
-
-            <button
-              class="btn primary"
-              onclick="go('login')"
-            >
-              🔐 Login
-            </button>
-
-            <button
-              class="btn"
-              onclick="go('register')"
-            >
-              🚀 Register
-            </button>
+            <div>
+              ${ownScore} - ${opponentScore}
+            </div>
 
           </div>
 
         </div>
 
-      </div>
+      `;
 
-    `;
-
-    return;
-
-  }
+    }).join("");
 
 
-  const name =
-    profile?.name ||
-    currentUser.displayName ||
-    "Player";
-
-
-  const avatar =
-    profile?.avatarUrl ||
-    "";
-
-
-  const isAdmin =
-    profile?.role === "admin";
-
-
-  box.innerHTML = `
+  $("publicProfileContent").innerHTML = `
 
     <div class="card">
 
-      <div class="player">
+      <div class="profileTop">
 
-        ${
-          avatar
-
-          ?
-
-          `<img
-            class="avatar"
-            src="${esc(avatar)}"
-            alt="Avatar"
-          >`
-
-          :
-
-          `<div
-            class="avatar"
-            style="
-              display:grid;
-              place-items:center;
-              font-size:28px
-            "
-          >
-            👤
-          </div>`
-        }
+        <img
+          class="avatarLarge"
+          src="${escapeHTML(
+            player.avatarUrl || ""
+          )}"
+          onerror="this.style.visibility='hidden'"
+        >
 
         <div>
 
           <h2>
-            ${esc(name)}
+            ${escapeHTML(player.name)}
           </h2>
 
           <span class="badge">
-            ${isAdmin ? "ADMIN" : "PLAYER"}
+            UID:
+            ${escapeHTML(
+              player.konamiUid || "—"
+            )}
           </span>
+
+          <p class="small">
+            Device:
+            ${escapeHTML(
+              player.device || "—"
+            )}
+          </p>
 
         </div>
 
       </div>
 
 
-      <div
-        class="grid2"
-        style="margin-top:18px"
-      >
+      <div class="profileStats">
 
-        <div class="card">
-
-          <span class="muted small">
-            Email
-          </span>
-
-          <br>
-
-          <b>
-            ${esc(
-              profile?.email ||
-              currentUser.email ||
-              "—"
-            )}
-          </b>
-
+        <div class="statBox">
+          <strong>${stats.played}</strong>
+          <span>Played</span>
         </div>
 
-
-        <div class="card">
-
-          <span class="muted small">
-            Konami UID
-          </span>
-
-          <br>
-
-          <b>
-            ${esc(
-              profile?.konamiUid ||
-              "—"
-            )}
-          </b>
-
+        <div class="statBox">
+          <strong>${stats.wins}</strong>
+          <span>Wins</span>
         </div>
 
-
-        <div class="card">
-
-          <span class="muted small">
-            Mobile
-          </span>
-
-          <br>
-
-          <b>
-            ${esc(
-              profile?.mobile ||
-              "—"
-            )}
-          </b>
-
+        <div class="statBox">
+          <strong>${stats.draws}</strong>
+          <span>Draws</span>
         </div>
 
-
-        <div class="card">
-
-          <span class="muted small">
-            Device
-          </span>
-
-          <br>
-
-          <b>
-            ${esc(
-              profile?.device ||
-              "—"
-            )}
-          </b>
-
+        <div class="statBox">
+          <strong>${stats.losses}</strong>
+          <span>Losses</span>
         </div>
 
-      </div>
+        <div class="statBox">
+          <strong>${stats.winRate}%</strong>
+          <span>Win Rate</span>
+        </div>
 
+        <div class="statBox">
+          <strong>${stats.gf}</strong>
+          <span>Goals For</span>
+        </div>
 
-      <div class="actions">
+        <div class="statBox">
+          <strong>${stats.ga}</strong>
+          <span>Goals Against</span>
+        </div>
 
-        ${
-          isAdmin
+        <div class="statBox">
+          <strong>${stats.gd}</strong>
+          <span>Goal Difference</span>
+        </div>
 
-          ?
-
-          `<button
-            class="btn primary"
-            onclick="go('admin')"
-          >
-            ⚙️ Admin Panel
-          </button>`
-
-          :
-
-          ""
-        }
-
-
-        <button
-          class="btn"
-          onclick="go('profile')"
-        >
-          👤 My Profile
-        </button>
-
-
-        <button
-          class="btn danger"
-          onclick="logout()"
-        >
-          🚪 Logout
-        </button>
+        <div class="statBox">
+          <strong>${stats.points}</strong>
+          <span>Points</span>
+        </div>
 
       </div>
 
     </div>
 
-
-    <!-- PLAYER DASHBOARD STATS -->
 
     <div class="head">
 
       <div>
 
-        <h2>
-          Player Dashboard
-        </h2>
+        <h2>Match History</h2>
 
         <p>
-          Your tournament overview.
+          Official approved matches
         </p>
 
       </div>
@@ -2819,134 +2205,487 @@ function prof(){
     </div>
 
 
-    <div class="grid">
+    <div class="card">
 
-      <div class="card">
-
-        <span class="muted">
-          Total Players
-        </span>
-
-        <div class="stat">
-          ${D.players.length}
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <span class="muted">
-          Published Results
-        </span>
-
-        <div class="stat">
-          ${D.results.length}
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <span class="muted">
-          Tournaments
-        </span>
-
-        <div class="stat">
-          ${D.tournaments.length}
-        </div>
-
-      </div>
+      ${
+        history
+          ? `<div class="matchHistory">${history}</div>`
+          : `<div class="empty">
+              No approved matches yet.
+            </div>`
+      }
 
     </div>
 
   `;
 
-}
+
+  go("publicProfile");
+
+};
 
 
-/* =====================================================
-   ADMIN
-===================================================== */
+/* =========================
+   MY PROFILE
+========================= */
 
-function admin(){
-
-  const guard =
-    $("aguard");
-
-  const content =
-    $("acont");
-
-
-  if(!guard || !content)
-    return;
-
+window.renderMyProfile = function(){
 
   if(!currentUser){
 
-    guard.innerHTML = `
+    $("myProfileContent").innerHTML = `
 
-      <div class="admin">
+      <div class="card">
 
-        <b>
-          Login required.
-        </b>
+        <h3>Login Required</h3>
 
         <p>
-          Please login as admin.
+          Please login to view your profile.
         </p>
 
         <button
           class="btn primary"
           onclick="go('login')"
         >
-          🔐 Login
+          Login
         </button>
 
       </div>
 
     `;
 
-    content.style.display =
-      "none";
+    return;
+
+  }
+
+
+  const player =
+    DATA.players.find(
+      p => p.id === currentUser.uid
+    );
+
+
+  if(!player){
+
+    $("myProfileContent").innerHTML =
+      `<div class="empty">
+        Player profile not found.
+      </div>`;
 
     return;
 
   }
 
 
-  if(profile?.role !== "admin"){
+  const stats =
+    getPlayerStats(currentUser.uid);
 
-    guard.innerHTML = `
 
-      <div class="admin">
+  $("myProfileContent").innerHTML = `
 
-        <b>
-          Admin access required.
-        </b>
+    <div class="card">
 
-        <p class="small">
-          Your user document must be:
-        </p>
+      <div class="profileTop">
 
-        <div class="notice">
+        <img
+          class="avatarLarge"
+          src="${escapeHTML(
+            player.avatarUrl || ""
+          )}"
+          onerror="this.style.visibility='hidden'"
+        >
 
-          users/${esc(currentUser.uid)}
+        <div>
 
-          <br><br>
+          <h2>
+            ${escapeHTML(player.name)}
+          </h2>
 
-          <b>
-            role: "admin"
-          </b>
+          <span class="badge">
+            ${
+              currentProfile?.role === "admin"
+                ? "ADMIN"
+                : "PLAYER"
+            }
+          </span>
+
+          <p class="small muted">
+            Your profile is managed by tournament administration.
+          </p>
 
         </div>
 
       </div>
 
+
+      <div class="profileStats">
+
+        <div class="statBox">
+          <strong>${stats.played}</strong>
+          <span>Played</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.wins}</strong>
+          <span>Wins</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.draws}</strong>
+          <span>Draws</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.losses}</strong>
+          <span>Losses</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.winRate}%</strong>
+          <span>Win Rate</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.gf}</strong>
+          <span>GF</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.ga}</strong>
+          <span>GA</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.gd}</strong>
+          <span>GD</span>
+        </div>
+
+        <div class="statBox">
+          <strong>${stats.points}</strong>
+          <span>Points</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:14px">
+
+      <h3>Account Information</h3>
+
+      <div class="grid2">
+
+        <div>
+          <span class="small muted">
+            Player Name
+          </span>
+          <br>
+          <b>${escapeHTML(player.name)}</b>
+        </div>
+
+        <div>
+          <span class="small muted">
+            Konami/eFootball UID
+          </span>
+          <br>
+          <b>${escapeHTML(player.konamiUid)}</b>
+        </div>
+
+        <div>
+          <span class="small muted">
+            Device
+          </span>
+          <br>
+          <b>${escapeHTML(player.device)}</b>
+        </div>
+
+        <div>
+          <span class="small muted">
+            Email
+          </span>
+          <br>
+          <b>${escapeHTML(player.email)}</b>
+        </div>
+
+      </div>
+
+      <div class="notice" style="margin-top:15px">
+        🔒 Your player information can only be changed by tournament administration.
+      </div>
+
+    </div>
+
+  `;
+
+};
+
+
+/* =========================
+   TOURNAMENTS
+========================= */
+
+function renderTournaments(){
+
+  if(!DATA.tournaments.length){
+
+    $("tournamentList").innerHTML =
+      `<div class="empty">
+        No tournaments available yet.
+      </div>`;
+
+    return;
+
+  }
+
+
+  $("tournamentList").innerHTML =
+    DATA.tournaments.map(
+      tournament => `
+
+        <div class="card">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:10px;
+            align-items:center;
+          ">
+
+            <h3>
+              ${escapeHTML(tournament.name)}
+            </h3>
+
+            <span class="badge">
+              ${escapeHTML(
+                tournament.status || "Upcoming"
+              )}
+            </span>
+
+          </div>
+
+          <p>
+            ${escapeHTML(
+              tournament.description || ""
+            )}
+          </p>
+
+          <div class="grid2">
+
+            <div>
+              <span class="small muted">
+                Date
+              </span>
+              <br>
+              <b>
+                ${escapeHTML(
+                  tournament.date || "TBA"
+                )}
+              </b>
+            </div>
+
+            <div>
+              <span class="small muted">
+                Prize
+              </span>
+              <br>
+              <b>
+                ${escapeHTML(
+                  tournament.prize || "TBA"
+                )}
+              </b>
+            </div>
+
+          </div>
+
+        </div>
+
+      `
+    ).join("");
+
+}
+
+
+/* =========================
+   RESULTS
+========================= */
+
+function renderResults(){
+
+  const approved =
+    DATA.results.filter(
+      r => r.status === "Approved"
+    );
+
+
+  if(!approved.length){
+
+    $("resultsList").innerHTML =
+      `<div class="empty">
+        No approved results yet.
+      </div>`;
+
+    return;
+
+  }
+
+
+  $("resultsList").innerHTML =
+    approved
+      .slice()
+      .reverse()
+      .map(result => `
+
+        <div class="row">
+
+          <div>
+
+            <b>
+              ${escapeHTML(
+                result.playerA
+              )}
+            </b>
+
+            <span class="badge">
+              ${Number(result.scoreA)}
+              -
+              ${Number(result.scoreB)}
+            </span>
+
+            <b>
+              ${escapeHTML(
+                result.playerB
+              )}
+            </b>
+
+            <div class="small muted">
+              ${escapeHTML(
+                result.tournament || ""
+              )}
+            </div>
+
+          </div>
+
+          <span class="badge">
+            Approved
+          </span>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+/* =========================
+   RULES
+========================= */
+
+function renderRules(){
+
+  if(!DATA.rules.length){
+
+    $("rulesList").innerHTML = `
+
+      <div class="card">
+        <h3>Fair Play</h3>
+        <p>
+          No cheating, exploits or abusive behaviour.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Match Rules</h3>
+        <p>
+          Players must follow official fixtures
+          and submit valid results.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Connection</h3>
+        <p>
+          Players are responsible for maintaining
+          a stable connection.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Administration</h3>
+        <p>
+          Tournament administration decisions
+          are final for disputes.
+        </p>
+      </div>
+
     `;
 
-    content.style.display =
+    return;
+
+  }
+
+
+  $("rulesList").innerHTML =
+    DATA.rules.map(
+      rule => `
+
+        <div class="card">
+
+          <h3>
+            ${escapeHTML(rule.title)}
+          </h3>
+
+          <p>
+            ${escapeHTML(rule.body)}
+          </p>
+
+        </div>
+
+      `
+    ).join("");
+
+}
+
+
+/* =========================
+   ADMIN CHECK
+========================= */
+
+function isAdmin(){
+
+  return (
+    currentUser &&
+    currentProfile &&
+    currentProfile.role === "admin"
+  );
+
+}
+
+
+/* =========================
+   ADMIN
+========================= */
+
+function renderAdmin(){
+
+  if(!isAdmin()){
+
+    $("adminGuard").innerHTML = `
+
+      <div class="adminBox">
+
+        <b>Admin access required.</b>
+
+        <p class="small">
+          This account is not an administrator.
+        </p>
+
+      </div>
+
+    `;
+
+    $("adminContent").style.display =
       "none";
 
     return;
@@ -2954,131 +2693,128 @@ function admin(){
   }
 
 
-  guard.innerHTML = `
+  $("adminGuard").innerHTML = `
 
     <div class="notice success">
-      ✅ Admin authenticated.
+      ✓ Admin authenticated
     </div>
 
   `;
 
-  content.style.display =
+  $("adminContent").style.display =
     "block";
-
-
-  const activeTab =
-    document.querySelector(
-      ".tab.active"
-    );
-
-  atab(
-    "players",
-    activeTab
-  );
 
 }
 
 
-/* =====================================================
-   ADMIN TABS
-===================================================== */
+window.adminTab = function(tab,button){
 
-window.atab = function(type,button){
+  if(!isAdmin()) return;
+
 
   document
     .querySelectorAll(".tab")
     .forEach(
-      x =>
-        x.classList.remove("active")
+      x => x.classList.remove("active")
     );
 
-
-  if(button)
+  if(button){
     button.classList.add("active");
+  }
 
 
-  if(type === "players")
-    aplayers();
+  if(tab==="players"){
+    adminPlayers();
+  }
 
-  if(type === "tournaments")
-    atours();
+  if(tab==="tournaments"){
+    adminTournaments();
+  }
 
-  if(type === "results")
-    aresults();
+  if(tab==="fixtures"){
+    adminFixtures();
+  }
 
-  if(type === "rules")
-    arules();
+  if(tab==="results"){
+    adminResults();
+  }
+
+  if(tab==="rules"){
+    adminRules();
+  }
 
 };
 
 
-/* =====================================================
-   ADMIN PLAYERS
-===================================================== */
+/* =========================
+   ADMIN PLAYER MANAGEMENT
+========================= */
 
-function aplayers(){
+function adminPlayers(){
 
-  $("apanel").innerHTML = `
+  $("adminPanel").innerHTML = `
 
     <div class="card">
 
-      <h3>
-        Players
-      </h3>
+      <h3>Registered Players</h3>
+
+      <p class="small muted">
+        Only administrators can change player information.
+      </p>
 
       <div class="list">
 
         ${
-          D.players.length
+          DATA.players.length
 
           ?
 
-          D.players.map(
-            p => `
+          DATA.players.map(
+            player => `
 
-            <div class="row">
+              <div class="row">
 
-              <div>
+                <div>
 
-                <b>
-                  ${esc(p.name)}
-                </b>
+                  <b>
+                    ${escapeHTML(player.name)}
+                  </b>
 
-                <div class="small muted">
-                  ${esc(p.konamiUid)}
-                  •
-                  ${esc(p.email)}
+                  <div class="small muted">
+                    UID:
+                    ${escapeHTML(
+                      player.konamiUid || "—"
+                    )}
+                  </div>
+
+                  <div class="small muted">
+                    ${escapeHTML(
+                      player.email || ""
+                    )}
+                  </div>
+
+                </div>
+
+                <div class="rowActions">
+
+                  <button
+                    class="btn"
+                    onclick="editPlayer('${player.id}')"
+                  >
+                    Edit
+                  </button>
+
                 </div>
 
               </div>
 
-              <div class="rowactions">
-
-                <button
-                  class="btn"
-                  onclick="editP('${p.id}')"
-                >
-                  Edit
-                </button>
-
-                <button
-                  class="btn danger"
-                  onclick="delP('${p.id}')"
-                >
-                  Remove
-                </button>
-
-              </div>
-
-            </div>
-
-          `
+            `
           ).join("")
 
           :
 
           `<div class="empty">
-            No players.
+            No registered players.
           </div>`
 
         }
@@ -3092,36 +2828,35 @@ function aplayers(){
 }
 
 
-/* =====================================================
-   EDIT PLAYER
-===================================================== */
+/* =========================
+   ADMIN EDIT PLAYER
+========================= */
 
-window.editP = function(id){
+window.editPlayer = function(playerId){
 
-  const p =
-    D.players.find(
-      x => x.id === id
+  if(!isAdmin()) return;
+
+
+  const player =
+    DATA.players.find(
+      p => p.id === playerId
     );
 
-  if(!p)
-    return;
+
+  if(!player) return;
 
 
-  $("mc").innerHTML = `
+  $("modalContent").innerHTML = `
 
-    <h2>
-      Edit Player
-    </h2>
+    <h2>Edit Player</h2>
 
     <div class="field">
 
-      <label>
-        Name
-      </label>
+      <label>Player Name</label>
 
       <input
-        id="mn"
-        value="${esc(p.name)}"
+        id="editName"
+        value="${escapeHTML(player.name)}"
       >
 
     </div>
@@ -3129,13 +2864,13 @@ window.editP = function(id){
 
     <div class="field">
 
-      <label>
-        Konami UID
-      </label>
+      <label>Konami/eFootball UID</label>
 
       <input
-        id="mu"
-        value="${esc(p.konamiUid)}"
+        id="editUid"
+        value="${escapeHTML(
+          player.konamiUid || ""
+        )}"
       >
 
     </div>
@@ -3143,13 +2878,13 @@ window.editP = function(id){
 
     <div class="field">
 
-      <label>
-        Mobile
-      </label>
+      <label>Mobile</label>
 
       <input
-        id="mm"
-        value="${esc(p.mobile)}"
+        id="editMobile"
+        value="${escapeHTML(
+          player.mobile || ""
+        )}"
       >
 
     </div>
@@ -3157,13 +2892,26 @@ window.editP = function(id){
 
     <div class="field">
 
-      <label>
-        Device
-      </label>
+      <label>Device</label>
 
       <input
-        id="md"
-        value="${esc(p.device)}"
+        id="editDevice"
+        value="${escapeHTML(
+          player.device || ""
+        )}"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>New Avatar</label>
+
+      <input
+        id="editAvatar"
+        type="file"
+        accept="image/*"
       >
 
     </div>
@@ -3171,68 +2919,101 @@ window.editP = function(id){
 
     <button
       class="btn primary"
-      onclick="saveP('${id}')"
+      onclick="savePlayer('${player.id}')"
     >
-      💾 Save
+      Save Changes
     </button>
 
   `;
 
 
-  $("modal")
-    .classList.add("show");
+  $("modal").classList.add("show");
 
 };
 
 
-/* =====================================================
-   SAVE PLAYER
-===================================================== */
+window.savePlayer = async function(playerId){
 
-window.saveP = async function(id){
+  if(!isAdmin()){
+
+    alert("Admin access required.");
+
+    return;
+
+  }
+
 
   try{
 
-    const p =
-      D.players.find(
-        x => x.id === id
+    const player =
+      DATA.players.find(
+        p => p.id === playerId
       );
 
 
     const data = {
 
-      name:
-        $("mn").value.trim(),
+      name:$("editName").value.trim(),
 
-      konamiUid:
-        $("mu").value.trim(),
+      konamiUid:$("editUid").value.trim(),
 
-      mobile:
-        $("mm").value.trim(),
+      mobile:$("editMobile").value.trim(),
 
-      device:
-        $("md").value.trim()
+      device:$("editDevice").value.trim()
 
     };
+
+
+    const avatar =
+      $("editAvatar").files[0];
+
+
+    if(avatar){
+
+      const compressed =
+        await compressImage(avatar);
+
+      const storageRef =
+        ref(
+          storage,
+          "avatars/" +
+          playerId +
+          ".jpg"
+        );
+
+      await uploadBytes(
+        storageRef,
+        compressed,
+        {
+          contentType:"image/jpeg"
+        }
+      );
+
+      data.avatarUrl =
+        await getDownloadURL(
+          storageRef
+        );
+
+    }
 
 
     await updateDoc(
       doc(
         db,
         "players",
-        id
+        playerId
       ),
       data
     );
 
 
-    if(p?.uid){
+    if(player?.uid){
 
       await updateDoc(
         doc(
           db,
           "users",
-          p.uid
+          player.uid
         ),
         data
       );
@@ -3242,100 +3023,48 @@ window.saveP = async function(id){
 
     closeModal();
 
-    await load();
+    await loadAll();
 
-  }catch(e){
+    alert("Player information updated.");
 
-    alert(err(e));
+  }catch(error){
 
-  }
-
-};
-
-
-/* =====================================================
-   DELETE PLAYER
-===================================================== */
-
-window.delP = async function(id){
-
-  if(
-    !confirm(
-      "Remove this player?"
-    )
-  )
-    return;
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "players",
-        id
-      )
-    );
-
-    await load();
-
-  }catch(e){
-
-    alert(err(e));
+    alert(firebaseError(error));
 
   }
 
 };
 
 
-/* =====================================================
+/* =========================
    ADMIN TOURNAMENTS
-===================================================== */
+========================= */
 
-function atours(){
+function adminTournaments(){
 
-  $("apanel").innerHTML = `
+  $("adminPanel").innerHTML = `
 
     <div class="card">
 
-      <h3>
-        Publish Tournament
-      </h3>
+      <h3>Create Tournament</h3>
 
       <div class="grid2">
 
         <div class="field">
-
-          <label>
-            Name
-          </label>
-
-          <input id="tn">
-
+          <label>Name</label>
+          <input id="tourName">
         </div>
 
+        <div class="field">
+          <label>Date</label>
+          <input id="tourDate">
+        </div>
 
         <div class="field">
 
-          <label>
-            Date
-          </label>
+          <label>Status</label>
 
-          <input
-            id="td"
-            type="date"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Status
-          </label>
-
-          <select id="ts">
+          <select id="tourStatus">
 
             <option>
               Registration Open
@@ -3346,7 +3075,15 @@ function atours(){
             </option>
 
             <option>
-              Live
+              Group Stage
+            </option>
+
+            <option>
+              Knockout
+            </option>
+
+            <option>
+              Final
             </option>
 
             <option>
@@ -3357,15 +3094,9 @@ function atours(){
 
         </div>
 
-
         <div class="field">
-
-          <label>
-            Prize
-          </label>
-
-          <input id="tp">
-
+          <label>Prize</label>
+          <input id="tourPrize">
         </div>
 
       </div>
@@ -3373,56 +3104,74 @@ function atours(){
 
       <div class="field">
 
-        <label>
-          Description
-        </label>
+        <label>Description</label>
 
-        <textarea id="tx"></textarea>
+        <textarea id="tourDescription"></textarea>
 
       </div>
 
 
       <button
         class="btn primary"
-        onclick="addT()"
+        onclick="createTournament()"
       >
-        🏆 Publish
+        Create Tournament
       </button>
 
     </div>
 
 
-    <div
-      class="card"
-      style="margin-top:12px"
-    >
+    <div class="card" style="margin-top:13px">
 
-      <h3>
-        Published Tournaments
-      </h3>
+      <h3>Existing Tournaments</h3>
 
-      ${
-        D.tournaments.map(
-          t => `
+      <div class="list">
 
-          <div class="row">
+        ${
+          DATA.tournaments.length
 
-            <span>
-              ${esc(t.name)}
-            </span>
+          ?
 
-            <button
-              class="btn danger"
-              onclick="delT('${t.id}')"
-            >
-              Remove
-            </button>
+          DATA.tournaments.map(
+            t => `
 
-          </div>
+              <div class="row">
 
-        `
-        ).join("")
-      }
+                <div>
+
+                  <b>
+                    ${escapeHTML(t.name)}
+                  </b>
+
+                  <div class="small muted">
+                    ${escapeHTML(
+                      t.status || ""
+                    )}
+                  </div>
+
+                </div>
+
+                <button
+                  class="btn danger"
+                  onclick="deleteTournament('${t.id}')"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            `
+          ).join("")
+
+          :
+
+          `<div class="empty">
+            No tournaments.
+          </div>`
+
+        }
+
+      </div>
 
     </div>
 
@@ -3431,181 +3180,391 @@ function atours(){
 }
 
 
-/* =====================================================
-   ADD TOURNAMENT
-===================================================== */
+window.createTournament = async function(){
 
-window.addT = async function(){
-
-  try{
-
-    await addDoc(
-      collection(
-        db,
-        "tournaments"
-      ),
-      {
-
-        name:
-          $("tn").value.trim(),
-
-        date:
-          $("td").value,
-
-        status:
-          $("ts").value,
-
-        prize:
-          $("tp").value.trim(),
-
-        description:
-          $("tx").value.trim(),
-
-        createdAt:
-          serverTimestamp()
-
-      }
-    );
+  if(!isAdmin()) return;
 
 
-    await load();
+  const name =
+    $("tourName").value.trim();
 
-  }catch(e){
 
-    alert(err(e));
+  if(!name){
+
+    alert("Tournament name required.");
+
+    return;
 
   }
+
+
+  await addDoc(
+    collection(db,"tournaments"),
+    {
+
+      name:name,
+
+      date:$("tourDate").value,
+
+      status:$("tourStatus").value,
+
+      prize:$("tourPrize").value,
+
+      description:
+        $("tourDescription").value,
+
+      createdAt:
+        serverTimestamp()
+
+    }
+  );
+
+
+  await loadAll();
+
+  alert("Tournament created.");
 
 };
 
 
-/* =====================================================
-   DELETE TOURNAMENT
-===================================================== */
+window.deleteTournament = async function(id){
 
-window.delT = async function(id){
+  if(!isAdmin()) return;
+
 
   if(
     !confirm(
-      "Remove tournament?"
+      "Delete this tournament?"
     )
-  )
+  ) return;
+
+
+  await deleteDoc(
+    doc(
+      db,
+      "tournaments",
+      id
+    )
+  );
+
+
+  await loadAll();
+
+};
+
+
+/* =========================
+   RANDOM FIXTURE SYSTEM
+========================= */
+
+function shuffle(array){
+
+  const arr = [...array];
+
+  for(
+    let i=arr.length-1;
+    i>0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+    [
+      arr[i],
+      arr[j]
+    ] =
+    [
+      arr[j],
+      arr[i]
+    ];
+
+  }
+
+  return arr;
+
+}
+
+
+window.generateFixtures = async function(){
+
+  if(!isAdmin()) return;
+
+
+  if(DATA.players.length < 2){
+
+    alert(
+      "At least 2 players are required."
+    );
+
     return;
 
+  }
 
-  try{
+
+  const tournament =
+    DATA.tournaments[0];
+
+
+  if(!tournament){
+
+    alert(
+      "Create a tournament first."
+    );
+
+    return;
+
+  }
+
+
+  const selected =
+    shuffle(DATA.players);
+
+
+  const matches = [];
+
+
+  for(
+    let i=0;
+    i<selected.length;
+    i+=2
+  ){
+
+    if(!selected[i+1]){
+
+      continue;
+
+    }
+
+
+    matches.push({
+
+      tournamentId:tournament.id,
+
+      tournament:tournament.name,
+
+      playerAId:selected[i].id,
+
+      playerBId:selected[i+1].id,
+
+      playerA:selected[i].name,
+
+      playerB:selected[i+1].name,
+
+      scoreA:0,
+
+      scoreB:0,
+
+      status:"Upcoming",
+
+      round:"Round 1",
+
+      createdAt:
+        serverTimestamp()
+
+    });
+
+  }
+
+
+  for(
+    const match of matches
+  ){
+
+    await addDoc(
+      collection(db,"fixtures"),
+      match
+    );
+
+  }
+
+
+  alert(
+    matches.length +
+    " random fixtures generated."
+  );
+
+};
+
+
+window.resetFixtures = async function(){
+
+  if(!isAdmin()) return;
+
+
+  if(
+    !confirm(
+      "Reset all fixtures?"
+    )
+  ) return;
+
+
+  const fixtures =
+    await loadCollection(
+      "fixtures"
+    );
+
+
+  for(
+    const fixture of fixtures
+  ){
 
     await deleteDoc(
       doc(
         db,
-        "tournaments",
-        id
+        "fixtures",
+        fixture.id
       )
     );
 
-    await load();
-
-  }catch(e){
-
-    alert(err(e));
-
   }
+
+
+  alert(
+    "All fixtures have been reset."
+  );
+
+  adminFixtures();
 
 };
 
 
-/* =====================================================
-   ADMIN RESULTS
-===================================================== */
+function adminFixtures(){
 
-function aresults(){
-
-  $("apanel").innerHTML = `
+  $("adminPanel").innerHTML = `
 
     <div class="card">
 
-      <h3>
-        Publish Result
-      </h3>
+      <h3>Random Fixtures</h3>
+
+      <p>
+        Registered players will be randomly paired.
+      </p>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="generateFixtures()"
+        >
+          🎲 Generate Random Fixtures
+        </button>
+
+        <button
+          class="btn danger"
+          onclick="resetFixtures()"
+        >
+          🗑 Reset Fixtures
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:13px">
+
+      <h3>Important</h3>
+
+      <p class="small">
+        Resetting fixtures does not delete player accounts
+        or player registration information.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   ADMIN RESULTS
+========================= */
+
+function adminResults(){
+
+  $("adminPanel").innerHTML = `
+
+    <div class="card">
+
+      <h3>Add Result</h3>
+
+      <p class="small muted">
+        Only approved results affect player statistics.
+      </p>
+
 
       <div class="grid2">
 
         <div class="field">
+          <label>Player A</label>
+          <select id="resultPlayerA">
 
-          <label>
-            Player A
-          </label>
+            <option value="">
+              Select player
+            </option>
 
-          <input id="ra">
+            ${
+              DATA.players.map(
+                p =>
+                `<option value="${p.id}">
+                  ${escapeHTML(p.name)}
+                </option>`
+              ).join("")
+            }
 
+          </select>
         </div>
 
 
         <div class="field">
+          <label>Player B</label>
+          <select id="resultPlayerB">
 
-          <label>
-            Player B
-          </label>
+            <option value="">
+              Select player
+            </option>
 
-          <input id="rb">
+            ${
+              DATA.players.map(
+                p =>
+                `<option value="${p.id}">
+                  ${escapeHTML(p.name)}
+                </option>`
+              ).join("")
+            }
 
+          </select>
         </div>
 
 
         <div class="field">
-
-          <label>
-            Score A
-          </label>
-
+          <label>Score A</label>
           <input
-            id="rsa"
+            id="resultScoreA"
             type="number"
-            value="0"
             min="0"
+            value="0"
           >
-
         </div>
 
 
         <div class="field">
-
-          <label>
-            Score B
-          </label>
-
+          <label>Score B</label>
           <input
-            id="rsb"
+            id="resultScoreB"
             type="number"
-            value="0"
             min="0"
+            value="0"
           >
-
         </div>
 
 
         <div class="field">
-
-          <label>
-            Tournament
-          </label>
-
-          <input id="rt">
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Date
-          </label>
-
-          <input
-            id="rd"
-            type="date"
-          >
-
+          <label>Tournament</label>
+          <input id="resultTournament">
         </div>
 
       </div>
@@ -3613,55 +3572,121 @@ function aresults(){
 
       <button
         class="btn primary"
-        onclick="addR()"
+        onclick="adminAddResult()"
       >
-        📊 Publish Result
+        Add Approved Result
       </button>
 
     </div>
 
 
-    <div
-      class="card"
-      style="margin-top:12px"
-    >
+    <div class="card" style="margin-top:13px">
 
-      <h3>
-        Results
-      </h3>
+      <h3>Submitted Results</h3>
 
-      ${
-        D.results.map(
-          r => `
+      <div class="list">
 
-          <div class="row">
+        ${
+          DATA.results.length
 
-            <span>
+          ?
 
-              ${esc(r.playerA)}
+          DATA.results.map(
+            r => `
 
-              ${esc(r.scoreA)}
+              <div class="row">
 
-              -
+                <div>
 
-              ${esc(r.scoreB)}
+                  <b>
+                    ${escapeHTML(
+                      r.playerA
+                    )}
+                  </b>
 
-              ${esc(r.playerB)}
+                  ${Number(r.scoreA)}
+                  -
+                  ${Number(r.scoreB)}
 
-            </span>
+                  <b>
+                    ${escapeHTML(
+                      r.playerB
+                    )}
+                  </b>
 
-            <button
-              class="btn danger"
-              onclick="delR('${r.id}')"
-            >
-              Remove
-            </button>
+                  <div class="small muted">
+                    Status:
+                    ${escapeHTML(
+                      r.status || "Pending"
+                    )}
+                  </div>
 
-          </div>
+                </div>
 
-        `
-        ).join("")
-      }
+
+                <div class="rowActions">
+
+                  ${
+                    r.status !== "Approved"
+
+                    ?
+
+                    `<button
+                      class="btn success"
+                      onclick="approveResult('${r.id}')"
+                    >
+                      Approve
+                    </button>`
+
+                    :
+
+                    ""
+
+                  }
+
+
+                  ${
+                    r.status !== "Rejected"
+
+                    ?
+
+                    `<button
+                      class="btn warning"
+                      onclick="rejectResult('${r.id}')"
+                    >
+                      Reject
+                    </button>`
+
+                    :
+
+                    ""
+
+                  }
+
+
+                  <button
+                    class="btn danger"
+                    onclick="deleteResult('${r.id}')"
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              </div>
+
+            `
+          ).join("")
+
+          :
+
+          `<div class="empty">
+            No results.
+          </div>`
+
+        }
+
+      </div>
 
     </div>
 
@@ -3670,131 +3695,187 @@ function aresults(){
 }
 
 
-/* =====================================================
-   ADD RESULT
-===================================================== */
+window.adminAddResult = async function(){
 
-window.addR = async function(){
+  if(!isAdmin()) return;
 
-  try{
 
-    await addDoc(
-      collection(
-        db,
-        "results"
-      ),
-      {
+  const playerAId =
+    $("resultPlayerA").value;
 
-        playerA:
-          $("ra").value.trim(),
+  const playerBId =
+    $("resultPlayerB").value;
 
-        playerB:
-          $("rb").value.trim(),
 
-        scoreA:
-          Number(
-            $("rsa").value
-          ),
+  if(
+    !playerAId ||
+    !playerBId ||
+    playerAId === playerBId
+  ){
 
-        scoreB:
-          Number(
-            $("rsb").value
-          ),
+    alert(
+      "Select two different players."
+    );
 
-        tournament:
-          $("rt").value.trim(),
+    return;
 
-        date:
-          $("rd").value,
+  }
 
-        status:
-          "Final",
 
-        createdAt:
-          serverTimestamp()
+  const playerA =
+    DATA.players.find(
+      p => p.id === playerAId
+    );
 
-      }
+  const playerB =
+    DATA.players.find(
+      p => p.id === playerBId
     );
 
 
-    await load();
+  await addDoc(
+    collection(db,"results"),
+    {
 
-  }catch(e){
+      playerAId,
 
-    alert(err(e));
+      playerBId,
 
-  }
+      playerA:playerA.name,
+
+      playerB:playerB.name,
+
+      scoreA:Number(
+        $("resultScoreA").value
+      ),
+
+      scoreB:Number(
+        $("resultScoreB").value
+      ),
+
+      tournament:
+        $("resultTournament").value,
+
+      status:"Approved",
+
+      createdAt:
+        serverTimestamp()
+
+    }
+  );
+
+
+  await loadAll();
+
+  alert(
+    "Approved result added."
+  );
 
 };
 
 
-/* =====================================================
-   DELETE RESULT
-===================================================== */
+window.approveResult = async function(id){
 
-window.delR = async function(id){
+  if(!isAdmin()) return;
+
+
+  await updateDoc(
+    doc(
+      db,
+      "results",
+      id
+    ),
+    {
+      status:"Approved"
+    }
+  );
+
+
+  await loadAll();
+
+  adminResults();
+
+};
+
+
+window.rejectResult = async function(id){
+
+  if(!isAdmin()) return;
+
+
+  await updateDoc(
+    doc(
+      db,
+      "results",
+      id
+    ),
+    {
+      status:"Rejected"
+    }
+  );
+
+
+  await loadAll();
+
+  adminResults();
+
+};
+
+
+window.deleteResult = async function(id){
+
+  if(!isAdmin()) return;
+
 
   if(
     !confirm(
-      "Remove result?"
+      "Delete this result?"
     )
-  )
-    return;
+  ) return;
 
 
-  try{
+  await deleteDoc(
+    doc(
+      db,
+      "results",
+      id
+    )
+  );
 
-    await deleteDoc(
-      doc(
-        db,
-        "results",
-        id
-      )
-    );
 
-    await load();
+  await loadAll();
 
-  }catch(e){
-
-    alert(err(e));
-
-  }
+  adminResults();
 
 };
 
 
-/* =====================================================
+/* =========================
    ADMIN RULES
-===================================================== */
+========================= */
 
-function arules(){
+function adminRules(){
 
-  $("apanel").innerHTML = `
+  $("adminPanel").innerHTML = `
 
     <div class="card">
 
-      <h3>
-        Publish Rule
-      </h3>
+      <h3>Add Tournament Rule</h3>
 
       <div class="field">
 
-        <label>
-          Title
-        </label>
+        <label>Title</label>
 
-        <input id="rtitle">
+        <input id="ruleTitle">
 
       </div>
 
 
       <div class="field">
 
-        <label>
-          Rule
-        </label>
+        <label>Rule</label>
 
-        <textarea id="rbody"></textarea>
+        <textarea id="ruleBody"></textarea>
 
       </div>
 
@@ -3803,45 +3884,53 @@ function arules(){
         class="btn primary"
         onclick="addRule()"
       >
-        📋 Publish Rule
+        Publish Rule
       </button>
 
     </div>
 
 
-    <div
-      class="card"
-      style="margin-top:12px"
-    >
+    <div class="card" style="margin-top:13px">
 
-      <h3>
-        Custom Rules
-      </h3>
+      <h3>Custom Rules</h3>
 
-      ${
-        D.rules.map(
-          r => `
+      <div class="list">
 
-          <div class="row">
+        ${
+          DATA.rules.length
 
-            <span>
-              <b>
-                ${esc(r.title)}
-              </b>
-            </span>
+          ?
 
-            <button
-              class="btn danger"
-              onclick="delRule('${r.id}')"
-            >
-              Remove
-            </button>
+          DATA.rules.map(
+            r => `
 
-          </div>
+              <div class="row">
 
-        `
-        ).join("")
-      }
+                <b>
+                  ${escapeHTML(r.title)}
+                </b>
+
+                <button
+                  class="btn danger"
+                  onclick="deleteRule('${r.id}')"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            `
+          ).join("")
+
+          :
+
+          `<div class="empty">
+            No custom rules.
+          </div>`
+
+        }
+
+      </div>
 
     </div>
 
@@ -3850,96 +3939,95 @@ function arules(){
 }
 
 
-/* =====================================================
-   ADD RULE
-===================================================== */
-
 window.addRule = async function(){
 
-  try{
+  if(!isAdmin()) return;
 
-    await addDoc(
-      collection(
-        db,
-        "rules"
-      ),
-      {
 
-        title:
-          $("rtitle").value.trim(),
+  const title =
+    $("ruleTitle").value.trim();
 
-        body:
-          $("rbody").value.trim(),
+  const body =
+    $("ruleBody").value.trim();
 
-        createdAt:
-          serverTimestamp()
 
-      }
+  if(!title || !body){
+
+    alert(
+      "Title and rule are required."
     );
 
-
-    await load();
-
-  }catch(e){
-
-    alert(err(e));
+    return;
 
   }
+
+
+  await addDoc(
+    collection(db,"rules"),
+    {
+
+      title,
+
+      body,
+
+      createdAt:
+        serverTimestamp()
+
+    }
+  );
+
+
+  await loadAll();
+
+  adminRules();
 
 };
 
 
-/* =====================================================
-   DELETE RULE
-===================================================== */
+window.deleteRule = async function(id){
 
-window.delRule = async function(id){
+  if(!isAdmin()) return;
+
 
   if(
     !confirm(
-      "Remove rule?"
+      "Delete this rule?"
     )
-  )
-    return;
+  ) return;
 
 
-  try{
+  await deleteDoc(
+    doc(
+      db,
+      "rules",
+      id
+    )
+  );
 
-    await deleteDoc(
-      doc(
-        db,
-        "rules",
-        id
-      )
-    );
 
-    await load();
+  await loadAll();
 
-  }catch(e){
-
-    alert(err(e));
-
-  }
+  adminRules();
 
 };
 
 
-/* =====================================================
+/* =========================
    MODAL
-===================================================== */
+========================= */
 
-window.closeModal =
-  function(){
+window.closeModal = function(){
 
-    $("modal")
-      .classList.remove("show");
+  $("modal").classList.remove(
+    "show"
+  );
 
-  };
+};
 
 
-/* =====================================================
+/* =========================
    INITIAL
-===================================================== */
+========================= */
 
 go("home");
 
