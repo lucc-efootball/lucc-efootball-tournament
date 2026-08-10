@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080a10">
+
 <title>LUCC eFootball</title>
 
 <style>
+
 :root{
  --bg:#070910;
  --card:#101520;
@@ -17,23 +20,41 @@
  --p:#735cff;
  --p2:#2ec5ff;
  --ok:#20c997;
- --bad:#ff5c7a
+ --bad:#ff5c7a;
 }
 
-*{box-sizing:border-box}
+*{
+ box-sizing:border-box;
+}
 
-html{scroll-behavior:smooth}
+html{
+ scroll-behavior:smooth;
+}
 
 body{
  margin:0;
- background:radial-gradient(circle at 15% 0,#211747 0,#070910 38%);
+ background:
+ radial-gradient(circle at 15% 0,#211747 0,#070910 38%),
+ #070910;
  color:var(--txt);
- font-family:system-ui,-apple-system,Segoe UI,sans-serif
+ font-family:system-ui,-apple-system,Segoe UI,sans-serif;
 }
 
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
+button,
+input,
+textarea,
+select{
+ font:inherit;
+}
+
+button{
+ cursor:pointer;
+}
+
+a{
+ text-decoration:none;
+ color:inherit;
+}
 
 header{
  position:sticky;
@@ -41,7 +62,7 @@ header{
  z-index:30;
  background:#080a10e8;
  backdrop-filter:blur(18px);
- border-bottom:1px solid #ffffff0d
+ border-bottom:1px solid #ffffff0d;
 }
 
 .bar{
@@ -51,7 +72,7 @@ header{
  padding:0 15px;
  display:flex;
  align-items:center;
- gap:10px
+ gap:10px;
 }
 
 .brand{
@@ -59,7 +80,7 @@ header{
  font-size:20px;
  display:flex;
  align-items:center;
- gap:9px
+ gap:9px;
 }
 
 .logo{
@@ -69,14 +90,15 @@ header{
  display:grid;
  place-items:center;
  background:linear-gradient(135deg,var(--p),var(--p2));
- font-size:22px
+ font-size:22px;
+ box-shadow:0 0 25px #735cff44;
 }
 
 .nav{
  margin-left:auto;
  display:flex;
  gap:3px;
- align-items:center
+ align-items:center;
 }
 
 .nav button{
@@ -84,13 +106,13 @@ header{
  background:transparent;
  color:var(--muted);
  padding:10px 11px;
- border-radius:12px
+ border-radius:12px;
 }
 
 .nav button:hover,
 .nav button.active{
  background:#ffffff0a;
- color:#fff
+ color:#fff;
 }
 
 .menu{
@@ -101,17 +123,22 @@ header{
  color:#fff;
  border-radius:13px;
  padding:9px 12px;
- font-size:20px
+ font-size:20px;
 }
 
 main{
  max-width:1150px;
  margin:auto;
- padding:25px 15px 100px
+ padding:25px 15px 100px;
 }
 
-.page{display:none}
-.page.active{display:block}
+.page{
+ display:none;
+}
+
+.page.active{
+ display:block;
+}
 
 .hero{
  min-height:450px;
@@ -120,11 +147,17 @@ main{
  padding:40px;
  display:flex;
  align-items:center;
- background:linear-gradient(120deg,#17102d,#101823 65%,#071018);
- overflow:hidden
+ background:
+ radial-gradient(circle at 90% 20%,#2ec5ff15,transparent 30%),
+ radial-gradient(circle at 70% 80%,#735cff22,transparent 35%),
+ linear-gradient(120deg,#17102d,#101823 65%,#071018);
+ overflow:hidden;
+ box-shadow:0 25px 70px #0006;
 }
 
-.hero>div{max-width:720px}
+.hero>div{
+ max-width:720px;
+}
 
 .tag{
  display:inline-block;
@@ -134,25 +167,35 @@ main{
  padding:8px 12px;
  border-radius:999px;
  font-size:12px;
- font-weight:900
+ font-weight:900;
 }
 
 h1{
  font-size:clamp(45px,8vw,78px);
  line-height:.95;
  letter-spacing:-4px;
- margin:18px 0
+ margin:18px 0;
 }
 
-h2{margin:0 0 7px;font-size:31px}
-h3{margin:0 0 7px}
-p{color:var(--muted);line-height:1.6}
+h2{
+ margin:0 0 7px;
+ font-size:31px;
+}
+
+h3{
+ margin:0 0 7px;
+}
+
+p{
+ color:var(--muted);
+ line-height:1.6;
+}
 
 .actions{
  display:flex;
  flex-wrap:wrap;
  gap:9px;
- margin-top:20px
+ margin-top:20px;
 }
 
 .btn{
@@ -161,24 +204,31 @@ p{color:var(--muted);line-height:1.6}
  color:#fff;
  padding:11px 15px;
  border-radius:13px;
- font-weight:800
+ font-weight:800;
+ transition:.18s;
+}
+
+.btn:hover{
+ transform:translateY(-1px);
+ border-color:#ffffff22;
 }
 
 .primary{
  background:linear-gradient(135deg,var(--p),#5140dd);
- border:0
+ border:0;
+ box-shadow:0 8px 25px #735cff2b;
 }
 
 .danger{
  color:#ff9aac;
  background:#ff5c7a12;
- border-color:#ff5c7a44
+ border-color:#ff5c7a44;
 }
 
 .ok{
  color:#62e1b3;
  background:#20c99712;
- border-color:#20c99744
+ border-color:#20c99744;
 }
 
 .head{
@@ -186,67 +236,81 @@ p{color:var(--muted);line-height:1.6}
  justify-content:space-between;
  align-items:end;
  gap:10px;
- margin:35px 0 15px
+ margin:35px 0 15px;
 }
 
 .grid{
  display:grid;
  grid-template-columns:repeat(3,1fr);
- gap:13px
+ gap:13px;
 }
 
 .grid2{
  display:grid;
  grid-template-columns:repeat(2,1fr);
- gap:13px
+ gap:13px;
 }
 
 .card{
- background:linear-gradient(180deg,#121822,#0e1219);
+ background:
+ linear-gradient(180deg,#121822,#0e1219);
  border:1px solid var(--line);
  border-radius:20px;
- padding:18px
+ padding:18px;
+ box-shadow:0 10px 35px #0003;
 }
 
 .stat{
  font-size:34px;
- font-weight:900
+ font-weight:900;
 }
 
-.muted{color:var(--muted)}
-.small{font-size:12px}
+.muted{
+ color:var(--muted);
+}
+
+.small{
+ font-size:12px;
+}
 
 .form{
  max-width:720px;
- margin:auto
+ margin:auto;
 }
 
-.field{margin:12px 0}
+.field{
+ margin:12px 0;
+}
 
 .field label{
  display:block;
  font-size:13px;
  font-weight:800;
  color:#cbd3df;
- margin-bottom:6px
+ margin-bottom:6px;
 }
 
-input,textarea,select{
+input,
+textarea,
+select{
  width:100%;
  background:#080b11;
  border:1px solid var(--line);
  border-radius:12px;
  padding:12px;
  color:#fff;
- outline:0
+ outline:0;
 }
 
-textarea{min-height:110px}
+textarea{
+ min-height:110px;
+}
 
 input:focus,
 textarea:focus,
 select:focus{
- border-color:#735cff88
+ border-color:#735cff88;
+ box-shadow:0 0 0 3px #735cff10;
 }
 
 .notice{
@@ -254,23 +318,23 @@ select:focus{
  padding:12px 14px;
  border-radius:12px;
  background:#ffffff08;
- border:1px solid var(--line)
+ border:1px solid var(--line);
 }
 
 .error{
  color:#ff9aad;
- background:#ff5c7a12
+ background:#ff5c7a12;
 }
 
 .success{
  color:#70e5b8;
- background:#20c99712
+ background:#20c99712;
 }
 
 .player{
  display:flex;
  align-items:center;
- gap:12px
+ gap:12px;
 }
 
 .avatar{
@@ -279,13 +343,13 @@ select:focus{
  object-fit:cover;
  border-radius:17px;
  background:#1b2130;
- border:1px solid var(--line)
+ border:1px solid var(--line);
 }
 
 .avatar.big{
  width:90px;
  height:90px;
- border-radius:25px
+ border-radius:25px;
 }
 
 .badge{
@@ -295,12 +359,12 @@ select:focus{
  background:#ffffff0b;
  color:#b9c2d0;
  font-size:11px;
- font-weight:800
+ font-weight:800;
 }
 
 .list{
  display:grid;
- gap:10px
+ gap:10px;
 }
 
 .row{
@@ -311,7 +375,7 @@ select:focus{
  padding:13px;
  border:1px solid var(--line);
  background:#0b0e14;
- border-radius:15px
+ border-radius:15px;
 }
 
 .empty{
@@ -319,45 +383,239 @@ select:focus{
  padding:35px;
  border:1px dashed var(--line);
  border-radius:18px;
- color:var(--muted)
+ color:var(--muted);
 }
 
-.search{margin-bottom:14px}
-
-.clickable{cursor:pointer}
-
-.clickable:hover{
- border-color:#735cff66
+.search{
+ margin-bottom:14px;
 }
 
-.statgrid{
+.clickable{
+ cursor:pointer;
+}
+
+/* =========================
+   GAMING PLAYER CARD
+========================= */
+
+.player-card{
+ position:relative;
+ overflow:hidden;
+ background:
+  radial-gradient(circle at 100% 0,#735cff22,transparent 35%),
+  radial-gradient(circle at 0 100%,#2ec5ff14,transparent 35%),
+  linear-gradient(145deg,#151b28,#090d14);
+ border:1px solid #343d52;
+ border-radius:22px;
+ padding:17px;
+ transition:.22s ease;
+ box-shadow:0 12px 35px #0005;
+}
+
+.player-card::before{
+ content:"";
+ position:absolute;
+ left:0;
+ top:0;
+ width:100%;
+ height:3px;
+ background:linear-gradient(90deg,#735cff,#2ec5ff);
+}
+
+.player-card:hover{
+ transform:translateY(-4px);
+ border-color:#735cff88;
+ box-shadow:
+  0 18px 45px #0008,
+  0 0 25px #735cff18;
+}
+
+.player-card .avatar{
+ width:68px;
+ height:68px;
+ border-radius:20px;
+ border:2px solid #735cff66;
+ box-shadow:0 0 20px #735cff22;
+}
+
+.player-name{
+ font-size:19px;
+ font-weight:900;
+ letter-spacing:-.3px;
+}
+
+.player-uid{
+ color:#8f9bad;
+ font-size:11px;
+ margin-top:3px;
+}
+
+.player-stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ margin-top:14px;
+}
+
+.player-stat{
+ background:#080c13;
+ border:1px solid #252d3b;
+ border-radius:12px;
+ padding:9px;
+ text-align:center;
+}
+
+.player-stat b{
+ display:block;
+ font-size:17px;
+ color:#fff;
+}
+
+.player-stat span{
+ font-size:9px;
+ color:#7f8a9d;
+ text-transform:uppercase;
+ letter-spacing:.5px;
+}
+
+/* =========================
+   PROFILE GAMING CARD
+========================= */
+
+.profile-card{
+ position:relative;
+ overflow:hidden;
+ background:
+  radial-gradient(circle at 90% 0,#735cff28,transparent 32%),
+  radial-gradient(circle at 0 100%,#2ec5ff18,transparent 32%),
+  linear-gradient(145deg,#171d2b,#090d14);
+ border:1px solid #343d52;
+ border-radius:26px;
+ padding:22px;
+ box-shadow:
+  0 20px 60px #0007,
+  inset 0 1px #ffffff0a;
+}
+
+.profile-card::after{
+ content:"";
+ position:absolute;
+ width:180px;
+ height:180px;
+ right:-90px;
+ top:-90px;
+ border-radius:50%;
+ border:1px solid #735cff44;
+ box-shadow:0 0 50px #735cff22;
+}
+
+.profile-top{
+ display:flex;
+ align-items:center;
+ gap:16px;
+ position:relative;
+ z-index:2;
+}
+
+.profile-avatar{
+ width:105px;
+ height:105px;
+ border-radius:28px;
+ object-fit:cover;
+ border:2px solid #735cff77;
+ background:#101622;
+ box-shadow:
+  0 0 30px #735cff22,
+  0 8px 30px #0007;
+}
+
+.profile-name{
+ font-size:30px;
+ font-weight:950;
+ letter-spacing:-1px;
+}
+
+.profile-role{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+ margin-top:6px;
+ padding:5px 10px;
+ border-radius:999px;
+ background:#735cff18;
+ border:1px solid #735cff44;
+ color:#b9aeff;
+ font-size:10px;
+ font-weight:900;
+}
+
+.profile-stats{
  display:grid;
  grid-template-columns:repeat(4,1fr);
- gap:10px;
- margin-top:15px
+ gap:9px;
+ margin-top:20px;
+ position:relative;
+ z-index:2;
 }
 
-.statbox{
- background:#0b0f15;
- border:1px solid var(--line);
+.profile-stat{
+ background:#080c13;
+ border:1px solid #252d3b;
  border-radius:15px;
- padding:13px
+ padding:12px;
+ text-align:center;
 }
 
-.statbox b{font-size:25px}
+.profile-stat b{
+ display:block;
+ font-size:24px;
+}
+
+.profile-stat span{
+ color:#7f8a9d;
+ font-size:10px;
+ text-transform:uppercase;
+}
+
+.profile-info{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+ margin-top:16px;
+}
+
+.profile-info-box{
+ background:#0a0e15;
+ border:1px solid #252d3b;
+ border-radius:14px;
+ padding:12px;
+}
+
+.profile-info-box span{
+ color:#7f8a9d;
+ font-size:11px;
+ display:block;
+ margin-bottom:3px;
+}
+
+/* =========================
+   ADMIN
+========================= */
 
 .admin{
- background:linear-gradient(180deg,#17122b,#11151d);
+ background:
+  radial-gradient(circle at 100% 0,#735cff18,transparent 35%),
+  linear-gradient(180deg,#17122b,#11151d);
  border:1px solid #735cff55;
  border-radius:22px;
- padding:17px
+ padding:17px;
 }
 
 .tabs{
  display:flex;
  gap:7px;
  overflow:auto;
- margin:15px 0
+ margin:15px 0;
 }
 
 .tab{
@@ -366,13 +624,13 @@ select:focus{
  background:#0d1016;
  color:var(--muted);
  padding:9px 12px;
- border-radius:999px
+ border-radius:999px;
 }
 
 .tab.active{
  color:#fff;
  border-color:#735cff66;
- background:#735cff18
+ background:#735cff18;
 }
 
 .modal{
@@ -383,10 +641,12 @@ select:focus{
  display:none;
  align-items:center;
  justify-content:center;
- padding:15px
+ padding:15px;
 }
 
-.modal.show{display:flex}
+.modal.show{
+ display:flex;
+}
 
 .modalbox{
  width:min(620px,100%);
@@ -395,7 +655,8 @@ select:focus{
  background:#12161e;
  border:1px solid var(--line);
  border-radius:22px;
- padding:18px
+ padding:18px;
+ box-shadow:0 30px 100px #000;
 }
 
 .loader{
@@ -404,10 +665,12 @@ select:focus{
  background:#080a0fee;
  z-index:200;
  display:grid;
- place-items:center
+ place-items:center;
 }
 
-.loader.off{display:none}
+.loader.off{
+ display:none;
+}
 
 .spin{
  width:40px;
@@ -415,28 +678,34 @@ select:focus{
  border:4px solid #ffffff18;
  border-top-color:#8d7fff;
  border-radius:50%;
- animation:s .8s linear infinite
+ animation:s .8s linear infinite;
 }
 
 @keyframes s{
- to{transform:rotate(360deg)}
+ to{
+  transform:rotate(360deg);
+ }
 }
 
 footer{
  text-align:center;
  color:#687181;
  font-size:12px;
- padding:25px
+ padding:25px;
 }
 
-.bottom{display:none}
+.bottom{
+ display:none;
+}
 
 @media(max-width:800px){
 
- .nav{display:none}
+ .nav{
+  display:none;
+ }
 
  .menu{
-  display:block
+  display:block;
  }
 
  .bottom{
@@ -450,7 +719,7 @@ footer{
   backdrop-filter:blur(18px);
   border-top:1px solid var(--line);
   justify-content:space-around;
-  padding:6px 3px calc(6px + env(safe-area-inset-bottom))
+  padding:6px 3px calc(6px + env(safe-area-inset-bottom));
  }
 
  .bottom button{
@@ -458,33 +727,52 @@ footer{
   padding:6px;
   border:0;
   background:transparent;
-  color:var(--muted)
+  color:var(--muted);
  }
 
  .bottom b{
   display:block;
-  font-size:17px
+  font-size:17px;
  }
 
  .grid,
  .grid2{
-  grid-template-columns:1fr
+  grid-template-columns:1fr;
  }
 
  .statgrid{
-  grid-template-columns:repeat(2,1fr)
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .profile-stats{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .profile-info{
+  grid-template-columns:1fr;
  }
 
  .hero{
   padding:27px;
-  min-height:430px
+  min-height:430px;
  }
 
  main{
   padding-left:12px;
-  padding-right:12px
+  padding-right:12px;
  }
+
+ .profile-avatar{
+  width:82px;
+  height:82px;
+ }
+
+ .profile-name{
+  font-size:24px;
+ }
+
 }
+
 </style>
 </head>
 
@@ -495,67 +783,77 @@ footer{
 </div>
 
 <header>
+
 <div class="bar">
 
-<a class="brand"
-   href="#home"
-   onclick="go('home')">
+<a
+ class="brand"
+ href="#home"
+ onclick="go('home')">
+
  <span class="logo">⚽</span>
+
  LUCC eFootball
+
 </a>
 
 <nav class="nav">
 
-<button data-p="home"
+<button
+ data-p="home"
  onclick="go('home')">
  Home
 </button>
 
-<button data-p="tournament"
+<button
+ data-p="tournament"
  onclick="go('tournament')">
  Tournament
 </button>
 
-<button data-p="players"
+<button
+ data-p="players"
  onclick="go('players')">
  Players
 </button>
 
-<button data-p="results"
+<button
+ data-p="results"
  onclick="go('results')">
  Results
 </button>
 
-<button data-p="rules"
+<button
+ data-p="rules"
  onclick="go('rules')">
  Rules
 </button>
 
-<!-- LOGIN -->
-<button data-p="login"
+<button
+ data-p="login"
  id="loginNav"
  onclick="go('login')">
  Login
 </button>
 
-<!-- PROFILE -->
-<button data-p="profile"
+<button
+ data-p="profile"
  id="profileNav"
  style="display:none"
  onclick="go('profile')">
  Profile
 </button>
 
-<!-- ADMIN -->
-<button data-p="admin"
+<button
+ data-p="admin"
  id="adminNav"
  style="display:none"
  onclick="go('admin')">
  Admin
 </button>
 
-<!-- LOGOUT -->
-<button id="logoutNav"
+<button
+ id="logoutNav"
  style="display:none"
  onclick="logout()">
  Logout
@@ -563,20 +861,25 @@ footer{
 
 </nav>
 
-<button class="menu"
+<button
+ class="menu"
  onclick="toggleMobileMenu()">
  ☰
 </button>
 
 </div>
+
 </header>
 
 
 <main>
 
+
 <!-- HOME -->
 
-<section id="home" class="page active">
+<section
+ id="home"
+ class="page active">
 
 <div class="hero">
 
@@ -588,74 +891,124 @@ footer{
 
 <h1>
 LUCC<br>
-<span style="color:#8d7fff">eFootball</span>
+<span style="color:#8d7fff">
+eFootball
+</span>
 </h1>
 
 <p>
-Register, compete, follow fixtures,
-check results and climb the leaderboard.
+
+🔥 The tournament is starting very soon!
+
+Register now and get ready to compete,
+prove your skills and become the
+LUCC eFootball champion.
+
 </p>
 
 <div class="actions">
-
-<!-- REGISTER BUTTON ONLY LOGGED OUT -->
 
 <button
  id="homeRegisterBtn"
  class="btn primary"
  onclick="go('register')">
+
  🚀 Register Now
+
 </button>
 
 <button
  class="btn"
  onclick="go('login')">
+
  🔐 Login
+
 </button>
 
 <button
  class="btn"
  onclick="go('tournament')">
+
  🏆 Tournament
+
 </button>
 
 <button
  class="btn"
  onclick="go('rules')">
+
  📋 Rules
+
 </button>
 
 </div>
 
 </div>
+
 </div>
 
 
 <div class="head">
+
 <div>
-<h2>Live Overview</h2>
+
+<h2>
+Live Overview
+</h2>
+
 <p class="small">
 Tournament platform statistics
 </p>
+
 </div>
+
 </div>
 
 
 <div class="grid">
 
 <div class="card">
-<span class="muted">Players</span>
-<div class="stat" id="sp">—</div>
+
+<span class="muted">
+Players
+</span>
+
+<div
+ class="stat"
+ id="sp">
+ —
 </div>
 
-<div class="card">
-<span class="muted">Matches</span>
-<div class="stat" id="sr">—</div>
 </div>
 
+
 <div class="card">
-<span class="muted">Tournaments</span>
-<div class="stat" id="st">—</div>
+
+<span class="muted">
+Matches
+</span>
+
+<div
+ class="stat"
+ id="sr">
+ —
+</div>
+
+</div>
+
+
+<div class="card">
+
+<span class="muted">
+Tournaments
+</span>
+
+<div
+ class="stat"
+ id="st">
+ —
+</div>
+
 </div>
 
 </div>
@@ -665,14 +1018,26 @@ Tournament platform statistics
 
 <!-- REGISTER -->
 
-<section id="register" class="page">
+<section
+ id="register"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Player Registration</h2>
-<p>Create your tournament account.</p>
+
+<h2>
+Player Registration
+</h2>
+
+<p>
+Create your tournament account.
+</p>
+
 </div>
+
 </div>
+
 
 <div class="card form">
 
@@ -683,17 +1048,30 @@ Tournament platform statistics
 <div class="grid2">
 
 <div class="field">
-<label>Player Name *</label>
-<input id="name"
+
+<label>
+Player Name *
+</label>
+
+<input
+ id="name"
  required
  maxlength="60">
+
 </div>
 
+
 <div class="field">
-<label>Konami/eFootball UID *</label>
-<input id="uid"
+
+<label>
+Konami/eFootball UID *
+</label>
+
+<input
+ id="uid"
  required
  maxlength="60">
+
 </div>
 
 </div>
@@ -702,45 +1080,73 @@ Tournament platform statistics
 <div class="grid2">
 
 <div class="field">
-<label>Email *</label>
-<input id="email"
+
+<label>
+Email *
+</label>
+
+<input
+ id="email"
  type="email"
  required>
+
 </div>
 
+
 <div class="field">
-<label>Mobile</label>
+
+<label>
+Mobile
+</label>
+
 <input id="mobile">
+
 </div>
 
 </div>
 
 
 <div class="field">
-<label>Password *</label>
-<input id="pass"
+
+<label>
+Password *
+</label>
+
+<input
+ id="pass"
  type="password"
  minlength="6"
  required>
+
 </div>
 
 
 <div class="field">
-<label>Mobile/device model</label>
-<input id="device"
+
+<label>
+Mobile/device model
+</label>
+
+<input
+ id="device"
  placeholder="e.g. Pixel 7">
+
 </div>
 
 
 <div class="field">
 
-<label>Avatar</label>
+<label>
+Avatar
+</label>
 
-<input id="avatar"
+<input
+ id="avatar"
  type="file"
  accept="image/*">
 
-<img id="preview"
+<img
+ id="preview"
  class="avatar big"
  style="display:none;margin-top:8px">
 
@@ -751,19 +1157,26 @@ Tournament platform statistics
  id="regBtn"
  class="btn primary"
  type="submit">
+
  Create Account
+
 </button>
 
 </form>
 
 
 <p class="small">
+
 Already registered?
 
-<a onclick="go('login')"
-style="color:#a79cff;cursor:pointer">
-Login
+<a
+ onclick="go('login')"
+ style="color:#a79cff;cursor:pointer">
+
+ Login
+
 </a>
+
 </p>
 
 </div>
@@ -773,13 +1186,24 @@ Login
 
 <!-- LOGIN -->
 
-<section id="login" class="page">
+<section
+ id="login"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Login</h2>
-<p>Player and admin login.</p>
+
+<h2>
+Login
+</h2>
+
+<p>
+Player and admin login.
+</p>
+
 </div>
+
 </div>
 
 
@@ -790,35 +1214,57 @@ Login
 <form id="signin">
 
 <div class="field">
-<label>Email</label>
-<input id="lemail"
+
+<label>
+Email
+</label>
+
+<input
+ id="lemail"
  type="email"
  required>
+
 </div>
 
+
 <div class="field">
-<label>Password</label>
-<input id="lpass"
+
+<label>
+Password
+</label>
+
+<input
+ id="lpass"
  type="password"
  required>
+
 </div>
+
 
 <button
  id="loginBtn"
  class="btn primary"
  type="submit">
+
  Login
+
 </button>
 
 </form>
 
+
 <p class="small">
+
 Don't have an account?
 
-<a onclick="go('register')"
-style="color:#a79cff;cursor:pointer">
-Register
+<a
+ onclick="go('register')"
+ style="color:#a79cff;cursor:pointer">
+
+ Register
+
 </a>
+
 </p>
 
 </div>
@@ -828,16 +1274,26 @@ Register
 
 <!-- PLAYERS -->
 
-<section id="players" class="page">
+<section
+ id="players"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Players</h2>
+
+<h2>
+Players
+</h2>
+
 <p>
 Search and open any player profile.
 </p>
+
 </div>
+
 </div>
+
 
 <div class="search">
 
@@ -848,41 +1304,68 @@ Search and open any player profile.
 
 </div>
 
-<div id="plist"
- class="grid"></div>
+
+<div
+ id="plist"
+ class="grid">
+</div>
 
 </section>
 
 
 <!-- RULES -->
 
-<section id="rules" class="page">
+<section
+ id="rules"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Tournament Rules</h2>
-<p>Rules every player must follow.</p>
-</div>
+
+<h2>
+Tournament Rules
+</h2>
+
+<p>
+Rules every player must follow.
+</p>
+
 </div>
 
-<div id="rul"
- class="grid2"></div>
+</div>
+
+
+<div
+ id="rul"
+ class="grid2">
+</div>
 
 </section>
 
 
 <!-- TOURNAMENT -->
 
-<section id="tournament" class="page">
+<section
+ id="tournament"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Tournament</h2>
+
+<h2>
+Tournament
+</h2>
+
 <p>
 Fixtures, schedule and tournament information.
 </p>
+
 </div>
+
 </div>
+
 
 <div id="tour"></div>
 
@@ -891,35 +1374,61 @@ Fixtures, schedule and tournament information.
 
 <!-- RESULTS -->
 
-<section id="results" class="page">
+<section
+ id="results"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Results & Leaderboard</h2>
-<p>Published match results.</p>
+
+<h2>
+Results & Leaderboard
+</h2>
+
+<p>
+Published match results.
+</p>
+
 </div>
+
 </div>
+
 
 <div id="leader"></div>
 
 <br>
 
-<div id="res"
- class="list"></div>
+<div
+ id="res"
+ class="list">
+</div>
 
 </section>
 
 
 <!-- PROFILE -->
 
-<section id="profile" class="page">
+<section
+ id="profile"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>My Profile</h2>
-<p>Your account dashboard.</p>
+
+<h2>
+My Profile
+</h2>
+
+<p>
+Your account dashboard.
+</p>
+
 </div>
+
 </div>
+
 
 <div id="prof"></div>
 
@@ -928,50 +1437,68 @@ Fixtures, schedule and tournament information.
 
 <!-- ADMIN -->
 
-<section id="admin" class="page">
+<section
+ id="admin"
+ class="page">
 
 <div class="head">
+
 <div>
-<h2>Admin Panel</h2>
+
+<h2>
+Admin Panel
+</h2>
+
 <p>
 Manage tournament and players.
 </p>
+
 </div>
+
 </div>
+
 
 <div id="aguard"></div>
 
-<div id="acont"
+
+<div
+ id="acont"
  style="display:none">
 
 <div class="tabs">
 
-<button class="tab active"
+<button
+ class="tab active"
  onclick="atab('players',this)">
  Players
 </button>
 
-<button class="tab"
+<button
+ class="tab"
  onclick="atab('tournaments',this)">
  Tournament
 </button>
 
-<button class="tab"
+<button
+ class="tab"
  onclick="atab('fixtures',this)">
  Fixtures
 </button>
 
-<button class="tab"
+<button
+ class="tab"
  onclick="atab('results',this)">
  Results
 </button>
 
-<button class="tab"
+<button
+ class="tab"
  onclick="atab('rules',this)">
  Rules
 </button>
 
 </div>
+
 
 <div id="apanel"></div>
 
@@ -981,13 +1508,13 @@ Manage tournament and players.
 
 
 <footer>
-LUCC eFootball
+LUCC eFootball • Built for competitive gaming
 </footer>
 
 </main>
 
 
-<!-- MOBILE BOTTOM -->
+<!-- MOBILE -->
 
 <nav class="bottom">
 
@@ -1021,7 +1548,8 @@ Profile
 
 <!-- MODAL -->
 
-<div id="modal"
+<div
+ id="modal"
  class="modal">
 
 <div class="modalbox">
@@ -1030,7 +1558,9 @@ Profile
  class="btn"
  style="float:right"
  onclick="closeModal()">
+
  ✕
+
 </button>
 
 <div id="mc"></div>
@@ -1042,13 +1572,19 @@ Profile
 
 <script type="module">
 
-import{
+
+/* =========================
+   FIREBASE IMPORTS
+========================= */
+
+import {
  initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-import{
+
+import {
  getAuth,
  createUserWithEmailAndPassword,
  signInWithEmailAndPassword,
@@ -1059,7 +1595,8 @@ import{
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-import{
+
+import {
  getFirestore,
  doc,
  getDoc,
@@ -1075,7 +1612,9 @@ from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
-/* FIREBASE */
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig={
 
@@ -1113,8 +1652,18 @@ const db=
 getFirestore(app);
 
 
+/* =========================
+   ADMIN
+========================= */
+
+const ADMIN_EMAIL=
+"hrpteam333@gmail.com";
+
+
 let currentUser=null;
+
 let profile=null;
+
 
 let D={
  players:[],
@@ -1125,7 +1674,9 @@ let D={
 };
 
 
-/* HELPERS */
+/* =========================
+   HELPERS
+========================= */
 
 const $=
 id=>document.getElementById(id);
@@ -1144,12 +1695,15 @@ String(x??"")
 
 function note(id,text,ok=false){
 
- if(!$(id))return;
+ if(!$(id))
+  return;
 
  $(id).innerHTML=
- `<div class="notice ${ok?"success":"error"}">
+ `
+ <div class="notice ${ok?"success":"error"}">
  ${esc(text)}
- </div>`;
+ </div>
+ `;
 
 }
 
@@ -1177,7 +1731,10 @@ function firebaseError(e){
  "Wrong password.",
 
  "auth/network-request-failed":
- "Network error. Check your internet connection."
+ "Network error. Check your internet connection.",
+
+ "permission-denied":
+ "You do not have permission for this action."
 
  };
 
@@ -1188,7 +1745,26 @@ function firebaseError(e){
 }
 
 
-/* NAVIGATION */
+/* =========================
+   ADMIN CHECK
+========================= */
+
+function isAdmin(){
+
+ return !!currentUser &&
+ (
+   currentUser.email?.toLowerCase()===
+   ADMIN_EMAIL.toLowerCase()
+   ||
+   profile?.role==="admin"
+ );
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
 
 window.go=p=>{
 
@@ -1197,6 +1773,7 @@ window.go=p=>{
  .forEach(x=>
   x.classList.remove("active")
  );
+
 
  if($(p))
   $(p).classList.add("active");
@@ -1218,17 +1795,22 @@ window.go=p=>{
  if(p==="players")
   renderPlayers();
 
+
  if(p==="results")
   renderResults();
+
 
  if(p==="rules")
   renderRules();
 
+
  if(p==="tournament")
   renderTournament();
 
+
  if(p==="profile")
   renderProfile();
+
 
  if(p==="admin")
   admin();
@@ -1236,21 +1818,25 @@ window.go=p=>{
 };
 
 
-/* MOBILE MENU */
+/* =========================
+   MOBILE MENU
+========================= */
 
 window.toggleMobileMenu=()=>{
 
  if(currentUser)
   go("profile");
+
  else
   go("login");
 
 };
 
 
-/* IMAGE -> BASE64
-   NO FIREBASE STORAGE
-*/
+/* =========================
+   IMAGE COMPRESS
+   NO STORAGE
+========================= */
 
 function compressImage(file){
 
@@ -1261,20 +1847,26 @@ function compressImage(file){
    return;
   }
 
+
   if(!file.type.startsWith("image/")){
+
    reject(
     new Error("Please select an image.")
    );
+
    return;
   }
 
+
   const reader=
   new FileReader();
+
 
   reader.onload=()=>{
 
    const img=
    new Image();
+
 
    img.onload=()=>{
 
@@ -1282,6 +1874,7 @@ function compressImage(file){
     let h=img.height;
 
     const max=500;
+
 
     if(w>max||h>max){
 
@@ -1296,14 +1889,18 @@ function compressImage(file){
 
     }
 
+
     const canvas=
     document.createElement("canvas");
+
 
     canvas.width=w;
     canvas.height=h;
 
+
     const ctx=
     canvas.getContext("2d");
+
 
     ctx.drawImage(
      img,
@@ -1313,32 +1910,42 @@ function compressImage(file){
      h
     );
 
+
     const data=
     canvas.toDataURL(
      "image/jpeg",
      .70
     );
 
+
     resolve(data);
 
    };
 
+
    img.onerror=()=>{
+
     reject(
      new Error("Could not read image.")
     );
+
    };
+
 
    img.src=
    reader.result;
 
   };
 
+
   reader.onerror=()=>{
+
    reject(
     new Error("Image reading failed.")
    );
+
   };
+
 
   reader.readAsDataURL(file);
 
@@ -1347,7 +1954,9 @@ function compressImage(file){
 }
 
 
-/* IMAGE PREVIEW */
+/* =========================
+   AVATAR PREVIEW
+========================= */
 
 $("avatar").onchange=async e=>{
 
@@ -1358,12 +1967,16 @@ $("avatar").onchange=async e=>{
    e.target.files[0]
   );
 
-  if(!data)return;
+
+  if(!data)
+   return;
+
 
   $("preview").src=data;
 
   $("preview").style.display=
   "block";
+
 
  }catch(error){
 
@@ -1377,18 +1990,24 @@ $("avatar").onchange=async e=>{
 };
 
 
-/* REGISTRATION */
+/* =========================
+   REGISTRATION
+========================= */
 
 $("reg").onsubmit=async e=>{
 
  e.preventDefault();
 
+
  const btn=
  $("regBtn");
 
+
  btn.disabled=true;
+
  btn.textContent=
  "Creating account...";
+
 
  note(
   "regmsg",
@@ -1402,25 +2021,33 @@ $("reg").onsubmit=async e=>{
   const name=
   $("name").value.trim();
 
+
   const konamiUid=
   $("uid").value.trim();
+
 
   const email=
   $("email").value.trim();
 
+
   const mobile=
   $("mobile").value.trim();
+
 
   const device=
   $("device").value.trim()||
   "Not specified";
 
 
+  const password=
+  $("pass").value;
+
+
   if(
    !name||
    !konamiUid||
    !email||
-   !$("pass").value
+   !password
   ){
 
    throw new Error(
@@ -1430,13 +2057,13 @@ $("reg").onsubmit=async e=>{
   }
 
 
-  /* CREATE AUTH */
+  /* AUTH */
 
   const result=
   await createUserWithEmailAndPassword(
    auth,
    email,
-   $("pass").value
+   password
   );
 
 
@@ -1454,12 +2081,14 @@ $("reg").onsubmit=async e=>{
   );
 
 
-  /* AVATAR */
+  /* AVATAR BASE64 */
 
   let avatarUrl="";
 
+
   const avatarFile=
   $("avatar").files[0];
+
 
   if(avatarFile){
 
@@ -1473,7 +2102,7 @@ $("reg").onsubmit=async e=>{
    }catch(error){
 
     console.warn(
-     "Avatar failed",
+     "Avatar failed:",
      error
     );
 
@@ -1536,6 +2165,7 @@ $("reg").onsubmit=async e=>{
 
   $("reg").reset();
 
+
   $("preview").style.display=
   "none";
 
@@ -1560,6 +2190,7 @@ $("reg").onsubmit=async e=>{
    firebaseError(error)
   );
 
+
  }finally{
 
   btn.disabled=false;
@@ -1572,19 +2203,24 @@ $("reg").onsubmit=async e=>{
 };
 
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 $("signin").onsubmit=async e=>{
 
  e.preventDefault();
 
+
  const btn=
  $("loginBtn");
+
 
  btn.disabled=true;
 
  btn.textContent=
  "Signing in...";
+
 
  note(
   "loginmsg",
@@ -1612,11 +2248,6 @@ $("signin").onsubmit=async e=>{
   );
 
 
-  /*
-   AUTH STATE WILL ALSO RUN.
-   PROFILE BUTTON WILL APPEAR.
-  */
-
   go("profile");
 
 
@@ -1626,6 +2257,7 @@ $("signin").onsubmit=async e=>{
    "loginmsg",
    firebaseError(error)
   );
+
 
  }finally{
 
@@ -1639,7 +2271,9 @@ $("signin").onsubmit=async e=>{
 };
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 window.logout=async()=>{
 
@@ -1651,9 +2285,10 @@ window.logout=async()=>{
 
   currentUser=null;
 
+  updateNav();
+
   go("home");
 
-  updateNav();
 
  }catch(error){
 
@@ -1666,7 +2301,9 @@ window.logout=async()=>{
 };
 
 
-/* NAV UI */
+/* =========================
+   NAV UI
+========================= */
 
 function updateNav(){
 
@@ -1675,20 +2312,22 @@ function updateNav(){
   $("loginNav").style.display=
   "none";
 
+
   $("profileNav").style.display=
   "inline-block";
+
 
   $("logoutNav").style.display=
   "inline-block";
 
 
   $("adminNav").style.display=
-  profile?.role==="admin"
+  isAdmin()
   ?"inline-block"
   :"none";
 
 
-  /* HIDE REGISTER FROM HOME */
+  /* HIDE REGISTER */
 
   $("homeRegisterBtn").style.display=
   "none";
@@ -1699,11 +2338,14 @@ function updateNav(){
   $("loginNav").style.display=
   "inline-block";
 
+
   $("profileNav").style.display=
   "none";
 
+
   $("logoutNav").style.display=
   "none";
+
 
   $("adminNav").style.display=
   "none";
@@ -1719,7 +2361,9 @@ function updateNav(){
 }
 
 
-/* AUTH STATE */
+/* =========================
+   AUTH STATE
+========================= */
 
 onAuthStateChanged(
  auth,
@@ -1760,11 +2404,18 @@ onAuthStateChanged(
       email:
       user.email,
 
-      role:"user"
+      role:
+      user.email?.toLowerCase()===
+      ADMIN_EMAIL.toLowerCase()
+      ?
+      "admin"
+      :
+      "user"
 
      };
 
     }
+
 
    }catch(error){
 
@@ -1785,7 +2436,13 @@ onAuthStateChanged(
      email:
      user.email,
 
-     role:"user"
+     role:
+     user.email?.toLowerCase()===
+     ADMIN_EMAIL.toLowerCase()
+     ?
+     "admin"
+     :
+     "user"
 
     };
 
@@ -1801,6 +2458,7 @@ onAuthStateChanged(
 
   updateNav();
 
+
   $("loader")
    .classList
    .add("off");
@@ -1809,16 +2467,9 @@ onAuthStateChanged(
   await load();
 
 
-  /*
-   If already logged in and
-   current page is profile,
-   refresh profile.
-  */
-
   if(
    user &&
-   document
-   .getElementById("profile")
+   $("profile")
    .classList
    .contains("active")
   ){
@@ -1830,7 +2481,9 @@ onAuthStateChanged(
  });
 
 
-/* FIRESTORE COLLECTION LOAD */
+/* =========================
+   FIRESTORE COLLECTION
+========================= */
 
 async function col(name){
 
@@ -1870,21 +2523,27 @@ async function col(name){
 }
 
 
-/* LOAD EVERYTHING */
+/* =========================
+   LOAD DATA
+========================= */
 
 async function load(){
 
  D.players=
   await col("players");
 
+
  D.results=
   await col("results");
+
 
  D.tournaments=
   await col("tournaments");
 
+
  D.rules=
   await col("rules");
+
 
  D.fixtures=
   await col("fixtures");
@@ -1904,15 +2563,21 @@ async function load(){
 
 
  renderPlayers();
+
  renderResults();
+
  renderRules();
+
  renderTournament();
+
  renderProfile();
 
 }
 
 
-/* PLAYER STATS */
+/* =========================
+   PLAYER STATS
+========================= */
 
 function playerStats(id){
 
@@ -1925,7 +2590,9 @@ function playerStats(id){
 
 
  let wins=0;
+
  let losses=0;
+
  let draws=0;
 
  const history=[];
@@ -1956,8 +2623,10 @@ function playerStats(id){
   if(mine>opponentScore)
    wins++;
 
+
   else if(mine<opponentScore)
    losses++;
+
 
   else
    draws++;
@@ -2010,7 +2679,9 @@ function playerStats(id){
 }
 
 
-/* PLAYER LIST */
+/* =========================
+   PLAYER LIST
+========================= */
 
 window.renderPlayers=()=>{
 
@@ -2036,7 +2707,9 @@ window.renderPlayers=()=>{
  $("plist").innerHTML=
  players.length
 
- ?players.map(p=>{
+ ?
+
+ players.map(p=>{
 
   const s=
   playerStats(p.id);
@@ -2045,7 +2718,7 @@ window.renderPlayers=()=>{
   return `
 
   <div
-   class="card clickable"
+   class="player-card clickable"
    onclick="openPlayer('${p.id}')">
 
    <div class="player">
@@ -2056,22 +2729,36 @@ window.renderPlayers=()=>{
      `<img
        class="avatar"
        src="${esc(p.avatarUrl)}"
-       alt="Avatar">`
+       alt="Player Avatar">`
+
      :
-     `<div class="avatar"
-       style="display:grid;place-items:center">
-       👤
+
+     `<div
+       class="avatar"
+       style="
+        display:grid;
+        place-items:center;
+        font-size:28px">
+
+       ⚽
+
       </div>`
     }
 
+
     <div>
 
-     <h3>
+     <div class="player-name">
       ${esc(p.name)}
-     </h3>
+     </div>
+
+     <div class="player-uid">
+      eFootball UID:
+      ${esc(p.konamiUid)}
+     </div>
 
      <span class="badge">
-      UID ${esc(p.konamiUid)}
+      🎮 PLAYER
      </span>
 
     </div>
@@ -2079,17 +2766,24 @@ window.renderPlayers=()=>{
    </div>
 
 
-   <p class="small">
+   <div class="player-stats">
 
-    Played ${s.played}
-    •
-    W ${s.wins}
-    •
-    L ${s.losses}
-    •
-    WR ${s.winRate}%
+    <div class="player-stat">
+     <b>${s.played}</b>
+     <span>Played</span>
+    </div>
 
-   </p>
+    <div class="player-stat">
+     <b>${s.wins}</b>
+     <span>Wins</span>
+    </div>
+
+    <div class="player-stat">
+     <b>${s.winRate}%</b>
+     <span>Win Rate</span>
+    </div>
+
+   </div>
 
   </div>
 
@@ -2097,7 +2791,9 @@ window.renderPlayers=()=>{
 
  }).join("")
 
- :`
+ :
+
+ `
 
  <div class="empty">
   No player found.
@@ -2108,7 +2804,9 @@ window.renderPlayers=()=>{
 };
 
 
-/* PLAYER PROFILE MODAL */
+/* =========================
+   PLAYER PROFILE MODAL
+========================= */
 
 window.openPlayer=id=>{
 
@@ -2118,7 +2816,8 @@ window.openPlayer=id=>{
  );
 
 
- if(!p)return;
+ if(!p)
+  return;
 
 
  const s=
@@ -2127,79 +2826,118 @@ window.openPlayer=id=>{
 
  $("mc").innerHTML=`
 
- <div class="player">
+ <div class="profile-card">
 
-  ${
-   p.avatarUrl
-   ?
-   `<img
-     class="avatar big"
-     src="${esc(p.avatarUrl)}"
-     alt="Avatar">`
-   :
-   `<div class="avatar big"
-     style="display:grid;place-items:center">
-     👤
-    </div>`
-  }
+  <div class="profile-top">
+
+   ${
+    p.avatarUrl
+
+    ?
+
+    `<img
+      class="profile-avatar"
+      src="${esc(p.avatarUrl)}"
+      alt="Player Avatar">`
+
+    :
+
+    `<div
+      class="profile-avatar"
+      style="
+       display:grid;
+       place-items:center;
+       font-size:40px">
+
+      ⚽
+
+     </div>`
+   }
 
 
-  <div>
+   <div>
 
-   <h2>
-    ${esc(p.name)}
-   </h2>
+    <div class="profile-name">
+     ${esc(p.name)}
+    </div>
 
-   <span class="badge">
-    UID ${esc(p.konamiUid)}
-   </span>
+    <div class="profile-role">
+     🎮 LUCC PLAYER
+    </div>
+
+    <div
+     class="small muted"
+     style="margin-top:7px">
+
+     eFootball UID:
+     ${esc(p.konamiUid)}
+
+    </div>
+
+   </div>
+
+  </div>
+
+
+  <div class="profile-stats">
+
+   <div class="profile-stat">
+
+    <b>
+     ${s.played}
+    </b>
+
+    <span>
+     Played
+    </span>
+
+   </div>
+
+
+   <div class="profile-stat">
+
+    <b>
+     ${s.wins}
+    </b>
+
+    <span>
+     Wins
+    </span>
+
+   </div>
+
+
+   <div class="profile-stat">
+
+    <b>
+     ${s.losses}
+    </b>
+
+    <span>
+     Losses
+    </span>
+
+   </div>
+
+
+   <div class="profile-stat">
+
+    <b>
+     ${s.winRate}%
+    </b>
+
+    <span>
+     Win Rate
+    </span>
+
+   </div>
 
   </div>
 
  </div>
 
 
- <div class="statgrid">
-
-  <div class="statbox">
-   <span class="muted small">
-    Played
-   </span>
-   <br>
-   <b>${s.played}</b>
-  </div>
-
-
-  <div class="statbox">
-   <span class="muted small">
-    Wins
-   </span>
-   <br>
-   <b>${s.wins}</b>
-  </div>
-
-
-  <div class="statbox">
-   <span class="muted small">
-    Losses
-   </span>
-   <br>
-   <b>${s.losses}</b>
-  </div>
-
-
-  <div class="statbox">
-   <span class="muted small">
-    Win Rate
-   </span>
-   <br>
-   <b>${s.winRate}%</b>
-  </div>
-
- </div>
-
-
- <h3 style="margin-top:20px">
+ <h3 style="margin-top:22px">
   Match History
  </h3>
 
@@ -2259,7 +2997,9 @@ window.openPlayer=id=>{
 };
 
 
-/* RULES */
+/* =========================
+   RULES
+========================= */
 
 window.renderRules=()=>{
 
@@ -2293,33 +3033,56 @@ window.renderRules=()=>{
  `
 
  <div class="card">
-  <h3>Fair Play</h3>
+
+  <h3>
+   Fair Play
+  </h3>
+
   <p>
    No cheating, exploits or abusive behavior.
   </p>
+
  </div>
 
+
  <div class="card">
-  <h3>Match Rules</h3>
+
+  <h3>
+   Match Rules
+  </h3>
+
   <p>
    Follow the official fixture and submit
    valid proof when requested.
   </p>
+
  </div>
 
+
  <div class="card">
-  <h3>Connection</h3>
+
+  <h3>
+   Connection
+  </h3>
+
   <p>
    Players are responsible for a stable
    connection unless admin decides otherwise.
   </p>
+
  </div>
 
+
  <div class="card">
-  <h3>Admin Decision</h3>
+
+  <h3>
+   Admin Decision
+  </h3>
+
   <p>
    Admin decisions on disputes are final.
   </p>
+
  </div>
 
  `;
@@ -2327,7 +3090,9 @@ window.renderRules=()=>{
 };
 
 
-/* TOURNAMENT */
+/* =========================
+   TOURNAMENT
+========================= */
 
 window.renderTournament=()=>{
 
@@ -2363,19 +3128,28 @@ window.renderTournament=()=>{
    <div class="grid2">
 
     <div>
+
      <span class="small muted">
       Date
      </span>
+
      <br>
+
      ${esc(t.date||"TBA")}
+
     </div>
 
+
     <div>
+
      <span class="small muted">
       Prize
      </span>
+
      <br>
+
      ${esc(t.prize||"TBA")}
+
     </div>
 
    </div>
@@ -2386,7 +3160,9 @@ window.renderTournament=()=>{
  )
  .join("")
 
- :"";
+ :
+
+ "";
 
 
  let fixtures=
@@ -2482,7 +3258,9 @@ window.renderTournament=()=>{
 };
 
 
-/* RESULTS */
+/* =========================
+   RESULTS
+========================= */
 
 window.renderResults=()=>{
 
@@ -2517,11 +3295,13 @@ window.renderResults=()=>{
   if(
    !board[r.playerAId]||
    !board[r.playerBId]
-  )return;
+  )
+   return;
 
 
   const a=
   board[r.playerAId];
+
 
   const b=
   board[r.playerBId];
@@ -2530,17 +3310,20 @@ window.renderResults=()=>{
   const sa=
   Number(r.scoreA);
 
+
   const sb=
   Number(r.scoreB);
 
 
   a.played++;
+
   b.played++;
 
 
   if(sa>sb){
 
    a.wins++;
+
    b.losses++;
 
   }
@@ -2548,6 +3331,7 @@ window.renderResults=()=>{
   else if(sa<sb){
 
    b.wins++;
+
    a.losses++;
 
   }
@@ -2555,6 +3339,7 @@ window.renderResults=()=>{
   else{
 
    a.draws++;
+
    b.draws++;
 
   }
@@ -2705,13 +3490,16 @@ window.renderResults=()=>{
 };
 
 
-/* PROFILE */
+/* =========================
+   MY PROFILE
+========================= */
 
 window.renderProfile=()=>{
 
  if(!currentUser){
 
   $("prof").innerHTML=
+
   `
 
   <div class="card">
@@ -2727,7 +3515,9 @@ window.renderProfile=()=>{
    <button
     class="btn primary"
     onclick="go('login')">
+
     Login
+
    </button>
 
   </div>
@@ -2751,28 +3541,37 @@ window.renderProfile=()=>{
  "Player";
 
 
+ const avatar=
+ profile?.avatarUrl;
+
+
  $("prof").innerHTML=`
 
- <div class="card">
+ <div class="profile-card">
 
-  <div class="player">
+  <div class="profile-top">
 
    ${
-    profile?.avatarUrl
+    avatar
 
     ?
 
     `<img
-      class="avatar big"
-      src="${esc(profile.avatarUrl)}"
-      alt="Avatar">`
+      class="profile-avatar"
+      src="${esc(avatar)}"
+      alt="Player Avatar">`
 
     :
 
     `<div
-      class="avatar big"
-      style="display:grid;place-items:center">
-      👤
+      class="profile-avatar"
+      style="
+       display:grid;
+       place-items:center;
+       font-size:42px">
+
+      ⚽
+
      </div>`
 
    }
@@ -2780,116 +3579,154 @@ window.renderProfile=()=>{
 
    <div>
 
-    <h2>
+    <div class="profile-name">
      ${esc(name)}
-    </h2>
+    </div>
 
-    <span class="badge">
+    <div class="profile-role">
 
      ${
-      profile?.role==="admin"
+      isAdmin()
       ?
-      "ADMIN"
+      "🛡️ ADMIN"
       :
-      "PLAYER"
+      "🎮 PLAYER"
      }
 
-    </span>
+    </div>
+
+    <div
+     class="small muted"
+     style="margin-top:7px">
+
+     LUCC eFootball Competitor
+
+    </div>
 
    </div>
 
   </div>
 
 
-  <div class="statgrid">
+  <div class="profile-stats">
 
-   <div class="statbox">
-    <span class="muted small">
+   <div class="profile-stat">
+
+    <b>
+     ${s.played}
+    </b>
+
+    <span>
      Played
     </span>
-    <br>
-    <b>${s.played}</b>
+
    </div>
 
 
-   <div class="statbox">
-    <span class="muted small">
+   <div class="profile-stat">
+
+    <b>
+     ${s.wins}
+    </b>
+
+    <span>
      Wins
     </span>
-    <br>
-    <b>${s.wins}</b>
+
    </div>
 
 
-   <div class="statbox">
-    <span class="muted small">
+   <div class="profile-stat">
+
+    <b>
+     ${s.losses}
+    </b>
+
+    <span>
      Losses
     </span>
-    <br>
-    <b>${s.losses}</b>
+
    </div>
 
 
-   <div class="statbox">
-    <span class="muted small">
+   <div class="profile-stat">
+
+    <b>
+     ${s.winRate}%
+    </b>
+
+    <span>
      Win Rate
     </span>
-    <br>
-    <b>${s.winRate}%</b>
+
    </div>
 
   </div>
 
 
-  <div
-   class="grid2"
-   style="margin-top:18px">
+  <div class="profile-info">
 
-   <div>
-    Email
-    <br>
+   <div class="profile-info-box">
+
+    <span>
+     Email
+    </span>
+
     <b>
      ${esc(
       profile?.email||
       currentUser.email
      )}
     </b>
+
    </div>
 
 
-   <div>
-    Konami UID
-    <br>
+   <div class="profile-info-box">
+
+    <span>
+     Konami UID
+    </span>
+
     <b>
      ${esc(
       profile?.konamiUid||
       "—"
      )}
     </b>
+
    </div>
 
 
-   <div>
-    Mobile
-    <br>
+   <div class="profile-info-box">
+
+    <span>
+     Mobile
+    </span>
+
     <b>
      ${esc(
       profile?.mobile||
       "—"
      )}
     </b>
+
    </div>
 
 
-   <div>
-    Device
-    <br>
+   <div class="profile-info-box">
+
+    <span>
+     Device
+    </span>
+
     <b>
      ${esc(
       profile?.device||
       "—"
      )}
     </b>
+
    </div>
 
   </div>
@@ -2906,7 +3743,9 @@ window.renderProfile=()=>{
   <button
    class="btn danger"
    onclick="logout()">
+
    Logout
+
   </button>
 
  </div>
@@ -2972,19 +3811,22 @@ window.renderProfile=()=>{
 };
 
 
-/* ADMIN ACCESS */
+/* =========================
+   ADMIN
+========================= */
 
 window.admin=()=>{
 
  if(!currentUser){
 
   $("aguard").innerHTML=
+
   `
 
   <div class="admin">
 
    <b>
-    Login required.
+    🔐 Login required.
    </b>
 
    <p>
@@ -2994,7 +3836,9 @@ window.admin=()=>{
    <button
     class="btn primary"
     onclick="go('login')">
+
     Login
+
    </button>
 
   </div>
@@ -3009,20 +3853,21 @@ window.admin=()=>{
  }
 
 
- if(profile?.role!=="admin"){
+ if(!isAdmin()){
 
   $("aguard").innerHTML=
+
   `
 
   <div class="admin">
 
    <b>
-    Admin access required.
+    🚫 Admin access required.
    </b>
 
    <p class="small">
-    Your user document must contain:
-    <b>role: "admin"</b>
+    This account does not have administrator
+    permissions.
    </p>
 
   </div>
@@ -3038,8 +3883,11 @@ window.admin=()=>{
 
 
  $("aguard").innerHTML=
+
  `<div class="notice success">
-  Admin authenticated.
+
+  🛡️ Administrator authenticated successfully.
+
  </div>`;
 
 
@@ -3052,7 +3900,9 @@ window.admin=()=>{
 };
 
 
-/* ADMIN TABS */
+/* =========================
+   ADMIN TABS
+========================= */
 
 window.atab=(tab,button)=>{
 
@@ -3071,14 +3921,18 @@ window.atab=(tab,button)=>{
  if(tab==="players")
   adminPlayers();
 
+
  if(tab==="tournaments")
   adminTournaments();
+
 
  if(tab==="fixtures")
   adminFixtures();
 
+
  if(tab==="results")
   adminResults();
+
 
  if(tab==="rules")
   adminRules();
@@ -3086,11 +3940,15 @@ window.atab=(tab,button)=>{
 };
 
 
-/* ADMIN PLAYERS */
+/* =========================
+   ADMIN PLAYERS
+========================= */
 
 function adminPlayers(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML=
+
+ `
 
  <div class="card">
 
@@ -3117,17 +3975,22 @@ function adminPlayers(){
       </b>
 
       <div class="small muted">
+
        ${esc(p.konamiUid)}
        •
        ${esc(p.email)}
+
       </div>
 
      </div>
 
+
      <button
       class="btn"
       onclick="editPlayer('${p.id}')">
+
       Edit
+
      </button>
 
     </div>
@@ -3153,7 +4016,9 @@ function adminPlayers(){
 }
 
 
-/* ADMIN EDIT PLAYER */
+/* =========================
+   EDIT PLAYER
+========================= */
 
 window.editPlayer=id=>{
 
@@ -3163,10 +4028,13 @@ window.editPlayer=id=>{
  );
 
 
- if(!p)return;
+ if(!p)
+  return;
 
 
- $("mc").innerHTML=`
+ $("mc").innerHTML=
+
+ `
 
  <h2>
   Edit Player
@@ -3174,45 +4042,63 @@ window.editPlayer=id=>{
 
 
  <div class="field">
-  <label>Name</label>
+
+  <label>
+   Name
+  </label>
 
   <input
    id="mn"
    value="${esc(p.name)}">
+
  </div>
 
 
  <div class="field">
-  <label>Konami UID</label>
+
+  <label>
+   Konami UID
+  </label>
 
   <input
    id="mu"
    value="${esc(p.konamiUid)}">
+
  </div>
 
 
  <div class="field">
-  <label>Mobile</label>
+
+  <label>
+   Mobile
+  </label>
 
   <input
    id="mm"
    value="${esc(p.mobile||"")}">
+
  </div>
 
 
  <div class="field">
-  <label>Device</label>
+
+  <label>
+   Device
+  </label>
 
   <input
    id="md"
    value="${esc(p.device||"")}">
+
  </div>
 
 
  <button
   class="btn primary"
   onclick="savePlayer('${id}')">
+
   Save Changes
+
  </button>
 
  `;
@@ -3278,7 +4164,9 @@ window.savePlayer=async id=>{
 
   closeModal();
 
+
   await load();
+
 
   adminPlayers();
 
@@ -3299,11 +4187,15 @@ window.savePlayer=async id=>{
 };
 
 
-/* ADMIN TOURNAMENT */
+/* =========================
+   TOURNAMENT ADMIN
+========================= */
 
 function adminTournaments(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML=
+
+ `
 
  <div class="card">
 
@@ -3316,7 +4208,9 @@ function adminTournaments(){
 
    <div class="field">
 
-    <label>Name</label>
+    <label>
+     Name
+    </label>
 
     <input id="tn">
 
@@ -3325,7 +4219,9 @@ function adminTournaments(){
 
    <div class="field">
 
-    <label>Date</label>
+    <label>
+     Date
+    </label>
 
     <input
      id="td"
@@ -3336,7 +4232,9 @@ function adminTournaments(){
 
    <div class="field">
 
-    <label>Status</label>
+    <label>
+     Status
+    </label>
 
     <select id="ts">
 
@@ -3363,7 +4261,9 @@ function adminTournaments(){
 
    <div class="field">
 
-    <label>Prize</label>
+    <label>
+     Prize
+    </label>
 
     <input id="tp">
 
@@ -3422,10 +4322,13 @@ function adminTournaments(){
 
      </span>
 
+
      <button
       class="btn danger"
       onclick="deleteTournament('${t.id}')">
+
       Remove
+
      </button>
 
     </div>
@@ -3506,7 +4409,8 @@ window.deleteTournament=async id=>{
 
  if(!confirm(
   "Remove this tournament?"
- ))return;
+ ))
+  return;
 
 
  try{
@@ -3524,6 +4428,7 @@ window.deleteTournament=async id=>{
 
   adminTournaments();
 
+
  }catch(error){
 
   alert(
@@ -3535,7 +4440,9 @@ window.deleteTournament=async id=>{
 };
 
 
-/* SHUFFLE */
+/* =========================
+   SHUFFLE
+========================= */
 
 function shuffle(array){
 
@@ -3567,11 +4474,15 @@ function shuffle(array){
 }
 
 
-/* ADMIN FIXTURES */
+/* =========================
+   FIXTURES ADMIN
+========================= */
 
 function adminFixtures(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML=
+
+ `
 
  <div class="card">
 
@@ -3727,9 +4638,22 @@ function adminFixtures(){
 }
 
 
-/* GENERATE FIXTURES */
+/* =========================
+   GENERATE FIXTURES
+========================= */
 
 window.generateFixtures=async()=>{
+
+ if(!isAdmin()){
+
+  alert(
+   "Admin access required."
+  );
+
+  return;
+
+ }
+
 
  if(D.players.length<2){
 
@@ -3746,12 +4670,11 @@ window.generateFixtures=async()=>{
   "Generate new random fixtures?\n\n"+
   "Existing fixtures will be replaced.\n"+
   "Players will NOT be deleted."
- ))return;
+ ))
+  return;
 
 
  try{
-
-  /* DELETE OLD FIXTURES */
 
   for(
    const fixture of D.fixtures
@@ -3819,6 +4742,7 @@ window.generateFixtures=async()=>{
    const a=
    pair[0];
 
+
    const b=
    pair[1];
 
@@ -3878,16 +4802,30 @@ window.generateFixtures=async()=>{
 };
 
 
-/* RESET TOURNAMENT */
+/* =========================
+   RESET TOURNAMENT
+========================= */
 
 window.resetTournament=async()=>{
+
+ if(!isAdmin()){
+
+  alert(
+   "Admin access required."
+  );
+
+  return;
+
+ }
+
 
  if(!confirm(
   "RESET TOURNAMENT?\n\n"+
   "Fixtures and results will be deleted.\n"+
   "Players and accounts will remain safe.\n\n"+
   "Continue?"
- ))return;
+ ))
+  return;
 
 
  try{
@@ -3944,11 +4882,15 @@ window.resetTournament=async()=>{
 };
 
 
-/* ADMIN RESULTS */
+/* =========================
+   ADMIN RESULTS
+========================= */
 
 function adminResults(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML=
+
+ `
 
  <div class="card">
 
@@ -4104,6 +5046,7 @@ function adminResults(){
 
      </span>
 
+
      <button
       class="btn danger"
       onclick="deleteResult('${r.id}')">
@@ -4132,9 +5075,22 @@ function adminResults(){
 }
 
 
-/* ADD RESULT */
+/* =========================
+   ADD RESULT
+========================= */
 
 window.addResult=async()=>{
+
+ if(!isAdmin()){
+
+  alert(
+   "Admin access required."
+  );
+
+  return;
+
+ }
+
 
  try{
 
@@ -4227,13 +5183,27 @@ window.addResult=async()=>{
 };
 
 
-/* DELETE RESULT */
+/* =========================
+   DELETE RESULT
+========================= */
 
 window.deleteResult=async id=>{
 
+ if(!isAdmin()){
+
+  alert(
+   "Admin access required."
+  );
+
+  return;
+
+ }
+
+
  if(!confirm(
   "Delete this result?"
- ))return;
+ ))
+  return;
 
 
  try{
@@ -4251,6 +5221,7 @@ window.deleteResult=async id=>{
 
   adminResults();
 
+
  }catch(error){
 
   alert(
@@ -4262,11 +5233,15 @@ window.deleteResult=async id=>{
 };
 
 
-/* ADMIN RULES */
+/* =========================
+   ADMIN RULES
+========================= */
 
 function adminRules(){
 
- $("apanel").innerHTML=`
+ $("apanel").innerHTML=
+
+ `
 
  <div class="card">
 
@@ -4329,6 +5304,7 @@ function adminRules(){
       </b>
      </span>
 
+
      <button
       class="btn danger"
       onclick="deleteRule('${r.id}')">
@@ -4357,9 +5333,22 @@ function adminRules(){
 }
 
 
-/* ADD RULE */
+/* =========================
+   ADD RULE
+========================= */
 
 window.addRule=async()=>{
+
+ if(!isAdmin()){
+
+  alert(
+   "Admin access required."
+  );
+
+  return;
+
+ }
+
 
  try{
 
@@ -4404,13 +5393,27 @@ window.addRule=async()=>{
 };
 
 
-/* DELETE RULE */
+/* =========================
+   DELETE RULE
+========================= */
 
 window.deleteRule=async id=>{
 
+ if(!isAdmin()){
+
+  alert(
+   "Admin access required."
+  );
+
+  return;
+
+ }
+
+
  if(!confirm(
   "Remove this rule?"
- ))return;
+ ))
+  return;
 
 
  try{
@@ -4428,6 +5431,7 @@ window.deleteRule=async id=>{
 
   adminRules();
 
+
  }catch(error){
 
   alert(
@@ -4439,7 +5443,9 @@ window.deleteRule=async id=>{
 };
 
 
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
 
 window.closeModal=()=>{
 
@@ -4449,8 +5455,6 @@ window.closeModal=()=>{
 
 };
 
-
-/* CLOSE MODAL BY OUTSIDE CLICK */
 
 $("modal").addEventListener(
  "click",
@@ -4463,7 +5467,9 @@ $("modal").addEventListener(
 );
 
 
-/* START */
+/* =========================
+   START
+========================= */
 
 go("home");
 
