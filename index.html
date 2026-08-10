@@ -1312,7 +1312,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  deleteUser
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
@@ -1336,6 +1337,12 @@ from
 /* =====================================================
    FIREBASE
 ===================================================== */
+
+/* IMPORTANT:
+   The Firebase API key currently in the old file is being rejected by Firebase.
+   Replace ONLY apiKey below with the CURRENT Web API key from:
+   Firebase Console -> Project settings -> Your apps -> Web app.
+*/
 
 const firebaseConfig = {
 
@@ -1361,6 +1368,13 @@ const firebaseConfig = {
   "G-HRMKH8HFQZ"
 };
 
+
+if (
+  !firebaseConfig.apiKey ||
+  firebaseConfig.apiKey === "PASTE_YOUR_CURRENT_FIREBASE_WEB_API_KEY_HERE"
+) {
+  console.error("Firebase API key is missing. Replace firebaseConfig.apiKey with your current Web API key.");
+}
 
 const app =
 initializeApp(firebaseConfig);
@@ -1750,6 +1764,8 @@ async e => {
   );
 
 
+  let createdUser = null;
+
   try{
 
     const name =
@@ -1795,6 +1811,8 @@ async e => {
 
     const user =
     result.user;
+
+    createdUser = user;
 
 
     /* DISPLAY NAME */
@@ -1905,6 +1923,16 @@ async e => {
   }catch(error){
 
     console.error(error);
+
+    /* If Auth succeeded but Firestore failed, remove the
+       newly-created Auth account so registration can be retried. */
+    if(createdUser){
+      try{
+        await deleteUser(createdUser);
+      }catch(rollbackError){
+        console.error("Registration rollback failed:", rollbackError);
+      }
+    }
 
     note(
       "regmsg",
@@ -2278,8 +2306,7 @@ async function load(){
 
 
   $("sr").textContent =
-  D.results.length +
-  D.fixtures.length;
+  D.results.length;
 
 
   $("st").textContent =
@@ -3825,13 +3852,21 @@ async id => {
     );
 
 
+    const name = $("mn").value.trim();
+    const konamiUid = $("mu").value.trim();
+
+    if(!name || !konamiUid){
+      alert("Name and Konami UID are required.");
+      return;
+    }
+
     const data = {
 
       name:
-      $("mn").value.trim(),
+      name,
 
       konamiUid:
-      $("mu").value.trim(),
+      konamiUid,
 
       mobile:
       $("mm").value.trim(),
@@ -4049,6 +4084,14 @@ async () => {
 
   try{
 
+    const name =
+    $("tn").value.trim();
+
+    if(!name){
+      alert("Tournament name is required.");
+      return;
+    }
+
     await addDoc(
       collection(
         db,
@@ -4057,7 +4100,7 @@ async () => {
       {
 
         name:
-        $("tn").value.trim(),
+        name,
 
         date:
         $("td").value,
@@ -4591,6 +4634,32 @@ function adminResults(){
     </h3>
 
 
+    <div class="field">
+
+      <label>
+        Fixture (optional)
+      </label>
+
+      <select id="rF" onchange="syncResultFixture()">
+
+        <option value="">Manual result</option>
+
+        ${
+          D.fixtures
+          .filter(f => f.status !== "completed")
+          .map(
+            f => `
+            <option value="${esc(f.id)}">
+              ${esc(f.playerA)} vs ${esc(f.playerB)} — ${esc(f.tournament || "Tournament")}
+            </option>
+            `
+          ).join("")
+        }
+
+      </select>
+
+    </div>
+
     <div class="grid2">
 
       <div class="field">
@@ -4768,6 +4837,29 @@ function adminResults(){
 
 
 /* =====================================================
+   SYNC RESULT FORM WITH FIXTURE
+===================================================== */
+
+window.syncResultFixture = () => {
+
+  const fixtureId = $("rF")?.value || "";
+
+  if(!fixtureId) return;
+
+  const fixture =
+  D.fixtures.find(f => f.id === fixtureId);
+
+  if(!fixture) return;
+
+  if($("rA")) $("rA").value = fixture.playerAId || "";
+  if($("rB")) $("rB").value = fixture.playerBId || "";
+  if($("rT")) $("rT").value = fixture.tournament || "";
+  if($("rD")) $("rD").value = fixture.date || "";
+
+};
+
+
+/* =====================================================
    ADD RESULT
 ===================================================== */
 
@@ -4797,6 +4889,8 @@ async () => {
       $("rB").value
     );
 
+    const scoreA = Number($("rSA").value);
+    const scoreB = Number($("rSB").value);
 
     if(
       !a ||
@@ -4812,7 +4906,19 @@ async () => {
 
     }
 
+    if(
+      !Number.isFinite(scoreA) ||
+      !Number.isFinite(scoreB) ||
+      scoreA < 0 ||
+      scoreB < 0
+    ){
+      alert("Scores must be valid numbers greater than or equal to 0.");
+      return;
+    }
 
+    const fixtureId = $("rF")?.value || "";
+
+    const resultRef =
     await addDoc(
       collection(
         db,
@@ -4833,14 +4939,13 @@ async () => {
         b.name,
 
         scoreA:
-        Number(
-          $("rSA").value
-        ),
+        scoreA,
 
         scoreB:
-        Number(
-          $("rSB").value
-        ),
+        scoreB,
+
+        fixtureId:
+        fixtureId || null,
 
         tournament:
         $("rT").value.trim(),
@@ -4857,6 +4962,23 @@ async () => {
       }
     );
 
+    if(fixtureId){
+
+      await updateDoc(
+        doc(
+          db,
+          "fixtures",
+          fixtureId
+        ),
+        {
+          status: "completed",
+          scoreA: scoreA,
+          scoreB: scoreB,
+          resultId: resultRef.id
+        }
+      );
+
+    }
 
     await load();
 
@@ -5038,6 +5160,14 @@ async () => {
 
   try{
 
+    const title = $("rtitle").value.trim();
+    const body = $("rbody").value.trim();
+
+    if(!title || !body){
+      alert("Rule title and rule text are required.");
+      return;
+    }
+
     await addDoc(
       collection(
         db,
@@ -5046,10 +5176,10 @@ async () => {
       {
 
         title:
-        $("rtitle").value.trim(),
+        title,
 
         body:
-        $("rbody").value.trim(),
+        body,
 
         createdAt:
         serverTimestamp()
@@ -5139,7 +5269,7 @@ window.closeModal =
 };
 
 
-$("modal").addEventListener(
+$("modal")?.addEventListener(
   "click",
   e => {
 
