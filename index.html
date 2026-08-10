@@ -24,13 +24,9 @@
   --gold:#ffc857;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -39,35 +35,14 @@ body{
     radial-gradient(circle at 10% -5%,#29165a 0,transparent 30%),
     radial-gradient(circle at 95% 15%,#063b50 0,transparent 25%),
     linear-gradient(135deg,#060810,#090d16 55%,#05070d);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   min-height:100vh;
 }
 
-button,
-input,
-textarea,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-img{
-  max-width:100%;
-}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
 
 header{
   position:sticky;
@@ -102,10 +77,8 @@ header{
   border-radius:14px;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(135deg,var(--purple),var(--cyan));
-  box-shadow:
-    0 0 30px #765cff45;
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  box-shadow:0 0 30px #765cff45;
   font-size:22px;
 }
 
@@ -148,15 +121,8 @@ main{
   padding:25px 15px 110px;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-/* HERO */
+.page{display:none}
+.page.active{display:block}
 
 .hero{
   position:relative;
@@ -167,10 +133,8 @@ main{
   border:1px solid #ffffff12;
   border-radius:30px;
   padding:45px;
-  background:
-    linear-gradient(120deg,#17102e,#101a2a 55%,#07131a);
-  box-shadow:
-    0 25px 80px #00000035;
+  background:linear-gradient(120deg,#17102e,#101a2a 55%,#07131a);
+  box-shadow:0 25px 80px #00000035;
 }
 
 .hero:before{
@@ -223,8 +187,7 @@ h1{
 }
 
 .gradient-text{
-  background:
-    linear-gradient(90deg,#8c75ff,#32dfff);
+  background:linear-gradient(90deg,#8c75ff,#32dfff);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
@@ -236,9 +199,7 @@ h2{
   letter-spacing:-1px;
 }
 
-h3{
-  margin:0 0 7px;
-}
+h3{margin:0 0 7px}
 
 p{
   color:var(--muted);
@@ -269,15 +230,13 @@ p{
 
 .primary{
   border:0;
-  background:
-    linear-gradient(135deg,var(--purple),#4c39d9);
+  background:linear-gradient(135deg,var(--purple),#4c39d9);
   box-shadow:0 8px 25px #765cff25;
 }
 
 .cyan{
   border:0;
-  background:
-    linear-gradient(135deg,#20caff,#167db8);
+  background:linear-gradient(135deg,#20caff,#167db8);
 }
 
 .danger{
@@ -292,15 +251,12 @@ p{
   border-color:#20d39b44;
 }
 
-/* ANNOUNCEMENT */
-
 .announcement{
   margin-top:16px;
   padding:17px 18px;
   border:1px solid #765cff44;
   border-radius:18px;
-  background:
-    linear-gradient(110deg,#765cff13,#24d9ff08);
+  background:linear-gradient(110deg,#765cff13,#24d9ff08);
   display:flex;
   gap:12px;
   align-items:flex-start;
@@ -316,11 +272,7 @@ p{
   background:#765cff20;
 }
 
-.announcement h3{
-  margin-bottom:3px;
-}
-
-/* SECTIONS */
+.announcement h3{margin-bottom:3px}
 
 .head{
   display:flex;
@@ -343,8 +295,7 @@ p{
 }
 
 .card{
-  background:
-    linear-gradient(180deg,#111824,#0d121b);
+  background:linear-gradient(180deg,#111824,#0d121b);
   border:1px solid var(--line);
   border-radius:20px;
   padding:18px;
@@ -358,24 +309,15 @@ p{
   letter-spacing:-1px;
 }
 
-.muted{
-  color:var(--muted);
-}
-
-.small{
-  font-size:12px;
-}
-
-/* FORM */
+.muted{color:var(--muted)}
+.small{font-size:12px}
 
 .form{
   max-width:720px;
   margin:auto;
 }
 
-.field{
-  margin:12px 0;
-}
+.field{margin:12px 0}
 
 .field label{
   display:block;
@@ -385,9 +327,7 @@ p{
   margin-bottom:6px;
 }
 
-input,
-textarea,
-select{
+input,textarea,select{
   width:100%;
   color:#fff;
   background:#080c13;
@@ -408,8 +348,6 @@ select:focus{
   border-color:#765cff88;
   box-shadow:0 0 0 3px #765cff0d;
 }
-
-/* NOTICE */
 
 .notice{
   margin:10px 0;
@@ -432,13 +370,11 @@ select:focus{
   border-color:#20d39b44;
 }
 
-/* PLAYER */
-
 .player-card{
   position:relative;
   overflow:hidden;
-  background:
-    linear-gradient(145deg,#121a29,#0b1019);
+  background:linear-gradient(145deg,#121a29,#0b1019);
+  transition:.18s;
 }
 
 .player-card:before{
@@ -543,9 +479,7 @@ select:focus{
   color:var(--muted);
 }
 
-.search{
-  margin-bottom:14px;
-}
+.search{margin-bottom:14px}
 
 .clickable{
   cursor:pointer;
@@ -570,14 +504,11 @@ select:focus{
   font-size:25px;
 }
 
-/* PROFILE */
-
 .profile-banner{
   padding:22px;
   border-radius:23px;
   border:1px solid #765cff35;
-  background:
-    linear-gradient(120deg,#1a1532,#111c2a);
+  background:linear-gradient(120deg,#1a1532,#111c2a);
 }
 
 .profile-top{
@@ -586,11 +517,8 @@ select:focus{
   gap:18px;
 }
 
-/* ADMIN */
-
 .admin{
-  background:
-    linear-gradient(145deg,#19152f,#111a27);
+  background:linear-gradient(145deg,#19152f,#111a27);
   border:1px solid #765cff55;
   border-radius:22px;
   padding:18px;
@@ -619,8 +547,6 @@ select:focus{
   background:#765cff18;
 }
 
-/* MODAL */
-
 .modal{
   position:fixed;
   inset:0;
@@ -633,23 +559,18 @@ select:focus{
   backdrop-filter:blur(8px);
 }
 
-.modal.show{
-  display:flex;
-}
+.modal.show{display:flex}
 
 .modalbox{
   width:min(650px,100%);
   max-height:90vh;
   overflow:auto;
-  background:
-    linear-gradient(180deg,#131925,#0c1119);
+  background:linear-gradient(180deg,#131925,#0c1119);
   border:1px solid var(--line);
   border-radius:23px;
   padding:18px;
   box-shadow:0 30px 100px #00000070;
 }
-
-/* LOADER */
 
 .loader{
   position:fixed;
@@ -660,9 +581,7 @@ select:focus{
   background:#060810f2;
 }
 
-.loader.off{
-  display:none;
-}
+.loader.off{display:none}
 
 .spin{
   width:42px;
@@ -674,9 +593,7 @@ select:focus{
 }
 
 @keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+  to{transform:rotate(360deg)}
 }
 
 footer{
@@ -686,20 +603,15 @@ footer{
   padding:25px;
 }
 
-/* MOBILE */
-
-.bottom{
-  display:none;
-}
+.bottom{display:none}
 
 @media(max-width:800px){
 
-  .nav{
-    display:none;
-  }
+  .nav{display:none}
 
   .menu{
     display:block;
+    margin-left:auto;
   }
 
   .bottom{
@@ -755,6 +667,7 @@ footer{
   h1{
     letter-spacing:-3px;
   }
+
 }
 </style>
 </head>
@@ -775,25 +688,11 @@ footer{
 
 <nav class="nav">
 
-<button data-p="home" onclick="go('home')">
-  Home
-</button>
-
-<button data-p="tournament" onclick="go('tournament')">
-  Tournament
-</button>
-
-<button data-p="players" onclick="go('players')">
-  Players
-</button>
-
-<button data-p="results" onclick="go('results')">
-  Results
-</button>
-
-<button data-p="rules" onclick="go('rules')">
-  Rules
-</button>
+<button data-p="home" onclick="go('home')">Home</button>
+<button data-p="tournament" onclick="go('tournament')">Tournament</button>
+<button data-p="players" onclick="go('players')">Players</button>
+<button data-p="results" onclick="go('results')">Results</button>
+<button data-p="rules" onclick="go('rules')">Rules</button>
 
 <button data-p="login" id="loginNav" onclick="go('login')">
   Login
@@ -821,9 +720,7 @@ footer{
 
 </nav>
 
-<button class="menu" onclick="toggleMobileMenu()">
-  ☰
-</button>
+<button class="menu" onclick="toggleMobileMenu()">☰</button>
 
 </div>
 </header>
@@ -883,15 +780,11 @@ footer{
 
 <div class="announcement">
 
-<div class="announcement-icon">
-  🔥
-</div>
+<div class="announcement-icon">🔥</div>
 
 <div>
 
-<h3>
-  Tournament Starting Very Soon!
-</h3>
+<h3>Tournament Starting Very Soon!</h3>
 
 <p class="small" style="margin:0">
   Our next LUCC eFootball tournament is coming very soon.
@@ -903,14 +796,10 @@ footer{
 </div>
 
 <div class="head">
-
 <div>
 <h2>Live Overview</h2>
-<p class="small">
-  Current tournament platform statistics
-</p>
+<p class="small">Current tournament platform statistics</p>
 </div>
-
 </div>
 
 <div class="grid">
@@ -956,16 +845,12 @@ footer{
 
 <div class="field">
 <label>Player Name *</label>
-<input id="name"
-       required
-       maxlength="60">
+<input id="name" required maxlength="60">
 </div>
 
 <div class="field">
 <label>Konami / eFootball UID *</label>
-<input id="uid"
-       required
-       maxlength="60">
+<input id="uid" required maxlength="60">
 </div>
 
 </div>
@@ -974,9 +859,7 @@ footer{
 
 <div class="field">
 <label>Email *</label>
-<input id="email"
-       type="email"
-       required>
+<input id="email" type="email" required>
 </div>
 
 <div class="field">
@@ -988,25 +871,19 @@ footer{
 
 <div class="field">
 <label>Password *</label>
-<input id="pass"
-       type="password"
-       minlength="6"
-       required>
+<input id="pass" type="password" minlength="6" required>
 </div>
 
 <div class="field">
 <label>Mobile / Device Model</label>
-<input id="device"
-       placeholder="e.g. Pixel 7">
+<input id="device" placeholder="e.g. Pixel 7">
 </div>
 
 <div class="field">
 
 <label>Player Avatar</label>
 
-<input id="avatar"
-       type="file"
-       accept="image/*">
+<input id="avatar" type="file" accept="image/*">
 
 <img id="preview"
      class="avatar big"
@@ -1054,16 +931,12 @@ Already registered?
 
 <div class="field">
 <label>Email</label>
-<input id="lemail"
-       type="email"
-       required>
+<input id="lemail" type="email" required>
 </div>
 
 <div class="field">
 <label>Password</label>
-<input id="lpass"
-       type="password"
-       required>
+<input id="lpass" type="password" required>
 </div>
 
 <button id="loginBtn"
@@ -1095,9 +968,7 @@ Don't have an account?
 <div class="head">
 <div>
 <h2>Players</h2>
-<p>
-Search and open any registered player profile.
-</p>
+<p>Search and open any registered player profile.</p>
 </div>
 </div>
 
@@ -1109,8 +980,7 @@ Search and open any registered player profile.
 
 </div>
 
-<div id="plist"
-     class="grid"></div>
+<div id="plist" class="grid"></div>
 
 </section>
 
@@ -1126,8 +996,7 @@ Search and open any registered player profile.
 </div>
 </div>
 
-<div id="rul"
-     class="grid2"></div>
+<div id="rul" class="grid2"></div>
 
 </section>
 
@@ -1139,9 +1008,7 @@ Search and open any registered player profile.
 <div class="head">
 <div>
 <h2>Tournament</h2>
-<p>
-Fixtures, schedule and tournament information.
-</p>
+<p>Fixtures, schedule and tournament information.</p>
 </div>
 </div>
 
@@ -1165,8 +1032,7 @@ Fixtures, schedule and tournament information.
 
 <br>
 
-<div id="res"
-     class="list"></div>
+<div id="res" class="list"></div>
 
 </section>
 
@@ -1194,16 +1060,13 @@ Fixtures, schedule and tournament information.
 <div class="head">
 <div>
 <h2>Admin Panel</h2>
-<p>
-Manage players, tournaments, fixtures, results and rules.
-</p>
+<p>Manage players, tournaments, fixtures, results and rules.</p>
 </div>
 </div>
 
 <div id="aguard"></div>
 
-<div id="acont"
-     style="display:none">
+<div id="acont" style="display:none">
 
 <div class="tabs">
 
@@ -1281,8 +1144,7 @@ LUCC eFootball • Competitive Gaming Platform
 
 <!-- MODAL -->
 
-<div id="modal"
-     class="modal">
+<div id="modal" class="modal">
 
 <div class="modalbox">
 
@@ -1338,12 +1200,6 @@ from
    FIREBASE
 ===================================================== */
 
-/* IMPORTANT:
-   The Firebase API key currently in the old file is being rejected by Firebase.
-   Replace ONLY apiKey below with the CURRENT Web API key from:
-   Firebase Console -> Project settings -> Your apps -> Web app.
-*/
-
 const firebaseConfig = {
 
   apiKey:
@@ -1368,22 +1224,9 @@ const firebaseConfig = {
   "G-HRMKH8HFQZ"
 };
 
-
-if (
-  !firebaseConfig.apiKey ||
-  firebaseConfig.apiKey === "PASTE_YOUR_CURRENT_FIREBASE_WEB_API_KEY_HERE"
-) {
-  console.error("Firebase API key is missing. Replace firebaseConfig.apiKey with your current Web API key.");
-}
-
-const app =
-initializeApp(firebaseConfig);
-
-const auth =
-getAuth(app);
-
-const db =
-getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 
 /* =====================================================
@@ -1414,9 +1257,7 @@ let D = {
    HELPERS
 ===================================================== */
 
-const $ =
-id => document.getElementById(id);
-
+const $ = id => document.getElementById(id);
 
 const esc = x =>
 String(x ?? "")
@@ -1561,7 +1402,6 @@ window.toggleMobileMenu = () => {
 
 /* =====================================================
    IMAGE TO BASE64
-   NO FIREBASE STORAGE
 ===================================================== */
 
 function compressImage(file){
@@ -1574,34 +1414,24 @@ function compressImage(file){
     }
 
     if(!file.type.startsWith("image/")){
-      reject(
-        new Error("Please select an image.")
-      );
+      reject(new Error("Please select an image."));
       return;
     }
 
 
-    const reader =
-    new FileReader();
+    const reader = new FileReader();
 
 
     reader.onload = () => {
 
-      const img =
-      new Image();
+      const img = new Image();
 
 
       img.onload = () => {
 
-        let w =
-        img.width;
-
-        let h =
-        img.height;
-
-
-        const max =
-        420;
+        let w = img.width;
+        let h = img.height;
+        const max = 420;
 
 
         if(w > max || h > max){
@@ -1612,36 +1442,22 @@ function compressImage(file){
             max/h
           );
 
-          w =
-          Math.round(
-            w * scale
-          );
-
-          h =
-          Math.round(
-            h * scale
-          );
+          w = Math.round(w * scale);
+          h = Math.round(h * scale);
 
         }
 
 
         const canvas =
-        document.createElement(
-          "canvas"
-        );
+        document.createElement("canvas");
 
 
-        canvas.width =
-        w;
-
-        canvas.height =
-        h;
+        canvas.width = w;
+        canvas.height = h;
 
 
         const ctx =
-        canvas.getContext(
-          "2d"
-        );
+        canvas.getContext("2d");
 
 
         ctx.drawImage(
@@ -1668,16 +1484,13 @@ function compressImage(file){
       img.onerror = () => {
 
         reject(
-          new Error(
-            "Could not read image."
-          )
+          new Error("Could not read image.")
         );
 
       };
 
 
-      img.src =
-      reader.result;
+      img.src = reader.result;
 
     };
 
@@ -1685,9 +1498,7 @@ function compressImage(file){
     reader.onerror = () => {
 
       reject(
-        new Error(
-          "Image reading failed."
-        )
+        new Error("Image reading failed.")
       );
 
     };
@@ -1718,11 +1529,8 @@ async e => {
       return;
 
 
-    $("preview").src =
-    data;
-
-    $("preview").style.display =
-    "block";
+    $("preview").src = data;
+    $("preview").style.display = "block";
 
   }catch(error){
 
@@ -1746,15 +1554,10 @@ async e => {
   e.preventDefault();
 
 
-  const btn =
-  $("regBtn");
+  const btn = $("regBtn");
 
-
-  btn.disabled =
-  true;
-
-  btn.textContent =
-  "Creating account...";
+  btn.disabled = true;
+  btn.textContent = "Creating account...";
 
 
   note(
@@ -1765,6 +1568,7 @@ async e => {
 
 
   let createdUser = null;
+
 
   try{
 
@@ -1799,8 +1603,6 @@ async e => {
     }
 
 
-    /* CREATE AUTH */
-
     const result =
     await createUserWithEmailAndPassword(
       auth,
@@ -1809,13 +1611,9 @@ async e => {
     );
 
 
-    const user =
-    result.user;
-
+    const user = result.user;
     createdUser = user;
 
-
-    /* DISPLAY NAME */
 
     await updateProfile(
       user,
@@ -1825,10 +1623,7 @@ async e => {
     );
 
 
-    /* AVATAR */
-
-    let avatarUrl =
-    "";
+    let avatarUrl = "";
 
 
     const avatarFile =
@@ -1847,64 +1642,33 @@ async e => {
 
     const playerData = {
 
-      uid:
-      user.uid,
-
-      name:
-      name,
-
-      konamiUid:
-      konamiUid,
-
-      email:
-      user.email,
-
-      mobile:
-      mobile,
-
-      device:
-      device,
-
-      avatarUrl:
-      avatarUrl,
-
-      role:
-      "user",
-
-      createdAt:
-      serverTimestamp()
+      uid:user.uid,
+      name:name,
+      konamiUid:konamiUid,
+      email:user.email,
+      mobile:mobile,
+      device:device,
+      avatarUrl:avatarUrl,
+      role:"user",
+      createdAt:serverTimestamp()
 
     };
 
 
-    /* USER */
-
     await setDoc(
-      doc(
-        db,
-        "users",
-        user.uid
-      ),
+      doc(db,"users",user.uid),
       playerData
     );
 
 
-    /* PLAYER */
-
     await setDoc(
-      doc(
-        db,
-        "players",
-        user.uid
-      ),
+      doc(db,"players",user.uid),
       playerData
     );
 
 
     $("reg").reset();
-
-    $("preview").style.display =
-    "none";
+    $("preview").style.display = "none";
 
 
     note(
@@ -1916,7 +1680,6 @@ async e => {
 
     await load();
 
-
     go("profile");
 
 
@@ -1924,28 +1687,35 @@ async e => {
 
     console.error(error);
 
-    /* If Auth succeeded but Firestore failed, remove the
-       newly-created Auth account so registration can be retried. */
+
     if(createdUser){
+
       try{
+
         await deleteUser(createdUser);
+
       }catch(rollbackError){
-        console.error("Registration rollback failed:", rollbackError);
+
+        console.error(
+          "Registration rollback failed:",
+          rollbackError
+        );
+
       }
+
     }
+
 
     note(
       "regmsg",
       firebaseError(error)
     );
 
+
   }finally{
 
-    btn.disabled =
-    false;
-
-    btn.textContent =
-    "Create Account";
+    btn.disabled = false;
+    btn.textContent = "Create Account";
 
   }
 
@@ -1962,15 +1732,10 @@ async e => {
   e.preventDefault();
 
 
-  const btn =
-  $("loginBtn");
+  const btn = $("loginBtn");
 
-
-  btn.disabled =
-  true;
-
-  btn.textContent =
-  "Signing in...";
+  btn.disabled = true;
+  btn.textContent = "Signing in...";
 
 
   note(
@@ -1999,9 +1764,6 @@ async e => {
     );
 
 
-    /* Auth listener handles everything */
-
-
   }catch(error){
 
     note(
@@ -2011,11 +1773,8 @@ async e => {
 
   }finally{
 
-    btn.disabled =
-    false;
-
-    btn.textContent =
-    "Login";
+    btn.disabled = false;
+    btn.textContent = "Login";
 
   }
 
@@ -2033,14 +1792,10 @@ async () => {
 
     await signOut(auth);
 
-    currentUser =
-    null;
-
-    profile =
-    null;
+    currentUser = null;
+    profile = null;
 
     updateNav();
-
     go("home");
 
   }catch(error){
@@ -2062,42 +1817,24 @@ function updateNav(){
 
   if(currentUser){
 
-    $("loginNav").style.display =
-    "none";
-
-    $("profileNav").style.display =
-    "inline-block";
-
-    $("logoutNav").style.display =
-    "inline-block";
-
+    $("loginNav").style.display = "none";
+    $("profileNav").style.display = "inline-block";
+    $("logoutNav").style.display = "inline-block";
 
     $("adminNav").style.display =
     isAdminUser()
     ? "inline-block"
     : "none";
 
-
-    $("homeRegisterBtn").style.display =
-    "none";
+    $("homeRegisterBtn").style.display = "none";
 
   }else{
 
-    $("loginNav").style.display =
-    "inline-block";
-
-    $("profileNav").style.display =
-    "none";
-
-    $("logoutNav").style.display =
-    "none";
-
-    $("adminNav").style.display =
-    "none";
-
-
-    $("homeRegisterBtn").style.display =
-    "inline-block";
+    $("loginNav").style.display = "inline-block";
+    $("profileNav").style.display = "none";
+    $("logoutNav").style.display = "none";
+    $("adminNav").style.display = "none";
+    $("homeRegisterBtn").style.display = "inline-block";
 
   }
 
@@ -2112,8 +1849,7 @@ onAuthStateChanged(
   auth,
   async user => {
 
-    currentUser =
-    user;
+    currentUser = user;
 
 
     if(user){
@@ -2132,25 +1868,16 @@ onAuthStateChanged(
 
         if(snap.exists()){
 
-          profile =
-          snap.data();
+          profile = snap.data();
 
         }else{
 
           profile = {
 
-            uid:
-            user.uid,
-
-            name:
-            user.displayName ||
-            "Player",
-
-            email:
-            user.email,
-
-            role:
-            "user"
+            uid:user.uid,
+            name:user.displayName || "Player",
+            email:user.email,
+            role:"user"
 
           };
 
@@ -2166,29 +1893,15 @@ onAuthStateChanged(
 
         profile = {
 
-          uid:
-          user.uid,
-
-          name:
-          user.displayName ||
-          "Player",
-
-          email:
-          user.email,
-
-          role:
-          "user"
+          uid:user.uid,
+          name:user.displayName || "Player",
+          email:user.email,
+          role:"user"
 
         };
 
       }
 
-
-      /*
-       =================================================
-       AUTOMATIC ADMIN
-       =================================================
-      */
 
       if(
         user.email &&
@@ -2196,16 +1909,14 @@ onAuthStateChanged(
         ADMIN_EMAIL.toLowerCase()
       ){
 
-        profile.role =
-        "admin";
+        profile.role = "admin";
 
       }
 
 
     }else{
 
-      profile =
-      null;
+      profile = null;
 
     }
 
@@ -2213,9 +1924,7 @@ onAuthStateChanged(
     updateNav();
 
 
-    $("loader")
-      .classList
-      .add("off");
+    $("loader").classList.add("off");
 
 
     await load();
@@ -2223,9 +1932,7 @@ onAuthStateChanged(
 
     if(
       user &&
-      $("profile").classList.contains(
-        "active"
-      )
+      $("profile").classList.contains("active")
     ){
 
       renderProfile();
@@ -2246,31 +1953,21 @@ async function col(name){
 
     const snap =
     await getDocs(
-      collection(
-        db,
-        name
-      )
+      collection(db,name)
     );
 
 
     return snap.docs.map(
       x => ({
-
-        id:
-        x.id,
-
+        id:x.id,
         ...x.data()
-
       })
     );
 
 
   }catch(error){
 
-    console.error(
-      name,
-      error
-    );
+    console.error(name,error);
 
     return [];
 
@@ -2285,32 +1982,16 @@ async function col(name){
 
 async function load(){
 
-  D.players =
-  await col("players");
-
-  D.results =
-  await col("results");
-
-  D.tournaments =
-  await col("tournaments");
-
-  D.rules =
-  await col("rules");
-
-  D.fixtures =
-  await col("fixtures");
+  D.players = await col("players");
+  D.results = await col("results");
+  D.tournaments = await col("tournaments");
+  D.rules = await col("rules");
+  D.fixtures = await col("fixtures");
 
 
-  $("sp").textContent =
-  D.players.length;
-
-
-  $("sr").textContent =
-  D.results.length;
-
-
-  $("st").textContent =
-  D.tournaments.length;
+  $("sp").textContent = D.players.length;
+  $("sr").textContent = D.results.length;
+  $("st").textContent = D.tournaments.length;
 
 
   renderPlayers();
@@ -2383,40 +2064,32 @@ function playerStats(id){
       : match.playerA,
 
       score:
-      mine +
-      " - " +
-      opponentScore,
+      mine + " - " + opponentScore,
 
       date:
-      match.date ||
-      ""
+      match.date || ""
 
     });
 
   });
 
 
-  const played =
-  matches.length;
+  const played = matches.length;
 
 
   const winRate =
   played
-  ? Math.round(
-      wins / played * 100
-    )
+  ? Math.round(wins / played * 100)
   : 0;
 
 
   return {
-
     played,
     wins,
     losses,
     draws,
     winRate,
     history
-
   };
 
 }
@@ -2501,6 +2174,17 @@ window.renderPlayers =
             UID ${esc(p.konamiUid)}
           </span>
 
+          <div
+            class="small muted"
+            style="margin-top:6px">
+
+            📱 ${esc(
+              p.device ||
+              "Device not specified"
+            )}
+
+          </div>
+
         </div>
 
       </div>
@@ -2511,33 +2195,25 @@ window.renderPlayers =
         style="margin-top:14px">
 
         <div class="statbox">
-          <span class="small muted">
-            Played
-          </span>
+          <span class="small muted">Played</span>
           <br>
           <b>${s.played}</b>
         </div>
 
         <div class="statbox">
-          <span class="small muted">
-            Wins
-          </span>
+          <span class="small muted">Wins</span>
           <br>
           <b>${s.wins}</b>
         </div>
 
         <div class="statbox">
-          <span class="small muted">
-            Losses
-          </span>
+          <span class="small muted">Losses</span>
           <br>
           <b>${s.losses}</b>
         </div>
 
         <div class="statbox">
-          <span class="small muted">
-            WR
-          </span>
+          <span class="small muted">WR</span>
           <br>
           <b>${s.winRate}%</b>
         </div>
@@ -2629,36 +2305,70 @@ id => {
   </div>
 
 
+  <!-- DEVICE + MOBILE -->
+
+  <div class="grid2" style="margin-top:14px">
+
+    <div class="statbox">
+
+      <span class="small muted">
+        📱 Device
+      </span>
+
+      <br>
+
+      <b>
+        ${esc(
+          p.device ||
+          "Not specified"
+        )}
+      </b>
+
+    </div>
+
+
+    <div class="statbox">
+
+      <span class="small muted">
+        📞 Mobile
+      </span>
+
+      <br>
+
+      <b>
+        ${esc(
+          p.mobile ||
+          "Not specified"
+        )}
+      </b>
+
+    </div>
+
+  </div>
+
+
   <div class="statgrid">
 
     <div class="statbox">
-      <span class="muted small">
-        Matches
-      </span>
+      <span class="muted small">Matches</span>
       <br>
       <b>${s.played}</b>
     </div>
 
     <div class="statbox">
-      <span class="muted small">
-        Wins
-      </span>
+      <span class="muted small">Wins</span>
       <br>
       <b>${s.wins}</b>
     </div>
 
     <div class="statbox">
-      <span class="muted small">
-        Losses
-      </span>
+      <span class="muted small">Losses</span>
       <br>
       <b>${s.losses}</b>
     </div>
 
     <div class="statbox">
-      <span class="muted small">
-        Win Rate
-      </span>
+      <span class="muted small">Win Rate</span>
       <br>
       <b>${s.winRate}%</b>
     </div>
@@ -2739,80 +2449,177 @@ id => {
 window.renderRules =
 () => {
 
-  $("rul").innerHTML =
+  $("rul").innerHTML = `
 
-  D.rules.length
+  <!-- MATCH RULES -->
 
-  ?
+  <div class="card">
 
-  D.rules.map(
-    r => `
+    <span class="badge badge-purple">
+      ⚙️ MATCH SETTINGS
+    </span>
 
-    <div class="card">
+    <h3 style="margin-top:10px">
+      Match Rules
+    </h3>
 
-      <span class="badge badge-purple">
-        RULE
-      </span>
+    <div class="list" style="margin-top:14px">
 
-      <h3 style="margin-top:9px">
-        ${esc(r.title)}
-      </h3>
+      <div class="row">
 
-      <p>
-        ${esc(r.body)}
-      </p>
+        <span>
+          <span class="muted small">
+            Match Time
+          </span>
+
+          <br>
+
+          <b>8 min</b>
+        </span>
+
+        <span class="badge badge-green">
+          8 MIN
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Condition
+          </span>
+
+          <br>
+
+          <b>Normal</b>
+        </span>
+
+        <span class="badge">
+          NORMAL
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Penalty
+          </span>
+
+          <br>
+
+          <b>On</b>
+        </span>
+
+        <span class="badge badge-green">
+          ON
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Extra Time
+          </span>
+
+          <br>
+
+          <b>On</b>
+        </span>
+
+        <span class="badge badge-green">
+          ON
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Smart Assist
+          </span>
+
+          <br>
+
+          <b>Off</b>
+        </span>
+
+        <span class="badge danger">
+          OFF
+        </span>
+
+      </div>
 
     </div>
 
-    `
-  )
-  .join("")
+  </div>
 
-  :
 
-  `
+  <!-- FAIR PLAY -->
 
   <div class="card">
 
-    <h3>🤝 Fair Play</h3>
+    <span class="badge badge-purple">
+      🤝 FAIR PLAY
+    </span>
+
+    <h3 style="margin-top:10px">
+      Fair Play
+    </h3>
 
     <p>
       No cheating, exploits or abusive behavior.
+      All players must maintain fair and respectful
+      gameplay.
     </p>
 
   </div>
 
 
+  <!-- CONNECTION -->
+
   <div class="card">
 
-    <h3>🎮 Match Rules</h3>
+    <span class="badge badge-purple">
+      📶 CONNECTION
+    </span>
+
+    <h3 style="margin-top:10px">
+      Connection
+    </h3>
 
     <p>
-      Follow the official fixture and submit
-      valid proof when requested.
+      Players are responsible for maintaining a stable
+      internet connection during their matches.
     </p>
 
   </div>
 
 
-  <div class="card">
-
-    <h3>📶 Connection</h3>
-
-    <p>
-      Players are responsible for a stable
-      connection unless admin decides otherwise.
-    </p>
-
-  </div>
-
+  <!-- ADMIN -->
 
   <div class="card">
 
-    <h3>🛡️ Admin Decision</h3>
+    <span class="badge badge-purple">
+      🛡️ ADMIN
+    </span>
+
+    <h3 style="margin-top:10px">
+      Admin Decision
+    </h3>
 
     <p>
-      Admin decisions on tournament disputes are final.
+      Admin decisions regarding tournament disputes
+      and match issues are final.
     </p>
 
   </div>
@@ -2931,6 +2738,7 @@ window.renderTournament =
             </b>
 
             <span class="badge">
+
               ${
                 f.status === "completed"
                 ?
@@ -2940,6 +2748,7 @@ window.renderTournament =
                 :
                 "VS"
               }
+
             </span>
 
             <b>
@@ -3026,18 +2835,12 @@ window.renderResults =
         return;
 
 
-      const a =
-      board[r.playerAId];
-
-      const b =
-      board[r.playerBId];
+      const a = board[r.playerAId];
+      const b = board[r.playerBId];
 
 
-      const sa =
-      Number(r.scoreA);
-
-      const sb =
-      Number(r.scoreB);
+      const sa = Number(r.scoreA);
+      const sb = Number(r.scoreB);
 
 
       a.played++;
@@ -3323,33 +3126,25 @@ window.renderProfile =
   <div class="statgrid">
 
     <div class="statbox">
-      <span class="muted small">
-        Played
-      </span>
+      <span class="muted small">Played</span>
       <br>
       <b>${s.played}</b>
     </div>
 
     <div class="statbox">
-      <span class="muted small">
-        Wins
-      </span>
+      <span class="muted small">Wins</span>
       <br>
       <b>${s.wins}</b>
     </div>
 
     <div class="statbox">
-      <span class="muted small">
-        Losses
-      </span>
+      <span class="muted small">Losses</span>
       <br>
       <b>${s.losses}</b>
     </div>
 
     <div class="statbox">
-      <span class="muted small">
-        Win Rate
-      </span>
+      <span class="muted small">Win Rate</span>
       <br>
       <b>${s.winRate}%</b>
     </div>
@@ -3357,9 +3152,9 @@ window.renderProfile =
   </div>
 
 
-  <div
-    class="card"
-    style="margin-top:13px">
+  <!-- PLAYER INFORMATION -->
+
+  <div class="card" style="margin-top:13px">
 
     <h3>
       Player Information
@@ -3382,6 +3177,7 @@ window.renderProfile =
         </b>
       </div>
 
+
       <div>
         <span class="small muted">
           Konami UID
@@ -3395,28 +3191,30 @@ window.renderProfile =
         </b>
       </div>
 
+
       <div>
         <span class="small muted">
-          Mobile
+          📞 Mobile
         </span>
         <br>
         <b>
           ${esc(
             profile?.mobile ||
-            "—"
+            "Not specified"
           )}
         </b>
       </div>
 
+
       <div>
         <span class="small muted">
-          Device
+          📱 Device / Mobile Model
         </span>
         <br>
         <b>
           ${esc(
             profile?.device ||
-            "—"
+            "Not specified"
           )}
         </b>
       </div>
@@ -3425,6 +3223,8 @@ window.renderProfile =
 
   </div>
 
+
+  <!-- MATCH HISTORY -->
 
   <div
     class="card"
@@ -3546,17 +3346,12 @@ window.admin =
 
     `;
 
-    $("acont").style.display =
-    "none";
+    $("acont").style.display = "none";
 
     return;
 
   }
 
-
-  /*
-   ONLY ADMIN EMAIL
-  */
 
   if(!isAdminUser()){
 
@@ -3577,8 +3372,7 @@ window.admin =
 
     `;
 
-    $("acont").style.display =
-    "none";
+    $("acont").style.display = "none";
 
     return;
 
@@ -3599,8 +3393,7 @@ window.admin =
   `;
 
 
-  $("acont").style.display =
-  "block";
+  $("acont").style.display = "block";
 
 
   adminPlayers();
@@ -3619,16 +3412,12 @@ window.atab =
     .querySelectorAll(".tab")
     .forEach(
       x =>
-      x.classList.remove(
-        "active"
-      )
+      x.classList.remove("active")
     );
 
 
   if(button)
-    button.classList.add(
-      "active"
-    );
+    button.classList.add("active");
 
 
   if(tab === "players")
@@ -3706,6 +3495,13 @@ function adminPlayers(){
                 ${esc(p.konamiUid)}
                 •
                 ${esc(p.email)}
+              </div>
+
+              <div class="small muted"
+                   style="margin-top:4px">
+                📱 ${esc(p.device || "Device not specified")}
+                •
+                📞 ${esc(p.mobile || "Mobile not specified")}
               </div>
 
             </div>
@@ -3806,7 +3602,7 @@ id => {
 
   <div class="field">
 
-    <label>Device</label>
+    <label>Device / Mobile Model</label>
 
     <input
       id="md"
@@ -3852,27 +3648,30 @@ async id => {
     );
 
 
-    const name = $("mn").value.trim();
-    const konamiUid = $("mu").value.trim();
+    const name =
+    $("mn").value.trim();
+
+    const konamiUid =
+    $("mu").value.trim();
+
 
     if(!name || !konamiUid){
-      alert("Name and Konami UID are required.");
+
+      alert(
+        "Name and Konami UID are required."
+      );
+
       return;
+
     }
+
 
     const data = {
 
-      name:
-      name,
-
-      konamiUid:
-      konamiUid,
-
-      mobile:
-      $("mm").value.trim(),
-
-      device:
-      $("md").value.trim()
+      name:name,
+      konamiUid:konamiUid,
+      mobile:$("mm").value.trim(),
+      device:$("md").value.trim()
 
     };
 
@@ -3943,7 +3742,6 @@ function adminTournaments(){
       <div class="field">
 
         <label>Name</label>
-
         <input id="tn">
 
       </div>
@@ -3966,21 +3764,10 @@ function adminTournaments(){
 
         <select id="ts">
 
-          <option>
-            Registration Open
-          </option>
-
-          <option>
-            Upcoming
-          </option>
-
-          <option>
-            Live
-          </option>
-
-          <option>
-            Completed
-          </option>
+          <option>Registration Open</option>
+          <option>Upcoming</option>
+          <option>Live</option>
+          <option>Completed</option>
 
         </select>
 
@@ -3990,7 +3777,6 @@ function adminTournaments(){
       <div class="field">
 
         <label>Prize</label>
-
         <input id="tp">
 
       </div>
@@ -4001,7 +3787,6 @@ function adminTournaments(){
     <div class="field">
 
       <label>Description</label>
-
       <textarea id="tx"></textarea>
 
     </div>
@@ -4087,10 +3872,17 @@ async () => {
     const name =
     $("tn").value.trim();
 
+
     if(!name){
-      alert("Tournament name is required.");
+
+      alert(
+        "Tournament name is required."
+      );
+
       return;
+
     }
+
 
     await addDoc(
       collection(
@@ -4099,23 +3891,12 @@ async () => {
       ),
       {
 
-        name:
-        name,
-
-        date:
-        $("td").value,
-
-        status:
-        $("ts").value,
-
-        prize:
-        $("tp").value.trim(),
-
-        description:
-        $("tx").value.trim(),
-
-        createdAt:
-        serverTimestamp()
+        name:name,
+        date:$("td").value,
+        status:$("ts").value,
+        prize:$("tp").value.trim(),
+        description:$("tx").value.trim(),
+        createdAt:serverTimestamp()
 
       }
     );
@@ -4431,9 +4212,7 @@ async () => {
 
 
     const players =
-    shuffle(
-      [...D.players]
-    );
+    shuffle([...D.players]);
 
 
     const tournament =
@@ -4478,11 +4257,8 @@ async () => {
       const pair of pairs
     ){
 
-      const a =
-      pair[0];
-
-      const b =
-      pair[1];
+      const a = pair[0];
+      const b = pair[1];
 
 
       await addDoc(
@@ -4492,29 +4268,14 @@ async () => {
         ),
         {
 
-          playerAId:
-          a.id,
-
-          playerBId:
-          b.id,
-
-          playerA:
-          a.name,
-
-          playerB:
-          b.name,
-
-          tournament:
-          tournament,
-
-          date:
-          date,
-
-          status:
-          "scheduled",
-
-          createdAt:
-          serverTimestamp()
+          playerAId:a.id,
+          playerBId:b.id,
+          playerA:a.name,
+          playerB:b.name,
+          tournament:tournament,
+          date:date,
+          status:"scheduled",
+          createdAt:serverTimestamp()
 
         }
       );
@@ -4642,16 +4403,29 @@ function adminResults(){
 
       <select id="rF" onchange="syncResultFixture()">
 
-        <option value="">Manual result</option>
+        <option value="">
+          Manual result
+        </option>
 
         ${
           D.fixtures
-          .filter(f => f.status !== "completed")
+          .filter(
+            f =>
+            f.status !== "completed"
+          )
           .map(
             f => `
+
             <option value="${esc(f.id)}">
-              ${esc(f.playerA)} vs ${esc(f.playerB)} — ${esc(f.tournament || "Tournament")}
+
+              ${esc(f.playerA)}
+              vs
+              ${esc(f.playerB)}
+              —
+              ${esc(f.tournament || "Tournament")}
+
             </option>
+
             `
           ).join("")
         }
@@ -4660,13 +4434,12 @@ function adminResults(){
 
     </div>
 
+
     <div class="grid2">
 
       <div class="field">
 
-        <label>
-          Player A
-        </label>
+        <label>Player A</label>
 
         <select id="rA">
 
@@ -4689,9 +4462,7 @@ function adminResults(){
 
       <div class="field">
 
-        <label>
-          Player B
-        </label>
+        <label>Player B</label>
 
         <select id="rB">
 
@@ -4714,9 +4485,7 @@ function adminResults(){
 
       <div class="field">
 
-        <label>
-          Score A
-        </label>
+        <label>Score A</label>
 
         <input
           id="rSA"
@@ -4729,9 +4498,7 @@ function adminResults(){
 
       <div class="field">
 
-        <label>
-          Score B
-        </label>
+        <label>Score B</label>
 
         <input
           id="rSB"
@@ -4744,9 +4511,7 @@ function adminResults(){
 
       <div class="field">
 
-        <label>
-          Tournament
-        </label>
+        <label>Tournament</label>
 
         <input id="rT">
 
@@ -4755,9 +4520,7 @@ function adminResults(){
 
       <div class="field">
 
-        <label>
-          Date
-        </label>
+        <label>Date</label>
 
         <input
           id="rD"
@@ -4837,24 +4600,47 @@ function adminResults(){
 
 
 /* =====================================================
-   SYNC RESULT FORM WITH FIXTURE
+   SYNC RESULT FIXTURE
 ===================================================== */
 
 window.syncResultFixture = () => {
 
-  const fixtureId = $("rF")?.value || "";
+  const fixtureId =
+  $("rF")?.value || "";
 
-  if(!fixtureId) return;
+
+  if(!fixtureId)
+    return;
+
 
   const fixture =
-  D.fixtures.find(f => f.id === fixtureId);
+  D.fixtures.find(
+    f => f.id === fixtureId
+  );
 
-  if(!fixture) return;
 
-  if($("rA")) $("rA").value = fixture.playerAId || "";
-  if($("rB")) $("rB").value = fixture.playerBId || "";
-  if($("rT")) $("rT").value = fixture.tournament || "";
-  if($("rD")) $("rD").value = fixture.date || "";
+  if(!fixture)
+    return;
+
+
+  if($("rA"))
+    $("rA").value =
+    fixture.playerAId || "";
+
+
+  if($("rB"))
+    $("rB").value =
+    fixture.playerBId || "";
+
+
+  if($("rT"))
+    $("rT").value =
+    fixture.tournament || "";
+
+
+  if($("rD"))
+    $("rD").value =
+    fixture.date || "";
 
 };
 
@@ -4889,8 +4675,13 @@ async () => {
       $("rB").value
     );
 
-    const scoreA = Number($("rSA").value);
-    const scoreB = Number($("rSB").value);
+
+    const scoreA =
+    Number($("rSA").value);
+
+    const scoreB =
+    Number($("rSB").value);
+
 
     if(
       !a ||
@@ -4906,17 +4697,26 @@ async () => {
 
     }
 
+
     if(
       !Number.isFinite(scoreA) ||
       !Number.isFinite(scoreB) ||
       scoreA < 0 ||
       scoreB < 0
     ){
-      alert("Scores must be valid numbers greater than or equal to 0.");
+
+      alert(
+        "Scores must be valid numbers greater than or equal to 0."
+      );
+
       return;
+
     }
 
-    const fixtureId = $("rF")?.value || "";
+
+    const fixtureId =
+    $("rF")?.value || "";
+
 
     const resultRef =
     await addDoc(
@@ -4926,41 +4726,21 @@ async () => {
       ),
       {
 
-        playerAId:
-        a.id,
-
-        playerBId:
-        b.id,
-
-        playerA:
-        a.name,
-
-        playerB:
-        b.name,
-
-        scoreA:
-        scoreA,
-
-        scoreB:
-        scoreB,
-
-        fixtureId:
-        fixtureId || null,
-
-        tournament:
-        $("rT").value.trim(),
-
-        date:
-        $("rD").value,
-
-        status:
-        "Final",
-
-        createdAt:
-        serverTimestamp()
+        playerAId:a.id,
+        playerBId:b.id,
+        playerA:a.name,
+        playerB:b.name,
+        scoreA:scoreA,
+        scoreB:scoreB,
+        fixtureId:fixtureId || null,
+        tournament:$("rT").value.trim(),
+        date:$("rD").value,
+        status:"Final",
+        createdAt:serverTimestamp()
 
       }
     );
+
 
     if(fixtureId){
 
@@ -4971,14 +4751,17 @@ async () => {
           fixtureId
         ),
         {
-          status: "completed",
-          scoreA: scoreA,
-          scoreB: scoreB,
-          resultId: resultRef.id
+
+          status:"completed",
+          scoreA:scoreA,
+          scoreB:scoreB,
+          resultId:resultRef.id
+
         }
       );
 
     }
+
 
     await load();
 
@@ -5160,13 +4943,23 @@ async () => {
 
   try{
 
-    const title = $("rtitle").value.trim();
-    const body = $("rbody").value.trim();
+    const title =
+    $("rtitle").value.trim();
+
+    const body =
+    $("rbody").value.trim();
+
 
     if(!title || !body){
-      alert("Rule title and rule text are required.");
+
+      alert(
+        "Rule title and rule text are required."
+      );
+
       return;
+
     }
+
 
     await addDoc(
       collection(
@@ -5175,14 +4968,9 @@ async () => {
       ),
       {
 
-        title:
-        title,
-
-        body:
-        body,
-
-        createdAt:
-        serverTimestamp()
+        title:title,
+        body:body,
+        createdAt:serverTimestamp()
 
       }
     );
