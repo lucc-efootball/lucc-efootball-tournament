@@ -3508,11 +3508,19 @@ function adminPlayers(){
 
           </div>
 
-          <button
-            class="btn"
-            onclick="editPlayer('${esc(p.id)}')">
-            Edit
-          </button>
+          <div class="actions" style="margin-top:0;justify-content:flex-end">
+            <button
+              class="btn"
+              onclick="editPlayer('${esc(p.id)}')">
+              Edit
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="removePlayer('${esc(p.id)}')">
+              🗑️ Remove
+            </button>
+          </div>
 
         </div>
 
@@ -3720,6 +3728,74 @@ async id => {
 
   }
 
+};
+
+
+/* =====================================================
+   REMOVE PLAYER
+===================================================== */
+
+window.removePlayer =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
+  if(!p) return;
+
+  const playerName = p.name || "this player";
+
+  const confirmed = confirm(
+    `Remove ${playerName} from LUCC?\n\nThis will remove the player's profile from the Players list and delete the related Firestore profile data.`
+  );
+
+  if(!confirmed) return;
+
+  try{
+
+    // Remove the player profile.
+    await deleteDoc(
+      doc(
+        db,
+        "players",
+        id
+      )
+    );
+
+    // Also remove the matching user profile when the UID exists.
+    if(p.uid){
+      await deleteDoc(
+        doc(
+          db,
+          "users",
+          p.uid
+        )
+      );
+    }
+
+    // Refresh local data and the admin player list.
+    await load();
+    adminPlayers();
+
+    alert(
+      `${playerName} has been removed from the player list.`
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      firebaseError(error)
+    );
+  }
 };
 
 
