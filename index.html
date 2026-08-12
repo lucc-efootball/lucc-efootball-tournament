@@ -4040,6 +4040,10 @@ window.generateKnockout = async tournamentId => {
 };
 
 async function advanceWinner(fixture,winnerId,winnerName,winnerAvatar=""){
+  // Move ONLY the approved winner into the exact linked slot.
+  // Never create a result, never choose another winner, and never
+  // touch unrelated matches. The next fixture becomes playable only
+  // when both of its slots have been filled by approved winners.
   if(!fixture.nextFixtureId) return;
   const nextRef=doc(db,"fixtures",fixture.nextFixtureId);
   const snap=await getDoc(nextRef);
@@ -4047,14 +4051,23 @@ async function advanceWinner(fixture,winnerId,winnerName,winnerAvatar=""){
   const next=snap.data();
   const slot=fixture.nextSlot||((Number(fixture.matchNumber)%2===1)?"A":"B");
   const update = {};
+
   if(slot==="A"){
-    update.playerAId=winnerId; update.playerA=winnerName; update.playerAAvatar=winnerAvatar;
+    update.playerAId=winnerId;
+    update.playerA=winnerName;
+    update.playerAAvatar=winnerAvatar;
   }else{
-    update.playerBId=winnerId; update.playerB=winnerName; update.playerBAvatar=winnerAvatar;
+    update.playerBId=winnerId;
+    update.playerB=winnerName;
+    update.playerBAvatar=winnerAvatar;
   }
-  const aId=slot==="A" ? winnerId : next.playerAId;
-  const bId=slot==="B" ? winnerId : next.playerBId;
-  if(aId && bId) update.status="scheduled";
+
+  const aId = slot==="A" ? winnerId : (next.playerAId || null);
+  const bId = slot==="B" ? winnerId : (next.playerBId || null);
+
+  // Only this next fixture changes from waiting -> scheduled when
+  // BOTH approved winners are present. Otherwise it stays waiting.
+  update.status = (aId && bId) ? "scheduled" : "waiting";
   await updateDoc(nextRef,update);
 }
 async function resolveKnockoutByes(tournamentId){
@@ -4269,12 +4282,15 @@ window.approveResult = async resultId => {
     const winner=D.players.find(p=>p.id===winnerId);
 
     await updateDoc(doc(db,"results",r.id),{status:"Final",approvedBy:currentUser.uid,approvedAt:serverTimestamp()});
+    // IMPORTANT: approval advances ONLY this match's winner into its
+    // linked next-round slot. We do NOT recalculate or finalize any
+    // other matches here. Every other fixture remains exactly as it is
+    // until its own result is submitted and approved.
     await updateDoc(doc(db,"fixtures",f.id),{
       status:"completed",scoreA:Number(r.scoreA),scoreB:Number(r.scoreB),
       winnerId,winnerName:winner?.name||"",winnerAvatar:winner?.avatarUrl||"",resultId:r.id
     });
     await advanceWinner({...f,winnerId},winnerId,winner?.name||"",winner?.avatarUrl||"");
-    await resolveKnockoutByes(f.tournamentId);
     await load();
     adminResults();
     renderTournament();
