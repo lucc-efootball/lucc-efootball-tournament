@@ -443,16 +443,16 @@ select:focus{
   border:1px solid #765cff33;
 }
 
-.badge-gold{
-  color:#ffc857;
-  background:#ffc8571a;
-  border:1px solid #ffc85744;
-}
-
 .badge-green{
   color:#72e8bd;
   background:#20d39b12;
   border:1px solid #20d39b33;
+}
+
+.badge-gold{
+  color:#ffe08a;
+  background:#ffc85712;
+  border:1px solid #ffc85733;
 }
 
 .list{
@@ -484,9 +484,6 @@ select:focus{
 .clickable{
   cursor:pointer;
   transition:.18s;
-}
-.clickable:hover{
-  opacity:0.8;
 }
 
 .statgrid{
@@ -607,6 +604,29 @@ footer{
 }
 
 .bottom{display:none}
+
+
+/* =====================================================
+   KNOCKOUT TOURNAMENT UI
+===================================================== */
+.bracket-wrap{overflow-x:auto;padding-bottom:8px}
+.bracket{display:flex;gap:18px;align-items:flex-start;min-width:max-content}
+.bracket-round{width:280px;flex:none}
+.bracket-round h3{margin:0 0 10px}
+.bracket-match{position:relative;margin:0 0 14px;padding:13px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(180deg,#111824,#0b1018)}
+.bracket-player{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid #ffffff0a}
+.bracket-player:last-child{border-bottom:0}
+.bracket-player .mini{display:flex;align-items:center;gap:8px;min-width:0}
+.bracket-player .mini span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bracket-avatar{width:34px;height:34px;border-radius:10px;object-fit:cover;background:#1a2231;border:1px solid #ffffff14;flex:none}
+.bracket-score{font-weight:950}
+.fixture-actions{margin-top:10px;display:flex;gap:7px;flex-wrap:wrap}
+.pending{color:#ffe08a;background:#ffc85712;border-color:#ffc85733}
+.bye{color:#72e8bd;background:#20d39b10;border-color:#20d39b33}
+.tplayer-list{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:14px;padding:8px}
+.tplayer{display:flex;align-items:center;gap:9px;padding:8px;border-radius:10px}
+.tplayer:hover{background:#ffffff06}
+.tplayer input{width:auto}
 
 @media(max-width:800px){
 
@@ -975,11 +995,13 @@ Don't have an account?
 </div>
 </div>
 
-<div class="search">
+<div class="search actions" style="margin-bottom:14px">
 
 <input id="playerSearch"
        placeholder="🔎 Search player name or UID..."
-       oninput="renderPlayers()">
+       onkeydown="if(event.key==='Enter')renderPlayers()">
+
+<button class="btn primary" onclick="renderPlayers()">🔎 Search</button>
 
 </div>
 
@@ -1010,22 +1032,12 @@ Don't have an account?
 
 <div class="head">
 <div>
-<h2>Tournaments</h2>
-<p>Tournament information and live updates.</p>
+<h2>Tournament</h2>
+<p>Fixtures, schedule and tournament information.</p>
 </div>
 </div>
-<div id="tourList"></div>
 
-<div class="head" style="margin-top:35px">
-<div>
-<h2>Knockout Brackets</h2>
-<p>Current fixtures. Click on a player's profile to view details.</p>
-</div>
-</div>
-<div class="search">
-<input id="fixSearch" placeholder="🔎 Search player name or tournament..." oninput="renderFixturesOnly()">
-</div>
-<div id="tourFix" class="list"></div>
+<div id="tour"></div>
 
 </section>
 
@@ -1214,13 +1226,27 @@ from
 ===================================================== */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCVD_Qn5_JBMlvY_edurZkheB0G-ekUVFs",
-  authDomain: "lucc-efootball-tournamen-a2eef.firebaseapp.com",
-  projectId: "lucc-efootball-tournamen-a2eef",
-  storageBucket: "lucc-efootball-tournamen-a2eef.firebasestorage.app",
-  messagingSenderId: "562916468135",
-  appId: "1:562916468135:web:8e8b72af92757f407dc282",
-  measurementId: "G-HRMKH8HFQZ"
+
+  apiKey:
+  "AIzaSyCVD_Qn5_JBMlvY_edurZkheB0G-ekUVFs",
+
+  authDomain:
+  "lucc-efootball-tournamen-a2eef.firebaseapp.com",
+
+  projectId:
+  "lucc-efootball-tournamen-a2eef",
+
+  storageBucket:
+  "lucc-efootball-tournamen-a2eef.firebasestorage.app",
+
+  messagingSenderId:
+  "562916468135",
+
+  appId:
+  "1:562916468135:web:8e8b72af92757f407dc282",
+
+  measurementId:
+  "G-HRMKH8HFQZ"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -1232,7 +1258,8 @@ const db = getFirestore(app);
    ADMIN EMAIL
 ===================================================== */
 
-const ADMIN_EMAIL = "hrpteam333@gmail.com";
+const ADMIN_EMAIL =
+"hrpteam333@gmail.com";
 
 
 /* =====================================================
@@ -1269,35 +1296,65 @@ String(x ?? "")
 
 
 function isAdminUser(){
+
   return !!(
     currentUser &&
     currentUser.email &&
-    currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+    currentUser.email.toLowerCase() ===
+    ADMIN_EMAIL.toLowerCase()
   );
+
 }
 
 
 function note(id,text,ok=false){
-  if(!$(id)) return;
+
+  if(!$(
+    id
+  )) return;
+
   $(id).innerHTML =
   `<div class="notice ${ok?"success":"error"}">
     ${esc(text)}
   </div>`;
+
 }
 
 
 function firebaseError(e){
+
   const m = {
-    "auth/email-already-in-use": "This email is already registered. Please login.",
-    "auth/invalid-email": "Invalid email address.",
-    "auth/weak-password": "Password must contain at least 6 characters.",
-    "auth/invalid-credential": "Wrong email or password.",
-    "auth/user-not-found": "No account found with this email.",
-    "auth/wrong-password": "Wrong password.",
-    "auth/network-request-failed": "Network error. Check your internet connection.",
-    "permission-denied": "You don't have permission for this action."
+
+    "auth/email-already-in-use":
+    "This email is already registered. Please login.",
+
+    "auth/invalid-email":
+    "Invalid email address.",
+
+    "auth/weak-password":
+    "Password must contain at least 6 characters.",
+
+    "auth/invalid-credential":
+    "Wrong email or password.",
+
+    "auth/user-not-found":
+    "No account found with this email.",
+
+    "auth/wrong-password":
+    "Wrong password.",
+
+    "auth/network-request-failed":
+    "Network error. Check your internet connection.",
+
+    "permission-denied":
+    "You don't have permission for this action."
+
   };
-  return m[e?.code] || e?.message || "Something went wrong.";
+
+  return m[e?.code] ||
+         e?.message ||
+         "Something went wrong.";
+
 }
 
 
@@ -1306,19 +1363,51 @@ function firebaseError(e){
 ===================================================== */
 
 window.go = p => {
-  document.querySelectorAll(".page").forEach(x => x.classList.remove("active"));
-  if($(p)) $(p).classList.add("active");
 
-  document.querySelectorAll("[data-p]").forEach(x => x.classList.toggle("active", x.dataset.p === p));
+  document
+    .querySelectorAll(".page")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
 
-  scrollTo({top:0, behavior:"smooth"});
+  if($(p))
+    $(p).classList.add("active");
 
-  if(p === "players") renderPlayers();
-  if(p === "results") renderResults();
-  if(p === "rules") renderRules();
-  if(p === "tournament") renderTournament();
-  if(p === "profile") renderProfile();
-  if(p === "admin") admin();
+
+  document
+    .querySelectorAll("[data-p]")
+    .forEach(x =>
+      x.classList.toggle(
+        "active",
+        x.dataset.p === p
+      )
+    );
+
+
+  scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  if(p === "players")
+    renderPlayers();
+
+  if(p === "results")
+    renderResults();
+
+  if(p === "rules")
+    renderRules();
+
+  if(p === "tournament")
+    renderTournament();
+
+  if(p === "profile")
+    renderProfile();
+
+  if(p === "admin")
+    admin();
+
 };
 
 
@@ -1327,8 +1416,12 @@ window.go = p => {
 ===================================================== */
 
 window.toggleMobileMenu = () => {
-  if(currentUser) go("profile");
-  else go("login");
+
+  if(currentUser)
+    go("profile");
+  else
+    go("login");
+
 };
 
 
@@ -1337,36 +1430,109 @@ window.toggleMobileMenu = () => {
 ===================================================== */
 
 function compressImage(file){
+
   return new Promise((resolve,reject)=>{
-    if(!file) { resolve(""); return; }
-    if(!file.type.startsWith("image/")) { reject(new Error("Please select an image.")); return; }
-    
+
+    if(!file){
+      resolve("");
+      return;
+    }
+
+    if(!file.type.startsWith("image/")){
+      reject(new Error("Please select an image."));
+      return;
+    }
+
+
     const reader = new FileReader();
+
+
     reader.onload = () => {
+
       const img = new Image();
+
+
       img.onload = () => {
+
         let w = img.width;
         let h = img.height;
         const max = 420;
+
+
         if(w > max || h > max){
-          const scale = Math.min(max/w, max/h);
+
+          const scale =
+          Math.min(
+            max/w,
+            max/h
+          );
+
           w = Math.round(w * scale);
           h = Math.round(h * scale);
+
         }
-        const canvas = document.createElement("canvas");
+
+
+        const canvas =
+        document.createElement("canvas");
+
+
         canvas.width = w;
         canvas.height = h;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, w, h);
-        const data = canvas.toDataURL("image/jpeg", .65);
+
+
+        const ctx =
+        canvas.getContext("2d");
+
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          w,
+          h
+        );
+
+
+        const data =
+        canvas.toDataURL(
+          "image/jpeg",
+          .65
+        );
+
+
         resolve(data);
+
       };
-      img.onerror = () => reject(new Error("Could not read image."));
+
+
+      img.onerror = () => {
+
+        reject(
+          new Error("Could not read image.")
+        );
+
+      };
+
+
       img.src = reader.result;
+
     };
-    reader.onerror = () => reject(new Error("Image reading failed."));
+
+
+    reader.onerror = () => {
+
+      reject(
+        new Error("Image reading failed.")
+      );
+
+    };
+
+
     reader.readAsDataURL(file);
+
   });
+
 }
 
 
@@ -1374,15 +1540,32 @@ function compressImage(file){
    AVATAR PREVIEW
 ===================================================== */
 
-$("avatar").onchange = async e => {
+$("avatar").onchange =
+async e => {
+
   try{
-    const data = await compressImage(e.target.files[0]);
-    if(!data) return;
+
+    const data =
+    await compressImage(
+      e.target.files[0]
+    );
+
+    if(!data)
+      return;
+
+
     $("preview").src = data;
     $("preview").style.display = "block";
+
   }catch(error){
-    note("regmsg", error.message);
+
+    note(
+      "regmsg",
+      error.message
+    );
+
   }
+
 };
 
 
@@ -1390,35 +1573,100 @@ $("avatar").onchange = async e => {
    REGISTRATION
 ===================================================== */
 
-$("reg").onsubmit = async e => {
+$("reg").onsubmit =
+async e => {
+
   e.preventDefault();
+
+
   const btn = $("regBtn");
+
   btn.disabled = true;
   btn.textContent = "Creating account...";
-  note("regmsg", "Creating your account...", true);
-  
-  let createdUser = null;
-  
-  try{
-    const name = $("name").value.trim();
-    const konamiUid = $("uid").value.trim();
-    const email = $("email").value.trim();
-    const mobile = $("mobile").value.trim();
-    const device = $("device").value.trim() || "Not specified";
 
-    if(!name || !konamiUid || !email || !$("pass").value) throw new Error("Please complete all required fields.");
-    
-    const result = await createUserWithEmailAndPassword(auth, email, $("pass").value);
+
+  note(
+    "regmsg",
+    "Creating your account...",
+    true
+  );
+
+
+  let createdUser = null;
+
+
+  try{
+
+    const name =
+    $("name").value.trim();
+
+    const konamiUid =
+    $("uid").value.trim();
+
+    const email =
+    $("email").value.trim();
+
+    const mobile =
+    $("mobile").value.trim();
+
+    const device =
+    $("device").value.trim() ||
+    "Not specified";
+
+
+    if(
+      !name ||
+      !konamiUid ||
+      !email ||
+      !$("pass").value
+    ){
+
+      throw new Error(
+        "Please complete all required fields."
+      );
+
+    }
+
+
+    const result =
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      $("pass").value
+    );
+
+
     const user = result.user;
     createdUser = user;
 
-    await updateProfile(user, { displayName:name });
+
+    await updateProfile(
+      user,
+      {
+        displayName:name
+      }
+    );
+
 
     let avatarUrl = "";
-    const avatarFile = $("avatar").files[0];
-    if(avatarFile) avatarUrl = await compressImage(avatarFile);
+
+
+    const avatarFile =
+    $("avatar").files[0];
+
+
+    if(avatarFile){
+
+      avatarUrl =
+      await compressImage(
+        avatarFile
+      );
+
+    }
+
 
     const playerData = {
+
       uid:user.uid,
       name:name,
       konamiUid:konamiUid,
@@ -1428,29 +1676,74 @@ $("reg").onsubmit = async e => {
       avatarUrl:avatarUrl,
       role:"user",
       createdAt:serverTimestamp()
+
     };
 
-    await setDoc(doc(db,"users",user.uid), playerData);
-    await setDoc(doc(db,"players",user.uid), playerData);
+
+    await setDoc(
+      doc(db,"users",user.uid),
+      playerData
+    );
+
+
+    await setDoc(
+      doc(db,"players",user.uid),
+      playerData
+    );
+
 
     $("reg").reset();
     $("preview").style.display = "none";
-    note("regmsg", "Registration successful! Welcome to LUCC.", true);
-    
+
+
+    note(
+      "regmsg",
+      "Registration successful! Welcome to LUCC.",
+      true
+    );
+
+
     await load();
+
     go("profile");
 
+
   }catch(error){
+
     console.error(error);
+
+
     if(createdUser){
-      try{ await deleteUser(createdUser); }
-      catch(rollbackError){ console.error("Registration rollback failed:", rollbackError); }
+
+      try{
+
+        await deleteUser(createdUser);
+
+      }catch(rollbackError){
+
+        console.error(
+          "Registration rollback failed:",
+          rollbackError
+        );
+
+      }
+
     }
-    note("regmsg", firebaseError(error));
+
+
+    note(
+      "regmsg",
+      firebaseError(error)
+    );
+
+
   }finally{
+
     btn.disabled = false;
     btn.textContent = "Create Account";
+
   }
+
 };
 
 
@@ -1458,23 +1751,58 @@ $("reg").onsubmit = async e => {
    LOGIN
 ===================================================== */
 
-$("signin").onsubmit = async e => {
+$("signin").onsubmit =
+async e => {
+
   e.preventDefault();
+
+
   const btn = $("loginBtn");
+
   btn.disabled = true;
   btn.textContent = "Signing in...";
-  note("loginmsg", "Signing in...", true);
+
+
+  note(
+    "loginmsg",
+    "Signing in...",
+    true
+  );
+
 
   try{
-    await signInWithEmailAndPassword(auth, $("lemail").value.trim(), $("lpass").value);
+
+    await signInWithEmailAndPassword(
+      auth,
+      $("lemail").value.trim(),
+      $("lpass").value
+    );
+
+
     $("signin").reset();
-    note("loginmsg", "Login successful!", true);
+
+
+    note(
+      "loginmsg",
+      "Login successful!",
+      true
+    );
+
+
   }catch(error){
-    note("loginmsg", firebaseError(error));
+
+    note(
+      "loginmsg",
+      firebaseError(error)
+    );
+
   }finally{
+
     btn.disabled = false;
     btn.textContent = "Login";
+
   }
+
 };
 
 
@@ -1482,16 +1810,27 @@ $("signin").onsubmit = async e => {
    LOGOUT
 ===================================================== */
 
-window.logout = async () => {
+window.logout =
+async () => {
+
   try{
+
     await signOut(auth);
+
     currentUser = null;
     profile = null;
+
     updateNav();
     go("home");
+
   }catch(error){
-    alert(firebaseError(error));
+
+    alert(
+      firebaseError(error)
+    );
+
   }
+
 };
 
 
@@ -1500,19 +1839,30 @@ window.logout = async () => {
 ===================================================== */
 
 function updateNav(){
+
   if(currentUser){
+
     $("loginNav").style.display = "none";
     $("profileNav").style.display = "inline-block";
     $("logoutNav").style.display = "inline-block";
-    $("adminNav").style.display = isAdminUser() ? "inline-block" : "none";
+
+    $("adminNav").style.display =
+    isAdminUser()
+    ? "inline-block"
+    : "none";
+
     $("homeRegisterBtn").style.display = "none";
+
   }else{
+
     $("loginNav").style.display = "inline-block";
     $("profileNav").style.display = "none";
     $("logoutNav").style.display = "none";
     $("adminNav").style.display = "none";
     $("homeRegisterBtn").style.display = "inline-block";
+
   }
+
 }
 
 
@@ -1520,37 +1870,102 @@ function updateNav(){
    AUTH STATE
 ===================================================== */
 
-onAuthStateChanged(auth, async user => {
-  currentUser = user;
+onAuthStateChanged(
+  auth,
+  async user => {
 
-  if(user){
-    try{
-      const snap = await getDoc(doc(db, "users", user.uid));
-      if(snap.exists()){
-        profile = snap.data();
-      }else{
-        profile = { uid:user.uid, name:user.displayName || "Player", email:user.email, role:"user" };
+    currentUser = user;
+
+
+    if(user){
+
+      try{
+
+        const snap =
+        await getDoc(
+          doc(
+            db,
+            "users",
+            user.uid
+          )
+        );
+
+
+        if(snap.exists()){
+
+          profile = snap.data();
+
+        }else{
+
+          profile = {
+
+            uid:user.uid,
+            name:user.displayName || "Player",
+            email:user.email,
+            role:"user"
+
+          };
+
+        }
+
+      }catch(error){
+
+        console.error(
+          "Profile load error:",
+          error
+        );
+
+
+        profile = {
+
+          uid:user.uid,
+          name:user.displayName || "Player",
+          email:user.email,
+          role:"user"
+
+        };
+
       }
-    }catch(error){
-      console.error("Profile load error:", error);
-      profile = { uid:user.uid, name:user.displayName || "Player", email:user.email, role:"user" };
-    }
-    if(user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
-      profile.role = "admin";
-    }
-  }else{
-    profile = null;
-  }
 
-  updateNav();
-  $("loader").classList.add("off");
-  
-  await load();
 
-  if(user && $("profile").classList.contains("active")){
-    renderProfile();
+      if(
+        user.email &&
+        user.email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase()
+      ){
+
+        profile.role = "admin";
+
+      }
+
+
+    }else{
+
+      profile = null;
+
+    }
+
+
+    updateNav();
+
+
+    $("loader").classList.add("off");
+
+
+    await load();
+
+
+    if(
+      user &&
+      $("profile").classList.contains("active")
+    ){
+
+      renderProfile();
+
+    }
+
   }
-});
+);
 
 
 /* =====================================================
@@ -1558,13 +1973,31 @@ onAuthStateChanged(auth, async user => {
 ===================================================== */
 
 async function col(name){
+
   try{
-    const snap = await getDocs(collection(db,name));
-    return snap.docs.map(x => ({ id:x.id, ...x.data() }));
+
+    const snap =
+    await getDocs(
+      collection(db,name)
+    );
+
+
+    return snap.docs.map(
+      x => ({
+        id:x.id,
+        ...x.data()
+      })
+    );
+
+
   }catch(error){
+
     console.error(name,error);
+
     return [];
+
   }
+
 }
 
 
@@ -1573,21 +2006,25 @@ async function col(name){
 ===================================================== */
 
 async function load(){
+
   D.players = await col("players");
   D.results = await col("results");
   D.tournaments = await col("tournaments");
   D.rules = await col("rules");
   D.fixtures = await col("fixtures");
 
+
   $("sp").textContent = D.players.length;
   $("sr").textContent = D.results.length;
   $("st").textContent = D.tournaments.length;
+
 
   renderPlayers();
   renderResults();
   renderRules();
   renderTournament();
-  if($("profile").classList.contains("active")) renderProfile();
+  renderProfile();
+
 }
 
 
@@ -1596,29 +2033,91 @@ async function load(){
 ===================================================== */
 
 function playerStats(id){
-  const matches = D.results.filter(x => x.playerAId === id || x.playerBId === id);
-  let wins = 0; let losses = 0; let draws = 0;
+
+  const matches =
+  D.results.filter(
+    x =>
+      x.status !== "pending" &&
+      (x.playerAId === id ||
+      x.playerBId === id)
+  );
+
+
+  let wins = 0;
+  let losses = 0;
+  let draws = 0;
+
   const history = [];
 
-  matches.forEach(match => {
-    const isA = match.playerAId === id;
-    const mine = Number(isA ? match.scoreA : match.scoreB);
-    const opponentScore = Number(isA ? match.scoreB : match.scoreA);
 
-    if(mine > opponentScore) wins++;
-    else if(mine < opponentScore) losses++;
-    else draws++;
+  matches.forEach(match => {
+
+    const isA =
+    match.playerAId === id;
+
+
+    const mine =
+    Number(
+      isA
+      ? match.scoreA
+      : match.scoreB
+    );
+
+
+    const opponentScore =
+    Number(
+      isA
+      ? match.scoreB
+      : match.scoreA
+    );
+
+
+    if(mine > opponentScore)
+      wins++;
+
+    else if(mine < opponentScore)
+      losses++;
+
+    else
+      draws++;
+
 
     history.push({
-      opponent: isA ? match.playerB : match.playerA,
-      score: mine + " - " + opponentScore,
-      date: match.date || ""
+
+      opponent:
+      isA
+      ? match.playerB
+      : match.playerA,
+
+      score:
+      mine + " - " + opponentScore,
+
+      date:
+      match.date || ""
+
     });
+
   });
 
+
   const played = matches.length;
-  const winRate = played ? Math.round(wins / played * 100) : 0;
-  return { played, wins, losses, draws, winRate, history };
+
+
+  const winRate =
+  played
+  ? Math.round(wins / played * 100)
+  : 0;
+
+
+  return {
+    played,
+    wins,
+    losses,
+    draws,
+    winRate,
+    history
+  };
+
 }
 
 
@@ -1626,31 +2125,141 @@ function playerStats(id){
    PLAYERS
 ===================================================== */
 
-window.renderPlayers = () => {
-  const q = ($("playerSearch")?.value || "").trim().toLowerCase();
-  const players = D.players.filter(p => (p.name || "").toLowerCase().includes(q) || (p.konamiUid || "").toLowerCase().includes(q));
+window.renderPlayers =
+() => {
 
-  $("plist").innerHTML = players.length ? players.map(p => {
-    const s = playerStats(p.id);
+  const q =
+  (
+    $("playerSearch")?.value ||
+    ""
+  )
+  .trim()
+  .toLowerCase();
+
+
+  const players =
+  D.players.filter(
+    p =>
+      (p.name || "")
+      .toLowerCase()
+      .includes(q)
+
+      ||
+
+      (p.konamiUid || "")
+      .toLowerCase()
+      .includes(q)
+  );
+
+
+  $("plist").innerHTML =
+  players.length
+
+  ?
+
+  players.map(p => {
+
+    const s =
+    playerStats(p.id);
+
+
     return `
-    <div class="card player-card clickable" onclick="openPlayer('${esc(p.id)}')">
+
+    <div
+      class="card player-card clickable"
+      onclick="openPlayer('${esc(p.id)}')">
+
       <div class="player">
-        ${p.avatarUrl ? `<img class="avatar" src="${esc(p.avatarUrl)}" alt="Player avatar">` : `<div class="avatar" style="display:grid;place-items:center;font-size:24px">👤</div>`}
+
+        ${
+          p.avatarUrl
+
+          ?
+
+          `<img
+            class="avatar"
+            src="${esc(p.avatarUrl)}"
+            alt="Player avatar">`
+
+          :
+
+          `<div
+            class="avatar"
+            style="display:grid;place-items:center;font-size:24px">
+            👤
+           </div>`
+        }
+
         <div>
-          <h3>${esc(p.name)}</h3>
-          <span class="badge badge-purple">UID ${esc(p.konamiUid)}</span>
-          <div class="small muted" style="margin-top:6px">📱 ${esc(p.device || "Device not specified")}</div>
+
+          <h3>
+            ${esc(p.name)}
+          </h3>
+
+          <span class="badge badge-purple">
+            UID ${esc(p.konamiUid)}
+          </span>
+
+          <div
+            class="small muted"
+            style="margin-top:6px">
+
+            📱 ${esc(
+              p.device ||
+              "Device not specified"
+            )}
+
+          </div>
+
         </div>
+
       </div>
-      <div class="statgrid" style="margin-top:14px">
-        <div class="statbox"><span class="small muted">Played</span><br><b>${s.played}</b></div>
-        <div class="statbox"><span class="small muted">Wins</span><br><b>${s.wins}</b></div>
-        <div class="statbox"><span class="small muted">Losses</span><br><b>${s.losses}</b></div>
-        <div class="statbox"><span class="small muted">WR</span><br><b>${s.winRate}%</b></div>
+
+
+      <div
+        class="statgrid"
+        style="margin-top:14px">
+
+        <div class="statbox">
+          <span class="small muted">Played</span>
+          <br>
+          <b>${s.played}</b>
+        </div>
+
+        <div class="statbox">
+          <span class="small muted">Wins</span>
+          <br>
+          <b>${s.wins}</b>
+        </div>
+
+        <div class="statbox">
+          <span class="small muted">Losses</span>
+          <br>
+          <b>${s.losses}</b>
+        </div>
+
+        <div class="statbox">
+          <span class="small muted">WR</span>
+          <br>
+          <b>${s.winRate}%</b>
+        </div>
+
       </div>
+
     </div>
+
     `;
-  }).join("") : `<div class="empty">No player found.</div>`;
+
+  }).join("")
+
+  :
+
+  `
+  <div class="empty">
+    No player found.
+  </div>
+  `;
+
 };
 
 
@@ -1658,44 +2267,204 @@ window.renderPlayers = () => {
    PLAYER PROFILE MODAL
 ===================================================== */
 
-window.openPlayer = id => {
-  const p = D.players.find(x => x.id === id);
-  if(!p) return;
-  const s = playerStats(id);
+window.openPlayer =
+id => {
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
+
+  if(!p)
+    return;
+
+
+  const s =
+  playerStats(id);
+
 
   $("mc").innerHTML = `
+
   <div class="profile-banner">
+
     <div class="profile-top">
-      ${p.avatarUrl ? `<img class="avatar-xl" src="${esc(p.avatarUrl)}" alt="Player avatar">` : `<div class="avatar-xl" style="display:grid;place-items:center;font-size:38px">👤</div>`}
+
+      ${
+        p.avatarUrl
+
+        ?
+
+        `<img
+          class="avatar-xl"
+          src="${esc(p.avatarUrl)}"
+          alt="Player avatar">`
+
+        :
+
+        `<div
+          class="avatar-xl"
+          style="display:grid;place-items:center;font-size:38px">
+          👤
+         </div>`
+      }
+
+
       <div>
-        <span class="badge badge-purple">⚽ LUCC PLAYER</span>
-        <h2 style="margin-top:7px">${esc(p.name)}</h2>
-        <span class="badge">UID ${esc(p.konamiUid)}</span>
+
+        <span class="badge badge-purple">
+          ⚽ LUCC PLAYER
+        </span>
+
+        <h2 style="margin-top:7px">
+          ${esc(p.name)}
+        </h2>
+
+        <span class="badge">
+          UID ${esc(p.konamiUid)}
+        </span>
+
       </div>
+
     </div>
+
   </div>
+
+
+  <!-- DEVICE + MOBILE -->
 
   <div class="grid2" style="margin-top:14px">
-    <div class="statbox"><span class="small muted">📱 Device</span><br><b>${esc(p.device || "Not specified")}</b></div>
-    <div class="statbox"><span class="small muted">📞 Mobile</span><br><b>${esc(p.mobile || "Not specified")}</b></div>
+
+    <div class="statbox">
+
+      <span class="small muted">
+        📱 Device
+      </span>
+
+      <br>
+
+      <b>
+        ${esc(
+          p.device ||
+          "Not specified"
+        )}
+      </b>
+
+    </div>
+
+
+    <div class="statbox">
+
+      <span class="small muted">
+        📞 Mobile
+      </span>
+
+      <br>
+
+      <b>
+        ${esc(
+          p.mobile ||
+          "Not specified"
+        )}
+      </b>
+
+    </div>
+
   </div>
+
 
   <div class="statgrid">
-    <div class="statbox"><span class="muted small">Matches</span><br><b>${s.played}</b></div>
-    <div class="statbox"><span class="muted small">Wins</span><br><b>${s.wins}</b></div>
-    <div class="statbox"><span class="muted small">Losses</span><br><b>${s.losses}</b></div>
-    <div class="statbox"><span class="muted small">Win Rate</span><br><b>${s.winRate}%</b></div>
+
+    <div class="statbox">
+      <span class="muted small">Matches</span>
+      <br>
+      <b>${s.played}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Wins</span>
+      <br>
+      <b>${s.wins}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Losses</span>
+      <br>
+      <b>${s.losses}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Win Rate</span>
+      <br>
+      <b>${s.winRate}%</b>
+    </div>
+
   </div>
 
-  <h3 style="margin-top:22px">Match History</h3>
-  ${s.history.length ? [...s.history].reverse().map(x => `
+
+  <h3 style="margin-top:22px">
+    Match History
+  </h3>
+
+
+  ${
+    s.history.length
+
+    ?
+
+    [...s.history]
+    .reverse()
+    .map(
+      x => `
+
       <div class="row">
-        <span><span class="small muted">VS</span><br><b>${esc(x.opponent)}</b><br><span class="small muted">${esc(x.date)}</span></span>
-        <span class="badge badge-green">${esc(x.score)}</span>
+
+        <span>
+
+          <span class="small muted">
+            VS
+          </span>
+
+          <br>
+
+          <b>
+            ${esc(x.opponent)}
+          </b>
+
+          <br>
+
+          <span class="small muted">
+            ${esc(x.date)}
+          </span>
+
+        </span>
+
+        <span class="badge badge-green">
+          ${esc(x.score)}
+        </span>
+
       </div>
-    `).join("") : `<div class="empty">No completed matches yet.</div>`}
+
+      `
+    )
+    .join("")
+
+    :
+
+    `
+    <div class="empty">
+      No completed matches yet.
+    </div>
+    `
+  }
+
   `;
-  $("modal").classList.add("show");
+
+
+  $("modal")
+    .classList
+    .add("show");
+
 };
 
 
@@ -1703,199 +2472,515 @@ window.openPlayer = id => {
    RULES
 ===================================================== */
 
-window.renderRules = () => {
+window.renderRules =
+() => {
+
   $("rul").innerHTML = `
-  <div class="card"><span class="badge badge-purple">⚙️ MATCH SETTINGS</span><h3 style="margin-top:10px">Match Rules</h3>
+
+  <!-- MATCH RULES -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      ⚙️ MATCH SETTINGS
+    </span>
+
+    <h3 style="margin-top:10px">
+      Match Rules
+    </h3>
+
     <div class="list" style="margin-top:14px">
-      <div class="row"><span><span class="muted small">Match Time</span><br><b>8 min</b></span><span class="badge badge-green">8 MIN</span></div>
-      <div class="row"><span><span class="muted small">Condition</span><br><b>Normal</b></span><span class="badge">NORMAL</span></div>
-      <div class="row"><span><span class="muted small">Penalty</span><br><b>On</b></span><span class="badge badge-green">ON</span></div>
-      <div class="row"><span><span class="muted small">Extra Time</span><br><b>On</b></span><span class="badge badge-green">ON</span></div>
-      <div class="row"><span><span class="muted small">Smart Assist</span><br><b>Off</b></span><span class="badge danger">OFF</span></div>
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Match Time
+          </span>
+
+          <br>
+
+          <b>8 min</b>
+        </span>
+
+        <span class="badge badge-green">
+          8 MIN
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Condition
+          </span>
+
+          <br>
+
+          <b>Normal</b>
+        </span>
+
+        <span class="badge">
+          NORMAL
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Penalty
+          </span>
+
+          <br>
+
+          <b>On</b>
+        </span>
+
+        <span class="badge badge-green">
+          ON
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Extra Time
+          </span>
+
+          <br>
+
+          <b>On</b>
+        </span>
+
+        <span class="badge badge-green">
+          ON
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Smart Assist
+          </span>
+
+          <br>
+
+          <b>Off</b>
+        </span>
+
+        <span class="badge danger">
+          OFF
+        </span>
+
+      </div>
+
     </div>
+
   </div>
-  <div class="card"><span class="badge badge-purple">🤝 FAIR PLAY</span><h3 style="margin-top:10px">Fair Play</h3><p>No cheating, exploits or abusive behavior. All players must maintain fair and respectful gameplay.</p></div>
-  <div class="card"><span class="badge badge-purple">📶 CONNECTION</span><h3 style="margin-top:10px">Connection</h3><p>Players are responsible for maintaining a stable internet connection during their matches.</p></div>
-  <div class="card"><span class="badge badge-purple">🛡️ ADMIN</span><h3 style="margin-top:10px">Admin Decision</h3><p>Admin decisions regarding tournament disputes and match issues are final.</p></div>
+
+
+  <!-- FAIR PLAY -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      🤝 FAIR PLAY
+    </span>
+
+    <h3 style="margin-top:10px">
+      Fair Play
+    </h3>
+
+    <p>
+      No cheating, exploits or abusive behavior.
+      All players must maintain fair and respectful
+      gameplay.
+    </p>
+
+  </div>
+
+
+  <!-- CONNECTION -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      📶 CONNECTION
+    </span>
+
+    <h3 style="margin-top:10px">
+      Connection
+    </h3>
+
+    <p>
+      Players are responsible for maintaining a stable
+      internet connection during their matches.
+    </p>
+
+  </div>
+
+
+  <!-- ADMIN -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      🛡️ ADMIN
+    </span>
+
+    <h3 style="margin-top:10px">
+      Admin Decision
+    </h3>
+
+    <p>
+      Admin decisions regarding tournament disputes
+      and match issues are final.
+    </p>
+
+  </div>
+
   `;
+
 };
 
 
 /* =====================================================
-   TOURNAMENT RENDER
+   TOURNAMENT
 ===================================================== */
 
 window.renderTournament = () => {
-  renderTournamentsOnly();
-  renderFixturesOnly();
-};
 
-window.renderTournamentsOnly = () => {
-  $("tourList").innerHTML = D.tournaments.length ? D.tournaments.map(t => `
-    <div class="card" style="margin-bottom:12px;">
-      <div style="display:flex;justify-content:space-between;gap:10px;">
-        <div><span class="badge badge-purple">🏆 TOURNAMENT</span><h3 style="margin-top:8px">${esc(t.name)}</h3></div>
+  const tournamentCards = D.tournaments.length ? D.tournaments.map(t => `
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <span class="badge badge-purple">🏆 KNOCKOUT TOURNAMENT</span>
+          <h3 style="margin-top:8px">${esc(t.name)}</h3>
+        </div>
         <span class="badge">${esc(t.status || "Upcoming")}</span>
       </div>
-      <p>${esc(t.description || "")}</p>
+      <p>${esc(t.description || "Single-elimination knockout tournament.")}</p>
       <div class="grid2">
         <div><span class="small muted">Date</span><br>${esc(t.date || "TBA")}</div>
-        <div><span class="small muted">Prize</span><br>${esc(t.prize || "TBA")}</div>
+        <div><span class="small muted">Players</span><br>${t.participantIds?.length || "All registered"}</div>
       </div>
     </div>
   `).join("") : "";
-};
 
-window.renderFixturesOnly = () => {
-  const fq = ($("fixSearch")?.value || "").trim().toLowerCase();
-  let fixtures = D.fixtures.filter(f => 
-    (f.playerA || "").toLowerCase().includes(fq) || 
-    (f.playerB || "").toLowerCase().includes(fq) || 
-    (f.tournament || "").toLowerCase().includes(fq)
-  );
+  const tournamentIds = new Set(D.tournaments.map(t => t.id));
+  const fixtures = D.fixtures.filter(f => !f.tournamentId || tournamentIds.has(f.tournamentId));
 
-  fixtures.sort((a,b) => (b.round || 1) - (a.round || 1));
-
-  $("tourFix").innerHTML = fixtures.length ? fixtures.map(f => {
-    const pA = D.players.find(p => p.id === f.playerAId);
-    const pB = D.players.find(p => p.id === f.playerBId);
-
-    const avA = pA?.avatarUrl ? `<img src="${esc(pA.avatarUrl)}" style="width:45px;height:45px;border-radius:14px;object-fit:cover;">` : `<div style="width:45px;height:45px;border-radius:14px;background:#1a2231;display:grid;place-items:center;font-size:20px;">👤</div>`;
-    const avB = f.playerBId === "BYE" ? `<div style="width:45px;height:45px;border-radius:14px;background:#1a2231;display:grid;place-items:center;font-size:20px;">🚫</div>` : (pB?.avatarUrl ? `<img src="${esc(pB.avatarUrl)}" style="width:45px;height:45px;border-radius:14px;object-fit:cover;">` : `<div style="width:45px;height:45px;border-radius:14px;background:#1a2231;display:grid;place-items:center;font-size:20px;">👤</div>`);
-
-    let statusBadge = `<span class="badge">${esc(f.status || "Scheduled")}</span>`;
-    if(f.status === "completed") statusBadge = `<span class="badge badge-green">${f.scoreA} - ${f.scoreB}</span>`;
-    else if(f.status === "pending") statusBadge = `<span class="badge badge-gold">Pending Approval</span>`;
-
-    let actionBtn = "";
-    if(f.status === "scheduled" && currentUser && (currentUser.uid === f.playerAId || currentUser.uid === f.playerBId) && f.playerBId !== "BYE") {
-       actionBtn = `<div style="margin-top:12px;"><button class="btn cyan" style="padding:7px 14px; font-size:12px;" onclick="openSubmitResult('${f.id}')">Submit Result</button></div>`;
-    }
-
-    return `
-      <div class="card" style="padding:15px;">
-        <div class="small muted" style="text-align:center; margin-bottom:12px;">
-           <b>${esc(f.tournament || "")}</b> • Round ${f.round || 1} • ${esc(f.date || "")}
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center; text-align:center;">
-           <div class="clickable" onclick="openPlayer('${f.playerAId}')" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
-             ${avA}
-             <b style="font-size:13px">${esc(f.playerA)}</b>
-           </div>
-           <div style="flex:1;">
-             ${statusBadge}
-             ${actionBtn}
-           </div>
-           <div class="${f.playerBId === 'BYE' ? '' : 'clickable'}" onclick="${f.playerBId === 'BYE' ? '' : `openPlayer('${f.playerBId}')`}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
-             ${avB}
-             <b style="font-size:13px">${esc(f.playerB)}</b>
-           </div>
-        </div>
-      </div>
-    `;
-  }).join("") : `<div class="empty">No fixtures available.</div>`;
-};
-
-
-/* =====================================================
-   SUBMIT RESULT MODAL
-===================================================== */
-window.openSubmitResult = (fixId) => {
-  const f = D.fixtures.find(x => x.id === fixId);
-  if(!f) return;
-
-  $("mc").innerHTML = `
-    <h2 style="text-align:center;margin-bottom:20px;">Submit Match Result</h2>
-    <div class="row" style="text-align:center; align-items:center; justify-content:space-between; border:none; background:transparent; padding:0;">
-       <div style="flex:1">
-         <b style="display:block;margin-bottom:8px;">${esc(f.playerA)}</b>
-         <input type="number" id="sScoreA" value="0" min="0" style="width:70px; text-align:center; font-size:22px; font-weight:bold;">
-       </div>
-       <div style="font-size:20px; color:var(--muted); font-weight:800; padding:0 15px;">VS</div>
-       <div style="flex:1">
-         <b style="display:block;margin-bottom:8px;">${esc(f.playerB)}</b>
-         <input type="number" id="sScoreB" value="0" min="0" style="width:70px; text-align:center; font-size:22px; font-weight:bold;">
-       </div>
-    </div>
-    <div class="actions" style="margin-top:25px; justify-content:center;">
-      <button class="btn primary" onclick="saveSubmitResult('${fixId}')">Submit to Admin for Approval</button>
-    </div>
-  `;
-  $("modal").classList.add("show");
-};
-
-window.saveSubmitResult = async (fixId) => {
-  const f = D.fixtures.find(x => x.id === fixId);
-  if(!f) return;
-  const scA = Number($("sScoreA").value);
-  const scB = Number($("sScoreB").value);
-
-  if(scA === scB && f.playerBId !== "BYE") {
-    return alert("Knockout matches cannot end in a draw! Please enter the final decisive score (including ET/Penalties).");
+  if(!fixtures.length){
+    $("tour").innerHTML = tournamentCards + `<div class="empty" style="margin-top:15px">No knockout fixtures generated yet.</div>`;
+    return;
   }
 
-  try {
-    await updateDoc(doc(db, "fixtures", fixId), {
-       status: "pending",
-       proposedScoreA: scA,
-       proposedScoreB: scB
-    });
-    closeModal();
-    await load();
-    alert("Result submitted! Pending admin approval.");
-  } catch(e) {
-    alert(firebaseError(e));
-  }
-};
-
-
-/* =====================================================
-   RESULTS & LEADERBOARD
-===================================================== */
-
-window.renderResults = () => {
-  const board = {};
-  D.players.forEach(p => { board[p.id] = { id:p.id, name:p.name, played:0, wins:0, losses:0, draws:0 }; });
-
-  D.results.forEach(r => {
-    if(!board[r.playerAId] || !board[r.playerBId]) return;
-    const a = board[r.playerAId];
-    const b = board[r.playerBId];
-    const sa = Number(r.scoreA);
-    const sb = Number(r.scoreB);
-    a.played++; b.played++;
-    if(sa > sb){ a.wins++; b.losses++; }
-    else if(sa < sb){ b.wins++; a.losses++; }
-    else{ a.draws++; b.draws++; }
+  const groups = {};
+  fixtures.forEach(f => {
+    const key = f.tournamentId || f.tournament || "legacy";
+    if(!groups[key]) groups[key] = [];
+    groups[key].push(f);
   });
 
-  const ranking = Object.values(board).sort((a,b) => b.wins-a.wins || b.played-a.played);
+  const bracketHtml = Object.entries(groups).map(([key,fs]) => {
+    const tour = D.tournaments.find(t => t.id === key);
+    const rounds = {};
+    fs.forEach(f => { const r = Number(f.roundNumber || 1); (rounds[r] ||= []).push(f); });
+
+    const roundHtml = Object.keys(rounds).sort((a,b)=>a-b).map(r => {
+      const list = rounds[r].sort((a,b)=>(a.matchNumber||0)-(b.matchNumber||0));
+      return `<div class="bracket-round">
+        <h3>${esc(roundName(Number(r), Object.keys(rounds).length))}</h3>
+        ${list.map(fixtureCardHtml).join("")}
+      </div>`;
+    }).join("");
+
+    return `<div class="card" style="margin-top:15px">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px">
+        <div><span class="badge badge-purple">🏆 ${esc(tour?.name || fs[0]?.tournament || "Tournament")}</span></div>
+        <span class="small muted">${fs.length} bracket matches</span>
+      </div>
+      <div class="bracket-wrap"><div class="bracket">${roundHtml}</div></div>
+    </div>`;
+  }).join("");
+
+  $("tour").innerHTML = tournamentCards + bracketHtml;
+};
+
+function roundName(round,total){
+  if(round === total) return "🏆 Final";
+  if(round === total-1) return "🥇 Semi Final";
+  if(round === total-2) return "Quarter Final";
+  return `Round ${round}`;
+}
+
+function avatarHtml(url,name){
+  return url ? `<img class="bracket-avatar" src="${esc(url)}" alt="${esc(name)}">` : `<span class="bracket-avatar" style="display:grid;place-items:center">👤</span>`;
+}
+
+function fixtureCardHtml(f){
+  const aName = f.playerA || "TBD";
+  const bName = f.playerB || "TBD";
+  const aId = f.playerAId || "";
+  const bId = f.playerBId || "";
+  const a = aId ? D.players.find(p=>p.id===aId) : null;
+  const b = bId ? D.players.find(p=>p.id===bId) : null;
+  const scoreA = f.scoreA ?? "";
+  const scoreB = f.scoreB ?? "";
+  const status = f.status || "scheduled";
+
+  const playerLine = (id,name,avatar,score) => id
+    ? `<div class="bracket-player"><div class="mini clickable" onclick="openPlayer('${esc(id)}')">${avatarHtml(avatar,name)}<span>${esc(name)}</span></div><b class="bracket-score">${score !== "" && score !== null ? esc(score) : ""}</b></div>`
+    : `<div class="bracket-player"><div class="mini">${avatarHtml("",name)}<span>${esc(name)}</span></div><b class="bracket-score"></b></div>`;
+
+  let action = "";
+  if(status === "scheduled" && aId && bId && currentUser && (currentUser.uid===aId || currentUser.uid===bId)){
+    action = `<div class="fixture-actions"><button class="btn primary" onclick="submitFixtureResult('${esc(f.id)}')">📝 Submit Result</button></div>`;
+  } else if(status === "pending") {
+    action = `<div class="fixture-actions"><span class="badge pending">⏳ Result awaiting admin approval</span></div>`;
+  } else if(status === "bye") {
+    action = `<div class="fixture-actions"><span class="badge bye">BYE • ${esc(f.winnerName || aName)}</span></div>`;
+  } else if(status === "completed") {
+    action = `<div class="fixture-actions"><span class="badge badge-green">✓ Completed</span></div>`;
+  } else if(status === "waiting") {
+    action = `<div class="fixture-actions"><span class="badge">Waiting for previous round</span></div>`;
+  }
+
+  return `<div class="bracket-match">
+    ${playerLine(aId,aName,f.playerAAvatar,aId ? scoreA : "")}
+    ${playerLine(bId,bName,f.playerBAvatar,bId ? scoreB : "")}
+    ${action}
+  </div>`;
+}
+
+
+/* =====================================================
+   RESULTS
+===================================================== */
+
+window.renderResults =
+() => {
+
+  const board = {};
+
+
+  D.players.forEach(
+    p => {
+
+      board[p.id] = {
+
+        id:p.id,
+        name:p.name,
+        played:0,
+        wins:0,
+        losses:0,
+        draws:0
+
+      };
+
+    }
+  );
+
+
+  D.results.forEach(
+    r => {
+
+      if(r.status === "pending") return;
+
+      if(
+        !board[r.playerAId] ||
+        !board[r.playerBId]
+      )
+        return;
+
+
+      const a = board[r.playerAId];
+      const b = board[r.playerBId];
+
+
+      const sa = Number(r.scoreA);
+      const sb = Number(r.scoreB);
+
+
+      a.played++;
+      b.played++;
+
+
+      if(sa > sb){
+
+        a.wins++;
+        b.losses++;
+
+      }
+
+      else if(sa < sb){
+
+        b.wins++;
+        a.losses++;
+
+      }
+
+      else{
+
+        a.draws++;
+        b.draws++;
+
+      }
+
+    }
+  );
+
+
+  const ranking =
+  Object.values(board)
+  .sort(
+    (a,b) =>
+      b.wins-a.wins ||
+      b.played-a.played
+  );
+
 
   $("leader").innerHTML = `
-  <div class="card">
-    <h3>🏆 Leaderboard</h3>
-    <div class="list">
-      ${ranking.length ? ranking.map((p,i) => `
-          <div class="row">
-            <span>
-              <b>#${i+1} ${esc(p.name)}</b><br>
-              <span class="small muted">${p.played} played • ${p.wins}W • ${p.losses}L • ${p.draws}D</span>
-            </span>
-            <span class="badge badge-purple">${p.played ? Math.round(p.wins/p.played*100) : 0}% WR</span>
-          </div>
-        `).join("") : `<div class="empty">No players yet.</div>`}
-    </div>
-  </div>`;
 
-  $("res").innerHTML = D.results.length ? [...D.results].reverse().map(r => `
-    <div class="row">
-      <div>
-        <b>${esc(r.playerA)}</b> <span class="badge badge-green">${esc(r.scoreA)} - ${esc(r.scoreB)}</span> <b>${esc(r.playerB)}</b>
-        <div class="small muted">${esc(r.tournament || "")} • ${esc(r.date || "")}</div>
-      </div>
-      <span class="badge">Final</span>
+  <div class="card">
+
+    <h3>
+      🏆 Leaderboard
+    </h3>
+
+    <div class="list">
+
+      ${
+        ranking.length
+
+        ?
+
+        ranking.map(
+          (p,i) => `
+
+          <div class="row">
+
+            <span>
+
+              <b>
+                #${i+1}
+                ${esc(p.name)}
+              </b>
+
+              <br>
+
+              <span class="small muted">
+                ${p.played} played
+                • ${p.wins}W
+                • ${p.losses}L
+                • ${p.draws}D
+              </span>
+
+            </span>
+
+            <span class="badge badge-purple">
+
+              ${
+                p.played
+                ?
+                Math.round(
+                  p.wins/p.played*100
+                )
+                :
+                0
+              }% WR
+
+            </span>
+
+          </div>
+
+          `
+        ).join("")
+
+        :
+
+        `
+        <div class="empty">
+          No players yet.
+        </div>
+        `
+      }
+
     </div>
-  `).join("") : `<div class="empty">No results published yet.</div>`;
+
+  </div>
+
+  `;
+
+
+  $("res").innerHTML =
+
+  D.results.filter(r=>r.status!=="pending").length
+
+  ?
+
+  [...D.results.filter(r=>r.status!=="pending")]
+  .reverse()
+  .map(
+    r => `
+
+    <div class="row">
+
+      <div>
+
+        <b>
+          ${esc(r.playerA)}
+        </b>
+
+        <span class="badge badge-green">
+          ${esc(r.scoreA)}
+          -
+          ${esc(r.scoreB)}
+        </span>
+
+        <b>
+          ${esc(r.playerB)}
+        </b>
+
+        <div class="small muted">
+
+          ${esc(r.tournament || "")}
+          •
+          ${esc(r.date || "")}
+
+        </div>
+
+      </div>
+
+      <span class="badge">
+        Final
+      </span>
+
+    </div>
+
+    `
+  )
+  .join("")
+
+  :
+
+  `
+  <div class="empty">
+    No results published yet.
+  </div>
+  `;
+
 };
 
 
@@ -1903,63 +2988,300 @@ window.renderResults = () => {
    PROFILE
 ===================================================== */
 
-window.renderProfile = () => {
+window.renderProfile =
+() => {
+
   if(!currentUser){
+
     $("prof").innerHTML = `
+
     <div class="card">
-      <h3>Login Required</h3><p>Please login to see your profile.</p>
-      <button class="btn primary" onclick="go('login')">Login</button>
-    </div>`;
+
+      <h3>
+        Login Required
+      </h3>
+
+      <p>
+        Please login to see your profile.
+      </p>
+
+      <button
+        class="btn primary"
+        onclick="go('login')">
+        Login
+      </button>
+
+    </div>
+
+    `;
+
     return;
+
   }
 
-  const s = playerStats(currentUser.uid);
-  const name = profile?.name || currentUser.displayName || "Player";
-  const admin = isAdminUser();
+
+  const s =
+  playerStats(
+    currentUser.uid
+  );
+
+
+  const name =
+  profile?.name ||
+  currentUser.displayName ||
+  "Player";
+
+
+  const admin =
+  isAdminUser();
+
 
   $("prof").innerHTML = `
+
   <div class="profile-banner">
+
     <div class="profile-top">
-      ${profile?.avatarUrl ? `<img class="avatar-xl" src="${esc(profile.avatarUrl)}" alt="Profile avatar">` : `<div class="avatar-xl" style="display:grid;place-items:center;font-size:40px">👤</div>`}
+
+      ${
+        profile?.avatarUrl
+
+        ?
+
+        `<img
+          class="avatar-xl"
+          src="${esc(profile.avatarUrl)}"
+          alt="Profile avatar">`
+
+        :
+
+        `<div
+          class="avatar-xl"
+          style="display:grid;place-items:center;font-size:40px">
+          👤
+         </div>`
+      }
+
+
       <div>
-        <span class="badge ${admin ? "badge-gold" : "badge-purple"}">${admin ? "👑 ADMIN" : "⚽ PLAYER"}</span>
-        <h2 style="margin-top:8px">${esc(name)}</h2>
-        <span class="small muted">${esc(currentUser.email || "")}</span>
+
+        <span class="badge ${
+          admin
+          ? "badge-gold"
+          : "badge-purple"
+        }">
+
+          ${
+            admin
+            ? "👑 ADMIN"
+            : "⚽ PLAYER"
+          }
+
+        </span>
+
+        <h2 style="margin-top:8px">
+          ${esc(name)}
+        </h2>
+
+        <span class="small muted">
+          ${esc(currentUser.email || "")}
+        </span>
+
       </div>
+
     </div>
+
   </div>
+
 
   <div class="statgrid">
-    <div class="statbox"><span class="muted small">Played</span><br><b>${s.played}</b></div>
-    <div class="statbox"><span class="muted small">Wins</span><br><b>${s.wins}</b></div>
-    <div class="statbox"><span class="muted small">Losses</span><br><b>${s.losses}</b></div>
-    <div class="statbox"><span class="muted small">Win Rate</span><br><b>${s.winRate}%</b></div>
-  </div>
 
-  <div class="card" style="margin-top:13px">
-    <h3>Player Information</h3>
-    <div class="grid2" style="margin-top:15px">
-      <div><span class="small muted">Email</span><br><b>${esc(profile?.email || currentUser.email)}</b></div>
-      <div><span class="small muted">Konami UID</span><br><b>${esc(profile?.konamiUid || "—")}</b></div>
-      <div><span class="small muted">📞 Mobile</span><br><b>${esc(profile?.mobile || "Not specified")}</b></div>
-      <div><span class="small muted">📱 Device / Mobile Model</span><br><b>${esc(profile?.device || "Not specified")}</b></div>
+    <div class="statbox">
+      <span class="muted small">Played</span>
+      <br>
+      <b>${s.played}</b>
     </div>
+
+    <div class="statbox">
+      <span class="muted small">Wins</span>
+      <br>
+      <b>${s.wins}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Losses</span>
+      <br>
+      <b>${s.losses}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Win Rate</span>
+      <br>
+      <b>${s.winRate}%</b>
+    </div>
+
   </div>
+
+
+  <!-- PLAYER INFORMATION -->
 
   <div class="card" style="margin-top:13px">
-    <h3>My Match History</h3>
-    ${s.history.length ? [...s.history].reverse().map(x => `
-        <div class="row">
-          <span>VS <b>${esc(x.opponent)}</b><br><span class="small muted">${esc(x.date)}</span></span>
-          <span class="badge badge-green">${esc(x.score)}</span>
-        </div>
-      `).join("") : `<div class="empty">No completed matches yet.</div>`}
+
+    <h3>
+      Player Information
+    </h3>
+
+    <div
+      class="grid2"
+      style="margin-top:15px">
+
+      <div>
+        <span class="small muted">
+          Email
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.email ||
+            currentUser.email
+          )}
+        </b>
+      </div>
+
+
+      <div>
+        <span class="small muted">
+          Konami UID
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.konamiUid ||
+            "—"
+          )}
+        </b>
+      </div>
+
+
+      <div>
+        <span class="small muted">
+          📞 Mobile
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.mobile ||
+            "Not specified"
+          )}
+        </b>
+      </div>
+
+
+      <div>
+        <span class="small muted">
+          📱 Device / Mobile Model
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.device ||
+            "Not specified"
+          )}
+        </b>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="actions" style="margin-top:15px">
-    ${admin ? `<button class="btn primary" onclick="go('admin')">👑 Open Admin Panel</button>` : ""}
-    <button class="btn danger" onclick="logout()">Logout</button>
-  </div>`;
+
+  <!-- MATCH HISTORY -->
+
+  <div
+    class="card"
+    style="margin-top:13px">
+
+    <h3>
+      My Match History
+    </h3>
+
+    ${
+      s.history.length
+
+      ?
+
+      [...s.history]
+      .reverse()
+      .map(
+        x => `
+
+        <div class="row">
+
+          <span>
+
+            VS
+            <b>
+              ${esc(x.opponent)}
+            </b>
+
+            <br>
+
+            <span class="small muted">
+              ${esc(x.date)}
+            </span>
+
+          </span>
+
+          <span class="badge badge-green">
+            ${esc(x.score)}
+          </span>
+
+        </div>
+
+        `
+      )
+      .join("")
+
+      :
+
+      `
+      <div class="empty">
+        No completed matches yet.
+      </div>
+      `
+    }
+
+  </div>
+
+
+  <div
+    class="actions"
+    style="margin-top:15px">
+
+    ${
+      admin
+      ?
+
+      `<button
+        class="btn primary"
+        onclick="go('admin')">
+        👑 Open Admin Panel
+       </button>`
+
+      :
+
+      ""
+    }
+
+    <button
+      class="btn danger"
+      onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+  `;
+
 };
 
 
@@ -1967,34 +3289,85 @@ window.renderProfile = () => {
    ADMIN ACCESS
 ===================================================== */
 
-window.admin = () => {
+window.admin =
+() => {
+
   if(!currentUser){
+
     $("aguard").innerHTML = `
+
     <div class="admin">
-      <b>Login required.</b><p>Please login with the admin account.</p>
-      <button class="btn primary" onclick="go('login')">Login</button>
-    </div>`;
+
+      <b>
+        Login required.
+      </b>
+
+      <p>
+        Please login with the admin account.
+      </p>
+
+      <button
+        class="btn primary"
+        onclick="go('login')">
+        Login
+      </button>
+
+    </div>
+
+    `;
+
     $("acont").style.display = "none";
+
     return;
+
   }
+
 
   if(!isAdminUser()){
+
     $("aguard").innerHTML = `
+
     <div class="admin">
-      <b>🛡️ Admin access required.</b>
-      <p class="small">This account is not authorized to access the LUCC administration panel.</p>
-    </div>`;
+
+      <b>
+        🛡️ Admin access required.
+      </b>
+
+      <p class="small">
+        This account is not authorized
+        to access the LUCC administration panel.
+      </p>
+
+    </div>
+
+    `;
+
     $("acont").style.display = "none";
+
     return;
+
   }
 
+
   $("aguard").innerHTML = `
+
   <div class="notice success">
-    👑 Admin authenticated: <b>${esc(currentUser.email)}</b>
-  </div>`;
+
+    👑 Admin authenticated:
+    <b>
+      ${esc(currentUser.email)}
+    </b>
+
+  </div>
+
+  `;
+
 
   $("acont").style.display = "block";
+
+
   adminPlayers();
+
 };
 
 
@@ -2002,15 +3375,36 @@ window.admin = () => {
    ADMIN TABS
 ===================================================== */
 
-window.atab = (tab,button) => {
-  document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
-  if(button) button.classList.add("active");
+window.atab =
+(tab,button) => {
 
-  if(tab === "players") adminPlayers();
-  if(tab === "tournaments") adminTournaments();
-  if(tab === "fixtures") adminFixtures();
-  if(tab === "results") adminResults();
-  if(tab === "rules") adminRules();
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      x =>
+      x.classList.remove("active")
+    );
+
+
+  if(button)
+    button.classList.add("active");
+
+
+  if(tab === "players")
+    adminPlayers();
+
+  if(tab === "tournaments")
+    adminTournaments();
+
+  if(tab === "fixtures")
+    adminFixtures();
+
+  if(tab === "results")
+    adminResults();
+
+  if(tab === "rules")
+    adminRules();
+
 };
 
 
@@ -2019,78 +3413,359 @@ window.atab = (tab,button) => {
 ===================================================== */
 
 function adminPlayers(){
+
   $("apanel").innerHTML = `
+
   <div class="card">
-    <h3>👥 Manage Players</h3>
+
+    <h3>
+      👥 Manage Players
+    </h3>
+
     <div class="list">
-    ${D.players.length ? D.players.map(p => `
+
+    ${
+      D.players.length
+
+      ?
+
+      D.players.map(
+        p => `
+
         <div class="row">
+
           <div class="player">
-            ${p.avatarUrl ? `<img class="avatar" src="${esc(p.avatarUrl)}" alt="Avatar">` : `<div class="avatar" style="display:grid;place-items:center">👤</div>`}
+
+            ${
+              p.avatarUrl
+
+              ?
+
+              `<img
+                class="avatar"
+                src="${esc(p.avatarUrl)}"
+                alt="Avatar">`
+
+              :
+
+              `<div
+                class="avatar"
+                style="display:grid;place-items:center">
+                👤
+               </div>`
+            }
+
             <div>
-              <b>${esc(p.name)}</b>
-              <div class="small muted">${esc(p.konamiUid)} • ${esc(p.email)}</div>
-              <div class="small muted" style="margin-top:4px">📱 ${esc(p.device || "Device not specified")} • 📞 ${esc(p.mobile || "Mobile not specified")}</div>
+
+              <b>
+                ${esc(p.name)}
+              </b>
+
+              <div class="small muted">
+                ${esc(p.konamiUid)}
+                •
+                ${esc(p.email)}
+              </div>
+
+              <div class="small muted"
+                   style="margin-top:4px">
+                📱 ${esc(p.device || "Device not specified")}
+                •
+                📞 ${esc(p.mobile || "Mobile not specified")}
+              </div>
+
             </div>
+
           </div>
+
           <div class="actions" style="margin-top:0;justify-content:flex-end">
-            <button class="btn" onclick="editPlayer('${esc(p.id)}')">Edit</button>
-            <button class="btn danger" onclick="removePlayer('${esc(p.id)}')">🗑️ Remove</button>
+            <button
+              class="btn"
+              onclick="editPlayer('${esc(p.id)}')">
+              Edit
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="removePlayer('${esc(p.id)}')">
+              🗑️ Remove
+            </button>
           </div>
+
         </div>
-      `).join("") : `<div class="empty">No players.</div>`}
+
+        `
+      ).join("")
+
+      :
+
+      `
+      <div class="empty">
+        No players.
+      </div>
+      `
+    }
+
     </div>
-  </div>`;
+
+  </div>
+
+  `;
+
 }
 
-window.editPlayer = id => {
-  if(!isAdminUser()) return;
-  const p = D.players.find(x => x.id === id);
-  if(!p) return;
+
+/* =====================================================
+   EDIT PLAYER
+===================================================== */
+
+window.editPlayer =
+id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
+
+  if(!p)
+    return;
+
 
   $("mc").innerHTML = `
-  <h2>Edit Player</h2>
-  <div class="field"><label>Name</label><input id="mn" value="${esc(p.name)}"></div>
-  <div class="field"><label>Konami UID</label><input id="mu" value="${esc(p.konamiUid)}"></div>
-  <div class="field"><label>Mobile</label><input id="mm" value="${esc(p.mobile || "")}"></div>
-  <div class="field"><label>Device / Mobile Model</label><input id="md" value="${esc(p.device || "")}"></div>
-  <button class="btn primary" onclick="savePlayer('${esc(id)}')">Save Changes</button>
+
+  <h2>
+    Edit Player
+  </h2>
+
+
+  <div class="field">
+
+    <label>Name</label>
+
+    <input
+      id="mn"
+      value="${esc(p.name)}">
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Konami UID</label>
+
+    <input
+      id="mu"
+      value="${esc(p.konamiUid)}">
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Mobile</label>
+
+    <input
+      id="mm"
+      value="${esc(p.mobile || "")}">
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Device / Mobile Model</label>
+
+    <input
+      id="md"
+      value="${esc(p.device || "")}">
+
+  </div>
+
+
+  <button
+    class="btn primary"
+    onclick="savePlayer('${esc(id)}')">
+    Save Changes
+  </button>
+
   `;
-  $("modal").classList.add("show");
+
+
+  $("modal")
+    .classList
+    .add("show");
+
 };
 
-window.savePlayer = async id => {
-  if(!isAdminUser()) return;
-  try{
-    const p = D.players.find(x => x.id === id);
-    const name = $("mn").value.trim();
-    const konamiUid = $("mu").value.trim();
-    if(!name || !konamiUid){ alert("Name and Konami UID are required."); return; }
 
-    const data = { name:name, konamiUid:konamiUid, mobile:$("mm").value.trim(), device:$("md").value.trim() };
-    await updateDoc(doc(db,"players",id), data);
-    if(p?.uid) await updateDoc(doc(db,"users",p.uid), data);
+/* =====================================================
+   SAVE PLAYER
+===================================================== */
+
+window.savePlayer =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  try{
+
+    const p =
+    D.players.find(
+      x => x.id === id
+    );
+
+
+    const name =
+    $("mn").value.trim();
+
+    const konamiUid =
+    $("mu").value.trim();
+
+
+    if(!name || !konamiUid){
+
+      alert(
+        "Name and Konami UID are required."
+      );
+
+      return;
+
+    }
+
+
+    const data = {
+
+      name:name,
+      konamiUid:konamiUid,
+      mobile:$("mm").value.trim(),
+      device:$("md").value.trim()
+
+    };
+
+
+    await updateDoc(
+      doc(
+        db,
+        "players",
+        id
+      ),
+      data
+    );
+
+
+    if(p?.uid){
+
+      await updateDoc(
+        doc(
+          db,
+          "users",
+          p.uid
+        ),
+        data
+      );
+
+    }
+
 
     closeModal();
+
     await load();
+
     adminPlayers();
-    alert("Player information updated.");
-  }catch(error){ alert(firebaseError(error)); }
+
+
+    alert(
+      "Player information updated."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
 };
 
-window.removePlayer = async id => {
-  if(!isAdminUser()) return;
-  const p = D.players.find(x => x.id === id);
+
+/* =====================================================
+   REMOVE PLAYER
+===================================================== */
+
+window.removePlayer =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
   if(!p) return;
-  if(!confirm(`Remove ${p.name || "this player"} from LUCC?\n\nThis will remove the player's profile.`)) return;
-  
+
+  const playerName = p.name || "this player";
+
+  const confirmed = confirm(
+    `Remove ${playerName} from LUCC?\n\nThis will remove the player's profile from the Players list and delete the related Firestore profile data.`
+  );
+
+  if(!confirmed) return;
+
   try{
-    await deleteDoc(doc(db,"players",id));
-    if(p.uid) await deleteDoc(doc(db,"users",p.uid));
+
+    // Remove the player profile.
+    await deleteDoc(
+      doc(
+        db,
+        "players",
+        id
+      )
+    );
+
+    // Also remove the matching user profile when the UID exists.
+    if(p.uid){
+      await deleteDoc(
+        doc(
+          db,
+          "users",
+          p.uid
+        )
+      );
+    }
+
+    // Refresh local data and the admin player list.
     await load();
     adminPlayers();
-    alert(`Player removed.`);
-  }catch(error){ alert(firebaseError(error)); }
+
+    alert(
+      `${playerName} has been removed from the player list.`
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      firebaseError(error)
+    );
+  }
 };
 
 
@@ -2099,50 +3774,98 @@ window.removePlayer = async id => {
 ===================================================== */
 
 function adminTournaments(){
-  $("apanel").innerHTML = `
-  <div class="card">
-    <h3>🏆 Create Tournament</h3>
-    <div class="grid2">
-      <div class="field"><label>Name</label><input id="tn"></div>
-      <div class="field"><label>Date</label><input id="td" type="date"></div>
-      <div class="field"><label>Status</label><select id="ts"><option>Registration Open</option><option>Upcoming</option><option>Live</option><option>Completed</option></select></div>
-      <div class="field"><label>Prize</label><input id="tp"></div>
-    </div>
-    <div class="field"><label>Description</label><textarea id="tx"></textarea></div>
-    <button class="btn primary" onclick="addTournament()">Publish Tournament</button>
-  </div>
 
-  <div class="card" style="margin-top:12px">
-    <h3>Published Tournaments</h3>
-    ${D.tournaments.map(t => `
-        <div class="row">
-          <span><b>${esc(t.name)}</b><br><span class="small muted">${esc(t.status || "")}</span></span>
-          <button class="btn danger" onclick="deleteTournament('${esc(t.id)}')">Remove</button>
+  const activeTournaments = D.tournaments.map(t => `
+    <div class="row">
+      <span>
+        <b>${esc(t.name)}</b>
+        <br>
+        <span class="small muted">
+          ${esc(t.status || "Upcoming")} • ${esc(t.date || "TBA")}
+          • ${t.participantIds?.length || D.players.length} players
+        </span>
+      </span>
+      <span class="actions" style="margin:0">
+        <button class="btn primary" onclick="generateKnockout('${esc(t.id)}')">🏆 Generate Knockout</button>
+        <button class="btn danger" onclick="deleteTournament('${esc(t.id)}')">Remove</button>
+      </span>
+    </div>
+  `).join("") || `<div class="empty">No tournaments.</div>`;
+
+  const playerList = D.players.map(p => `
+    <label class="tplayer">
+      <input type="checkbox" name="tplayers" value="${esc(p.id)}">
+      ${p.avatarUrl ? `<img class="bracket-avatar" src="${esc(p.avatarUrl)}" alt="">` : `<span class="bracket-avatar" style="display:grid;place-items:center">👤</span>`}
+      <span><b>${esc(p.name)}</b><br><span class="small muted">UID ${esc(p.konamiUid || "")}</span></span>
+    </label>
+  `).join("") || `<div class="empty">No registered players yet.</div>`;
+
+  $("apanel").innerHTML = `
+    <div class="card">
+      <h3>🏆 Create Knockout Tournament</h3>
+      <p>Select exactly the players you want in this tournament. The system will automatically create a single-elimination bracket based on the selected player count.</p>
+
+      <div class="grid2">
+        <div class="field"><label>Name</label><input id="tn"></div>
+        <div class="field"><label>Date</label><input id="td" type="date"></div>
+        <div class="field">
+          <label>Status</label>
+          <select id="ts">
+            <option>Registration Open</option><option>Upcoming</option><option>Live</option><option>Completed</option>
+          </select>
         </div>
-      `).join("") || `<div class="empty">No tournaments.</div>`}
-  </div>`;
+        <div class="field"><label>Prize</label><input id="tp"></div>
+      </div>
+
+      <div class="field"><label>Description</label><textarea id="tx"></textarea></div>
+
+      <div class="field">
+        <label>🎮 Tournament Players</label>
+        <div class="tplayer-list">${playerList}</div>
+        <div class="small muted" style="margin-top:7px">Example: 20 selected players → 10 first-round matches → 10 winners → Round 2.</div>
+      </div>
+
+      <button class="btn primary" onclick="addTournament()">Publish Tournament</button>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3>Published Tournaments</h3>
+      <div class="list">${activeTournaments}</div>
+    </div>
+  `;
 }
 
 window.addTournament = async () => {
-  if(!isAdminUser()) return;
+  if(!isAdminUser()){ alert("Admin access required."); return; }
   try{
     const name = $("tn").value.trim();
+    const selected = [...document.querySelectorAll('input[name="tplayers"]:checked')].map(x => x.value);
     if(!name){ alert("Tournament name is required."); return; }
-    
-    await addDoc(collection(db,"tournaments"), {
-      name:name, date:$("td").value, status:$("ts").value, prize:$("tp").value.trim(), description:$("tx").value.trim(), createdAt:serverTimestamp()
+    if(selected.length < 2){ alert("Select at least 2 players for the tournament."); return; }
+
+    await addDoc(collection(db,"tournaments"),{
+      name,
+      date:$("td").value,
+      status:$("ts").value,
+      prize:$("tp").value.trim(),
+      description:$("tx").value.trim(),
+      participantIds:selected,
+      format:"knockout",
+      createdAt:serverTimestamp()
     });
-    
+
     await load();
     adminTournaments();
-    alert("Tournament published.");
+    alert("Tournament published with " + selected.length + " players.");
   }catch(error){ alert(firebaseError(error)); }
 };
 
 window.deleteTournament = async id => {
-  if(!isAdminUser()) return;
-  if(!confirm("Remove this tournament?")) return;
+  if(!isAdminUser()){ alert("Admin access required."); return; }
+  if(!confirm("Remove this tournament? Its fixtures and results will also be removed.")) return;
   try{
+    for(const f of D.fixtures.filter(x => x.tournamentId === id)) await deleteDoc(doc(db,"fixtures",f.id));
+    for(const r of D.results.filter(x => x.tournamentId === id)) await deleteDoc(doc(db,"results",r.id));
     await deleteDoc(doc(db,"tournaments",id));
     await load();
     adminTournaments();
@@ -2153,276 +3876,417 @@ window.deleteTournament = async id => {
 /* =====================================================
    SHUFFLE
 ===================================================== */
+
 function shuffle(array){
-  for(let i = array.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+
+  for(
+    let i = array.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+    Math.floor(
+      Math.random() *
+      (i + 1)
+    );
+
+
+    [
+      array[i],
+      array[j]
+    ] =
+    [
+      array[j],
+      array[i]
+    ];
+
   }
+
+
   return array;
+
 }
 
 
 /* =====================================================
-   ADMIN FIXTURES (KNOCKOUT GENERATOR)
+   ADMIN FIXTURES
 ===================================================== */
 
 function adminFixtures(){
+  const tournamentOptions = D.tournaments.map(t => `<option value="${esc(t.id)}">${esc(t.name)}</option>`).join("");
+  const selectedTour = D.tournaments.find(t => t.id === D.fixtures.find(f=>f.tournamentId)?.tournamentId);
+  const fx = D.fixtures.slice().sort((a,b)=>(a.roundNumber||0)-(b.roundNumber||0) || (a.matchNumber||0)-(b.matchNumber||0));
+
   $("apanel").innerHTML = `
-  <div class="card">
-    <h3>🏆 Knockout Round Generator</h3>
-    <p>Generates knockout fixtures round-by-round. Winners advance to the next round automatically! Only winners from the last round will be paired.</p>
-    
-    <div class="grid2">
-      <div class="field"><label>Tournament Name</label><input id="fxTour" placeholder="LUCC eFootball Tournament"></div>
-      <div class="field"><label>Match Date</label><input id="fxDate" type="date"></div>
+    <div class="card">
+      <h3>🏆 Knockout Fixture Generator</h3>
+      <p>Select a published tournament. The bracket uses only that tournament's selected players and automatically creates Round 1, Round 2, Semi Final and Final as required.</p>
+      <div class="field"><label>Tournament</label><select id="fxTournament">${tournamentOptions || `<option value="">Create a tournament first</option>`}</select></div>
+      <div class="actions">
+        <button class="btn primary" onclick="generateKnockout($(\"fxTournament\").value)">⚡ Generate / Regenerate Knockout</button>
+        <button class="btn danger" onclick="resetTournament()">♻️ Reset Tournament</button>
+      </div>
+      <div class="notice">Example: <b>20 players → 10 Round-1 fixtures → 10 winners → 5 Round-2 fixtures → 2/3 byes as needed → Final.</b></div>
     </div>
-
-    <div class="actions">
-      <button class="btn primary" onclick="generateFixtures()">🎲 Generate Knockout Round</button>
-      <button class="btn danger" onclick="resetTournament()">♻️ Reset Tournament</button>
-    </div>
-    <div class="notice">
-      Reset deletes only: <b>fixtures + results</b>.<br><br>
-      ✅ Players remain saved.<br>✅ Accounts remain saved.<br>✅ Registration data remains saved.
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:12px">
-    <h3>Current Fixtures</h3>
-    <div class="list">
-    ${D.fixtures.length ? D.fixtures.map(f => `
-        <div class="row">
-          <span>
-            <b>${esc(f.playerA)}</b> vs <b>${esc(f.playerB)}</b><br>
-            <span class="small muted">${esc(f.tournament || "")} • Round ${f.round || 1} • ${esc(f.date || "")}</span>
-          </span>
-          <span class="badge">${esc(f.status || "Scheduled")}</span>
-        </div>
-      `).join("") : `<div class="empty">No fixtures.</div>`}
-    </div>
-  </div>`;
+    <div class="card" style="margin-top:12px">
+      <h3>Current Knockout Fixtures</h3>
+      <div class="list">
+        ${fx.length ? fx.map(f=>`<div class="row"><span><b>${esc(f.playerA||"TBD")}</b> vs <b>${esc(f.playerB||"TBD")}</b><br><span class="small muted">${esc(f.tournament||"")} • ${esc(roundName(Number(f.roundNumber||1),Number(f.totalRounds||1)))} • Match ${esc(f.matchNumber||"")}</span></span><span class="badge ${f.status==='pending'?'pending':''}">${esc(f.status||"scheduled")}</span></div>`).join("") : `<div class="empty">No fixtures generated yet.</div>`}
+      </div>
+    </div>`;
 }
 
-window.generateFixtures = async () => {
-  if(!isAdminUser()) return;
-  if(D.players.length < 2){ alert("At least 2 registered players are required."); return; }
+window.generateKnockout = async tournamentId => {
+  if(!isAdminUser()){ alert("Admin access required."); return; }
+  const t = D.tournaments.find(x=>x.id===tournamentId);
+  if(!t){ alert("Select a valid tournament."); return; }
 
-  const tournament = $("fxTour").value.trim() || "LUCC eFootball Tournament";
-  const date = $("fxDate").value || "TBA";
+  let players = (t.participantIds || []).map(id=>D.players.find(p=>p.id===id)).filter(Boolean);
+  if(!players.length) players = [...D.players];
+  if(players.length < 2){ alert("At least 2 players are required."); return; }
 
-  const tourneyFixtures = D.fixtures.filter(f => f.tournament === tournament);
-  let maxRound = 0;
-  tourneyFixtures.forEach(f => {
-    if((f.round || 1) > maxRound) maxRound = f.round || 1;
-  });
+  if(!confirm(`Generate knockout bracket for ${t.name} with ${players.length} players?\n\nExisting fixtures/results for this tournament will be replaced.`)) return;
 
-  let participants = [];
+  try{
+    for(const f of D.fixtures.filter(x=>x.tournamentId===t.id)) await deleteDoc(doc(db,"fixtures",f.id));
+    for(const r of D.results.filter(x=>x.tournamentId===t.id)) await deleteDoc(doc(db,"results",r.id));
 
-  if(maxRound === 0) {
-    if(!confirm(`Start Knockout Tournament (Round 1) with all ${D.players.length} players?`)) return;
-    participants = [...D.players];
-  } else {
-    const currentRoundFixtures = tourneyFixtures.filter(f => (f.round || 1) === maxRound);
-    const incomplete = currentRoundFixtures.filter(f => f.status !== "completed");
-    
-    if(incomplete.length > 0) {
-      return alert(`Please wait for all matches in Round ${maxRound} to finish and be approved by Admin.`);
+    players = shuffle([...players]);
+    const initialCount = players.length;
+    const totalRounds = Math.max(1, Math.ceil(Math.log2(initialCount)));
+    const roundCounts = [];
+    let remaining = initialCount;
+    while(remaining > 1){
+      roundCounts.push(Math.ceil(remaining / 2));
+      remaining = Math.ceil(remaining / 2);
     }
+    if(!roundCounts.length) roundCounts.push(1);
 
-    for(let f of currentRoundFixtures) {
-      if(f.playerBId === "BYE") {
-        participants.push(D.players.find(p => p.id === f.playerAId));
-        continue;
-      }
-      if(f.scoreA > f.scoreB) participants.push(D.players.find(p => p.id === f.playerAId));
-      else if(f.scoreB > f.scoreA) participants.push(D.players.find(p => p.id === f.playerBId));
-      else return alert(`Match tied! Knockout requires a winner. Please adjust the result for ${f.playerA} vs ${f.playerB}.`);
-    }
+    const rounds = [];
+    for(let r=1;r<=roundCounts.length;r++) rounds.push([]);
 
-    if(participants.length <= 1) {
-      return alert(`Tournament is already complete! Winner: ${participants[0] ? participants[0].name : "None"}`);
-    }
-    if(!confirm(`Generate Round ${maxRound + 1} with ${participants.length} advancing players?`)) return;
-  }
-
-  shuffle(participants);
-  let newRound = maxRound + 1;
-  let added = 0;
-
-  try {
-    for(let i=0; i<participants.length; i+=2) {
-      const a = participants[i];
-      const b = participants[i+1];
-
-      if(b) {
-        await addDoc(collection(db, "fixtures"), {
-          playerAId: a.id, playerBId: b.id, playerA: a.name, playerB: b.name, tournament: tournament, date: date, status: "scheduled", round: newRound, createdAt: serverTimestamp()
+    // Create every bracket slot first so later rounds are visible as TBD.
+    for(let r=1;r<=roundCounts.length;r++){
+      const count = roundCounts[r-1];
+      for(let m=1;m<=count;m++){
+        const ref = await addDoc(collection(db,"fixtures"),{
+          tournamentId:t.id,
+          tournament:t.name,
+          roundNumber:r,
+          totalRounds,
+          matchNumber:m,
+          playerAId:null, playerBId:null,
+          playerA:"TBD", playerB:"TBD",
+          playerAAvatar:"", playerBAvatar:"",
+          status:r===1 ? "scheduled" : "waiting",
+          date:t.date || "TBA",
+          createdAt:serverTimestamp()
         });
-      } else {
-        await addDoc(collection(db, "fixtures"), {
-          playerAId: a.id, playerBId: "BYE", playerA: a.name, playerB: "BYE", tournament: tournament, date: date, status: "completed", scoreA: 1, scoreB: 0, round: newRound, createdAt: serverTimestamp()
+        rounds[r-1].push({id:ref.id});
+      }
+    }
+
+    // Link each match to the correct next-round slot.
+    for(let r=1;r<totalRounds;r++){
+      for(let m=1;m<=rounds[r-1].length;m++){
+        const next = rounds[r][Math.ceil(m/2)-1];
+        await updateDoc(doc(db,"fixtures",rounds[r-1][m-1].id),{
+          nextFixtureId:next.id,
+          nextSlot:(m%2===1?"A":"B")
         });
       }
-      added++;
+    }
+
+    // Fill Round 1 and resolve a single bye when the player count is odd.
+    for(let m=1;m<=roundCounts[0];m++){
+      const a=players[(m-1)*2], b=players[(m-1)*2+1];
+      const fid=rounds[0][m-1].id;
+      if(a && b){
+        await updateDoc(doc(db,"fixtures",fid),{
+          playerAId:a.id, playerBId:b.id,
+          playerA:a.name, playerB:b.name,
+          playerAAvatar:a.avatarUrl||"", playerBAvatar:b.avatarUrl||"",
+          status:"scheduled"
+        });
+      }else if(a || b){
+        const w=a||b;
+        await updateDoc(doc(db,"fixtures",fid),{
+          playerAId:a?.id||null, playerBId:b?.id||null,
+          playerA:a?.name||"BYE", playerB:b?.name||"BYE",
+          playerAAvatar:a?.avatarUrl||"", playerBAvatar:b?.avatarUrl||"",
+          status:"bye", winnerId:w.id, winnerName:w.name, winnerAvatar:w.avatarUrl||""
+        });
+      }
     }
 
     await load();
+
+    // Push every bye through the bracket automatically.
+    await resolveKnockoutByes(t.id);
+
+    await load();
+    renderTournament();
     adminFixtures();
-    alert(`Round ${newRound} generated successfully!`);
-  } catch(e) { alert(firebaseError(e)); }
+    alert(`Knockout generated: ${initialCount} players, ${roundCounts.length} rounds.`);
+  }catch(error){ alert(firebaseError(error)); }
 };
 
-window.resetTournament = async () => {
-  if(!isAdminUser()) return;
-  if(!confirm("RESET TOURNAMENT?\n\nFixtures and results will be deleted.\nPlayers and accounts will remain safe.\n\nContinue?")) return;
+async function advanceWinner(fixture,winnerId,winnerName,winnerAvatar=""){
+  if(!fixture.nextFixtureId) return;
+  const nextRef=doc(db,"fixtures",fixture.nextFixtureId);
+  const snap=await getDoc(nextRef);
+  if(!snap.exists()) return;
+  const next=snap.data();
+  const slot=fixture.nextSlot||((Number(fixture.matchNumber)%2===1)?"A":"B");
+  const update = {};
+  if(slot==="A"){
+    update.playerAId=winnerId; update.playerA=winnerName; update.playerAAvatar=winnerAvatar;
+  }else{
+    update.playerBId=winnerId; update.playerB=winnerName; update.playerBAvatar=winnerAvatar;
+  }
+  const aId=slot==="A" ? winnerId : next.playerAId;
+  const bId=slot==="B" ? winnerId : next.playerBId;
+  if(aId && bId) update.status="scheduled";
+  await updateDoc(nextRef,update);
+}
+async function resolveKnockoutByes(tournamentId){
+  let changed=true;
+  while(changed){
+    changed=false;
+    const fresh=await col("fixtures");
+    const list=fresh.filter(f=>f.tournamentId===tournamentId);
+    for(const f of list){
+      if(f.status!=="waiting") continue;
+      const ids=[f.playerAId,f.playerBId].filter(Boolean);
+      if(ids.length!==1) continue;
+      const winnerId=ids[0];
+      const winner=D.players.find(p=>p.id===winnerId);
+      if(!winner) continue;
+      await updateDoc(doc(db,"fixtures",f.id),{
+        status:"bye",
+        winnerId:winner.id,
+        winnerName:winner.name,
+        winnerAvatar:winner.avatarUrl||""
+      });
+      await advanceWinner({...f,winnerId:winner.id},winner.id,winner.name,winner.avatarUrl||"");
+      changed=true;
+    }
+  }
+}
+
+
+/* =====================================================
+   RESET TOURNAMENT
+===================================================== */
+
+window.resetTournament =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(!confirm(
+    "RESET TOURNAMENT?\n\n" +
+    "Fixtures and results will be deleted.\n" +
+    "Players and accounts will remain safe.\n\n" +
+    "Continue?"
+  ))
+    return;
+
+
   try{
-    for(const f of D.fixtures) await deleteDoc(doc(db,"fixtures",f.id));
-    for(const r of D.results) await deleteDoc(doc(db,"results",r.id));
+
+    for(
+      const f of D.fixtures
+    ){
+
+      await deleteDoc(
+        doc(
+          db,
+          "fixtures",
+          f.id
+        )
+      );
+
+    }
+
+
+    for(
+      const r of D.results
+    ){
+
+      await deleteDoc(
+        doc(
+          db,
+          "results",
+          r.id
+        )
+      );
+
+    }
+
+
     await load();
+
     adminFixtures();
-    alert("Tournament reset complete.");
-  }catch(error){ alert(firebaseError(error)); }
+
+
+    alert(
+      "Tournament reset complete."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
 };
 
 
 /* =====================================================
-   ADMIN RESULTS & APPROVALS
+   ADMIN RESULTS
 ===================================================== */
 
 function adminResults(){
-  const pending = D.fixtures.filter(f => f.status === 'pending');
-  const pendingHtml = pending.length ? `
-    <div class="card" style="margin-bottom:12px; border: 1px solid var(--gold);">
-      <h3>⚠️ Pending Player Results</h3>
-      <p class="small muted" style="margin-bottom:15px;">Review and approve results submitted by players.</p>
-      <div class="list">
-        ${pending.map(p => `
-           <div class="row" style="flex-wrap:wrap;">
-             <span>
-               <b>${esc(p.playerA)}</b> <span class="badge badge-gold">${p.proposedScoreA} - ${p.proposedScoreB}</span> <b>${esc(p.playerB)}</b>
-               <br><span class="small muted">Round ${p.round || 1} • ${esc(p.tournament)}</span>
-             </span>
-             <div class="actions" style="margin-top:0;">
-               <button class="btn ok" onclick="approveResult('${p.id}')">Approve</button>
-               <button class="btn danger" onclick="rejectResult('${p.id}')">Reject</button>
-             </div>
-           </div>
-        `).join("")}
-      </div>
-    </div>
-  ` : '';
+  const pending = D.results.filter(r=>r.status==="pending");
+  const finals = D.results.filter(r=>r.status!=="pending");
 
-  $("apanel").innerHTML = pendingHtml + `
-  <div class="card">
-    <h3>📊 Publish Match Result (Manual)</h3>
-    <div class="field">
-      <label>Fixture (optional)</label>
-      <select id="rF" onchange="syncResultFixture()">
-        <option value="">Manual result</option>
-        ${D.fixtures.filter(f => f.status !== "completed").map(f => `<option value="${esc(f.id)}">${esc(f.playerA)} vs ${esc(f.playerB)} — ${esc(f.tournament || "Tournament")}</option>`).join("")}
-      </select>
+  $("apanel").innerHTML = `
+    <div class="card">
+      <h3>⏳ Pending Result Approvals</h3>
+      ${pending.length ? pending.map(r=>`
+        <div class="row" style="align-items:flex-start">
+          <span>
+            <b>${esc(r.playerA)}</b>
+            <span class="badge pending">${esc(r.scoreA)} - ${esc(r.scoreB)}</span>
+            <b>${esc(r.playerB)}</b>
+            <br><span class="small muted">${esc(r.tournament||"")} • submitted by ${esc(r.submittedByName||"Player")}</span>
+          </span>
+          <span class="actions" style="margin:0">
+            <button class="btn primary" onclick="approveResult('${esc(r.id)}')">✓ Approve</button>
+            <button class="btn danger" onclick="rejectResult('${esc(r.id)}')">Reject</button>
+          </span>
+        </div>`).join("") : `<div class="empty">No pending results.</div>`}
     </div>
-    <div class="grid2">
-      <div class="field"><label>Player A</label><select id="rA">${D.players.map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("")}</select></div>
-      <div class="field"><label>Player B</label><select id="rB">${D.players.map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("")}</select></div>
-      <div class="field"><label>Score A</label><input id="rSA" type="number" min="0" value="0"></div>
-      <div class="field"><label>Score B</label><input id="rSB" type="number" min="0" value="0"></div>
-      <div class="field"><label>Tournament</label><input id="rT"></div>
-      <div class="field"><label>Date</label><input id="rD" type="date"></div>
-    </div>
-    <button class="btn primary" onclick="addResult()">Publish Result</button>
-  </div>
 
-  <div class="card" style="margin-top:12px">
-    <h3>Published Results</h3>
-    ${D.results.map(r => `
+    <div class="card" style="margin-top:12px">
+      <h3>📊 Published Results</h3>
+      ${finals.length ? finals.map(r=>`
         <div class="row">
-          <span>${esc(r.playerA)} <span class="badge badge-green">${esc(r.scoreA)} - ${esc(r.scoreB)}</span> ${esc(r.playerB)}</span>
+          <span><b>${esc(r.playerA)}</b> <span class="badge badge-green">${esc(r.scoreA)} - ${esc(r.scoreB)}</span> <b>${esc(r.playerB)}</b><br><span class="small muted">${esc(r.tournament||"")}</span></span>
           <button class="btn danger" onclick="deleteResult('${esc(r.id)}')">Remove</button>
-        </div>
-      `).join("") || `<div class="empty">No results.</div>`}
-  </div>`;
+        </div>`).join("") : `<div class="empty">No published results.</div>`}
+    </div>
+  `;
 }
 
-
-window.approveResult = async (id) => {
-  if(!isAdminUser()) return;
-  const f = D.fixtures.find(x => x.id === id);
-  if(!f) return;
-  if(!confirm("Approve this match result?")) return;
-  
-  try {
-    const resRef = await addDoc(collection(db, "results"), {
-      playerAId: f.playerAId, playerBId: f.playerBId, playerA: f.playerA, playerB: f.playerB,
-      scoreA: f.proposedScoreA, scoreB: f.proposedScoreB, fixtureId: f.id, tournament: f.tournament,
-      date: f.date || new Date().toISOString().split('T')[0], status: "Final", createdAt: serverTimestamp()
-    });
-
-    await updateDoc(doc(db, "fixtures", f.id), {
-      status: "completed", scoreA: f.proposedScoreA, scoreB: f.proposedScoreB, resultId: resRef.id
-    });
-
-    await load();
-    adminResults();
-  } catch(e) { alert(firebaseError(e)); }
+window.submitFixtureResult = fixtureId => {
+  const f=D.fixtures.find(x=>x.id===fixtureId);
+  if(!f || f.status!=="scheduled" || !currentUser || (currentUser.uid!==f.playerAId && currentUser.uid!==f.playerBId)) return;
+  $("mc").innerHTML=`
+    <h2>📝 Submit Match Result</h2>
+    <p>${esc(f.playerA)} <b>VS</b> ${esc(f.playerB)}</p>
+    <div class="grid2">
+      <div class="field"><label>${esc(f.playerA)} Score</label><input id="subSA" type="number" min="0" value="0"></div>
+      <div class="field"><label>${esc(f.playerB)} Score</label><input id="subSB" type="number" min="0" value="0"></div>
+    </div>
+    <div class="notice">Submit the exact final score. A result becomes official only after admin approval.</div>
+    <button class="btn primary" onclick="saveSubmittedResult('${esc(f.id)}')">Submit for Approval</button>
+  `;
+  $("modal").classList.add("show");
 };
 
-window.rejectResult = async (id) => {
-  if(!isAdminUser()) return;
-  if(!confirm("Reject this result? Players will need to submit again.")) return;
-  try {
-    await updateDoc(doc(db, "fixtures", id), {
-      status: "scheduled", proposedScoreA: 0, proposedScoreB: 0
-    });
-    await load();
-    adminResults();
-  } catch(e) { alert(firebaseError(e)); }
-};
+window.saveSubmittedResult = async fixtureId => {
+  if(!currentUser) return;
+  const f=D.fixtures.find(x=>x.id===fixtureId);
+  if(!f || f.status!=="scheduled") return;
+  if(currentUser.uid!==f.playerAId && currentUser.uid!==f.playerBId) return;
 
-window.syncResultFixture = () => {
-  const fixtureId = $("rF")?.value || "";
-  if(!fixtureId) return;
-  const fixture = D.fixtures.find(f => f.id === fixtureId);
-  if(!fixture) return;
-  if($("rA")) $("rA").value = fixture.playerAId || "";
-  if($("rB")) $("rB").value = fixture.playerBId || "";
-  if($("rT")) $("rT").value = fixture.tournament || "";
-  if($("rD")) $("rD").value = fixture.date || "";
-};
+  const scoreA=Number($("subSA").value), scoreB=Number($("subSB").value);
+  if(!Number.isFinite(scoreA)||!Number.isFinite(scoreB)||scoreA<0||scoreB<0){ alert("Scores must be valid numbers."); return; }
+  if(scoreA===scoreB){ alert("Knockout matches cannot finish as a draw. Submit the final score after extra time/penalties."); return; }
 
-window.addResult = async () => {
-  if(!isAdminUser()) return;
   try{
-    const a = D.players.find(p => p.id === $("rA").value);
-    const b = D.players.find(p => p.id === $("rB").value);
-    const scoreA = Number($("rSA").value);
-    const scoreB = Number($("rSB").value);
-
-    if(!a || !b || a.id === b.id){ alert("Choose two different players."); return; }
-    if(!Number.isFinite(scoreA) || !Number.isFinite(scoreB) || scoreA < 0 || scoreB < 0){ alert("Scores must be valid numbers >= 0."); return; }
-
-    const fixtureId = $("rF")?.value || "";
-    const resultRef = await addDoc(collection(db,"results"), {
-      playerAId:a.id, playerBId:b.id, playerA:a.name, playerB:b.name, scoreA:scoreA, scoreB:scoreB, fixtureId:fixtureId || null, tournament:$("rT").value.trim(), date:$("rD").value, status:"Final", createdAt:serverTimestamp()
+    await addDoc(collection(db,"results"),{
+      fixtureId:f.id,
+      tournamentId:f.tournamentId||null,
+      tournament:f.tournament||"Tournament",
+      playerAId:f.playerAId, playerBId:f.playerBId,
+      playerA:f.playerA, playerB:f.playerB,
+      scoreA, scoreB,
+      date:f.date||"",
+      status:"pending",
+      submittedBy:currentUser.uid,
+      submittedByName:profile?.name||currentUser.displayName||"Player",
+      createdAt:serverTimestamp()
     });
-
-    if(fixtureId){
-      await updateDoc(doc(db,"fixtures",fixtureId), { status:"completed", scoreA:scoreA, scoreB:scoreB, resultId:resultRef.id });
-    }
-
+    await updateDoc(doc(db,"fixtures",f.id),{status:"pending"});
+    closeModal();
     await load();
-    adminResults();
-    alert("Result published.");
+    renderTournament();
+    alert("Result submitted. Waiting for admin approval.");
   }catch(error){ alert(firebaseError(error)); }
 };
 
-window.deleteResult = async id => {
+window.approveResult = async resultId => {
   if(!isAdminUser()) return;
-  if(!confirm("Delete this result?")) return;
+  const r=D.results.find(x=>x.id===resultId);
+  if(!r || r.status!=="pending") return;
   try{
-    await deleteDoc(doc(db,"results",id));
+    const f=D.fixtures.find(x=>x.id===r.fixtureId);
+    if(!f) throw new Error("Fixture not found.");
+    const winnerId=Number(r.scoreA)>Number(r.scoreB)?r.playerAId:r.playerBId;
+    const winner=D.players.find(p=>p.id===winnerId);
+
+    await updateDoc(doc(db,"results",r.id),{status:"Final",approvedBy:currentUser.uid,approvedAt:serverTimestamp()});
+    await updateDoc(doc(db,"fixtures",f.id),{
+      status:"completed",scoreA:Number(r.scoreA),scoreB:Number(r.scoreB),
+      winnerId,winnerName:winner?.name||"",winnerAvatar:winner?.avatarUrl||"",resultId:r.id
+    });
+    await advanceWinner({...f,winnerId},winnerId,winner?.name||"",winner?.avatarUrl||"");
+    await resolveKnockoutByes(f.tournamentId);
     await load();
     adminResults();
+    renderTournament();
+    alert("Result approved and winner advanced to the next round.");
+  }catch(error){ alert(firebaseError(error)); }
+};
+
+window.rejectResult = async resultId => {
+  if(!isAdminUser()) return;
+  if(!confirm("Reject this submitted result? The fixture will become available again.")) return;
+  try{
+    const r=D.results.find(x=>x.id===resultId);
+    if(!r) return;
+    await deleteDoc(doc(db,"results",r.id));
+    if(r.fixtureId) await updateDoc(doc(db,"fixtures",r.fixtureId),{status:"scheduled"});
+    await load(); adminResults(); renderTournament();
+  }catch(error){ alert(firebaseError(error)); }
+};
+
+window.syncResultFixture = () => {};
+
+window.addResult = async () => {
+  if(!isAdminUser()){ alert("Admin access required."); return; }
+  alert("For knockout tournaments, players submit their fixture result and the admin approves it from the Results tab.");
+};
+
+window.deleteResult = async id => {
+  if(!isAdminUser()){ alert("Admin access required."); return; }
+  if(!confirm("Delete this result?")) return;
+  try{
+    const r=D.results.find(x=>x.id===id);
+    await deleteDoc(doc(db,"results",id));
+    if(r?.fixtureId) await updateDoc(doc(db,"fixtures",r.fixtureId),{status:"scheduled",scoreA:null,scoreB:null,resultId:null});
+    await load(); adminResults(); renderTournament();
   }catch(error){ alert(firebaseError(error)); }
 };
 
@@ -2432,46 +4296,211 @@ window.deleteResult = async id => {
 ===================================================== */
 
 function adminRules(){
+
   $("apanel").innerHTML = `
+
   <div class="card">
-    <h3>📋 Publish Rule</h3>
-    <div class="field"><label>Title</label><input id="rtitle"></div>
-    <div class="field"><label>Rule</label><textarea id="rbody"></textarea></div>
-    <button class="btn primary" onclick="addRule()">Publish Rule</button>
+
+    <h3>
+      📋 Publish Rule
+    </h3>
+
+
+    <div class="field">
+
+      <label>
+        Title
+      </label>
+
+      <input id="rtitle">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Rule
+      </label>
+
+      <textarea id="rbody"></textarea>
+
+    </div>
+
+
+    <button
+      class="btn primary"
+      onclick="addRule()">
+
+      Publish Rule
+
+    </button>
+
   </div>
-  <div class="card" style="margin-top:12px">
-    <h3>Custom Rules</h3>
-    ${D.rules.map(r => `
+
+
+  <div
+    class="card"
+    style="margin-top:12px">
+
+    <h3>
+      Custom Rules
+    </h3>
+
+
+    ${
+      D.rules.map(
+        r => `
+
         <div class="row">
-          <span><b>${esc(r.title)}</b></span>
-          <button class="btn danger" onclick="deleteRule('${esc(r.id)}')">Remove</button>
+
+          <span>
+            <b>
+              ${esc(r.title)}
+            </b>
+          </span>
+
+          <button
+            class="btn danger"
+            onclick="deleteRule('${esc(r.id)}')">
+
+            Remove
+
+          </button>
+
         </div>
-      `).join("") || `<div class="empty">No custom rules.</div>`}
-  </div>`;
+
+        `
+      ).join("")
+
+      ||
+
+      `
+      <div class="empty">
+        No custom rules.
+      </div>
+      `
+    }
+
+  </div>
+
+  `;
+
 }
 
-window.addRule = async () => {
-  if(!isAdminUser()) return;
-  try{
-    const title = $("rtitle").value.trim();
-    const body = $("rbody").value.trim();
-    if(!title || !body){ alert("Rule title and rule text are required."); return; }
 
-    await addDoc(collection(db,"rules"), { title:title, body:body, createdAt:serverTimestamp() });
+/* =====================================================
+   ADD RULE
+===================================================== */
+
+window.addRule =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  try{
+
+    const title =
+    $("rtitle").value.trim();
+
+    const body =
+    $("rbody").value.trim();
+
+
+    if(!title || !body){
+
+      alert(
+        "Rule title and rule text are required."
+      );
+
+      return;
+
+    }
+
+
+    await addDoc(
+      collection(
+        db,
+        "rules"
+      ),
+      {
+
+        title:title,
+        body:body,
+        createdAt:serverTimestamp()
+
+      }
+    );
+
+
     await load();
+
     adminRules();
-    alert("Rule published.");
-  }catch(error){ alert(firebaseError(error)); }
+
+
+    alert(
+      "Rule published."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
 };
 
-window.deleteRule = async id => {
-  if(!isAdminUser()) return;
-  if(!confirm("Remove this rule?")) return;
+
+/* =====================================================
+   DELETE RULE
+===================================================== */
+
+window.deleteRule =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(!confirm(
+    "Remove this rule?"
+  ))
+    return;
+
+
   try{
-    await deleteDoc(doc(db,"rules",id));
+
+    await deleteDoc(
+      doc(
+        db,
+        "rules",
+        id
+      )
+    );
+
+
     await load();
+
     adminRules();
-  }catch(error){ alert(firebaseError(error)); }
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
 };
 
 
@@ -2479,13 +4508,32 @@ window.deleteRule = async id => {
    MODAL
 ===================================================== */
 
-window.closeModal = () => {
-  $("modal").classList.remove("show");
+window.closeModal =
+() => {
+
+  $("modal")
+    .classList
+    .remove("show");
+
 };
 
-$("modal")?.addEventListener("click", e => {
-  if(e.target.id === "modal"){ closeModal(); }
-});
+
+$("modal")?.addEventListener(
+  "click",
+  e => {
+
+    if(
+      e.target.id ===
+      "modal"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
 
 /* =====================================================
    START
