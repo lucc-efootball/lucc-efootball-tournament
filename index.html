@@ -2746,10 +2746,13 @@ function fixtureCardHtml(f){
 
   let action = "";
   if(status === "scheduled" && aId && bId){
-    if(currentUser && (currentUser.uid===aId || currentUser.uid===bId)){
-      action = `<div class="fixture-actions"><button class="btn primary" onclick="submitFixtureResult('${esc(f.id)}')">📝 Submit Result</button></div>`;
-    } else if(!currentUser){
-      action = `<div class="fixture-actions"><button class="btn" onclick="go('login')">🔐 Login to Submit Result</button></div>`;
+    // Result submission is intentionally visible to everyone.
+    // Any logged-in player can submit a proposed score; admin approval
+    // is required before the result becomes official.
+    if(currentUser){
+      action = `<div class="fixture-actions"><button class="btn primary" onclick="submitFixtureResult('${esc(f.id)}')">📝 Upload Result</button></div>`;
+    } else {
+      action = `<div class="fixture-actions"><button class="btn primary" onclick="go('login')">📝 Upload Result — Login Required</button></div>`;
     }
   } else if(status === "pending") {
     action = `<div class="fixture-actions"><span class="badge pending">⏳ Result awaiting admin approval</span></div>`;
@@ -4194,7 +4197,11 @@ function adminResults(){
 
 window.submitFixtureResult = fixtureId => {
   const f=D.fixtures.find(x=>x.id===fixtureId);
-  if(!f || f.status!=="scheduled" || !currentUser || (currentUser.uid!==f.playerAId && currentUser.uid!==f.playerBId)) return;
+  if(!currentUser){
+    go("login");
+    return;
+  }
+  if(!f || f.status!=="scheduled" || !f.playerAId || !f.playerBId) return;
   $("mc").innerHTML=`
     <h2>📝 Submit Match Result</h2>
     <p>${esc(f.playerA)} <b>VS</b> ${esc(f.playerB)}</p>
@@ -4202,17 +4209,19 @@ window.submitFixtureResult = fixtureId => {
       <div class="field"><label>${esc(f.playerA)} Score</label><input id="subSA" type="number" min="0" value="0"></div>
       <div class="field"><label>${esc(f.playerB)} Score</label><input id="subSB" type="number" min="0" value="0"></div>
     </div>
-    <div class="notice">Both players can submit their match result from this Tournament page. The result stays <b>Pending</b> until an admin approves it.</div>
+    <div class="notice">Any logged-in player can upload a proposed match result from this Tournament page. The result stays <b>Pending</b> until an admin approves it.</div>
     <button class="btn primary" onclick="saveSubmittedResult('${esc(f.id)}')">Submit for Approval</button>
   `;
   $("modal").classList.add("show");
 };
 
 window.saveSubmittedResult = async fixtureId => {
-  if(!currentUser) return;
+  if(!currentUser){
+    go("login");
+    return;
+  }
   const f=D.fixtures.find(x=>x.id===fixtureId);
-  if(!f || f.status!=="scheduled") return;
-  if(currentUser.uid!==f.playerAId && currentUser.uid!==f.playerBId) return;
+  if(!f || f.status!=="scheduled" || !f.playerAId || !f.playerBId) return;
 
   const scoreA=Number($("subSA").value), scoreB=Number($("subSB").value);
   if(!Number.isFinite(scoreA)||!Number.isFinite(scoreB)||scoreA<0||scoreB<0){ alert("Scores must be valid numbers."); return; }
