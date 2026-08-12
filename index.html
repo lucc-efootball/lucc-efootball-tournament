@@ -1033,7 +1033,7 @@ Don't have an account?
 <div class="head">
 <div>
 <h2>Tournament</h2>
-<p>Fixtures, schedule and tournament information.</p>
+<p>Fixtures, knockout bracket, schedule and result submission.</p>
 </div>
 </div>
 
@@ -2745,8 +2745,12 @@ function fixtureCardHtml(f){
     : `<div class="bracket-player"><div class="mini">${avatarHtml("",name)}<span>${esc(name)}</span></div><b class="bracket-score"></b></div>`;
 
   let action = "";
-  if(status === "scheduled" && aId && bId && currentUser && (currentUser.uid===aId || currentUser.uid===bId)){
-    action = `<div class="fixture-actions"><button class="btn primary" onclick="submitFixtureResult('${esc(f.id)}')">📝 Submit Result</button></div>`;
+  if(status === "scheduled" && aId && bId){
+    if(currentUser && (currentUser.uid===aId || currentUser.uid===bId)){
+      action = `<div class="fixture-actions"><button class="btn primary" onclick="submitFixtureResult('${esc(f.id)}')">📝 Submit Result</button></div>`;
+    } else if(!currentUser){
+      action = `<div class="fixture-actions"><button class="btn" onclick="go('login')">🔐 Login to Submit Result</button></div>`;
+    }
   } else if(status === "pending") {
     action = `<div class="fixture-actions"><span class="badge pending">⏳ Result awaiting admin approval</span></div>`;
   } else if(status === "bye") {
@@ -4161,7 +4165,7 @@ function adminResults(){
 
   $("apanel").innerHTML = `
     <div class="card">
-      <h3>⏳ Pending Result Approvals</h3>
+      <h3>⏳ Pending Result Approvals</h3><p class="small muted">Players submit results from the Tournament page. Nothing becomes official until you approve it here.</p>
       ${pending.length ? pending.map(r=>`
         <div class="row" style="align-items:flex-start">
           <span>
@@ -4198,7 +4202,7 @@ window.submitFixtureResult = fixtureId => {
       <div class="field"><label>${esc(f.playerA)} Score</label><input id="subSA" type="number" min="0" value="0"></div>
       <div class="field"><label>${esc(f.playerB)} Score</label><input id="subSB" type="number" min="0" value="0"></div>
     </div>
-    <div class="notice">Submit the exact final score. A result becomes official only after admin approval.</div>
+    <div class="notice">Both players can submit their match result from this Tournament page. The result stays <b>Pending</b> until an admin approves it.</div>
     <button class="btn primary" onclick="saveSubmittedResult('${esc(f.id)}')">Submit for Approval</button>
   `;
   $("modal").classList.add("show");
@@ -4215,6 +4219,15 @@ window.saveSubmittedResult = async fixtureId => {
   if(scoreA===scoreB){ alert("Knockout matches cannot finish as a draw. Submit the final score after extra time/penalties."); return; }
 
   try{
+    // Prevent duplicate submissions for the same fixture.
+    const existing = D.results.find(r =>
+      r.fixtureId === f.id && r.status === "pending"
+    );
+    if(existing){
+      alert("A result for this match is already waiting for admin approval.");
+      return;
+    }
+
     await addDoc(collection(db,"results"),{
       fixtureId:f.id,
       tournamentId:f.tournamentId||null,
