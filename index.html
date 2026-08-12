@@ -1,886 +1,672 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#070a11">
-<title>BMG Official • Tournament Platform</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070a12">
+
+<title>LUCC eFootball</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060810;
+  --bg2:#0b0f19;
+  --card:#101622;
+  --card2:#151c29;
+  --line:#263043;
+  --txt:#f7f9ff;
+  --muted:#8f9aae;
+  --purple:#765cff;
+  --purple2:#9b7cff;
+  --cyan:#24d9ff;
+  --green:#20d39b;
+  --red:#ff5577;
+  --gold:#ffc857;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
 
 body{
-font-family:Inter,Arial,sans-serif;
-background:#070a11;
-color:#eef3ff;
-min-height:100vh
+  margin:0;
+  color:var(--txt);
+  background:
+    radial-gradient(circle at 10% -5%,#29165a 0,transparent 30%),
+    radial-gradient(circle at 95% 15%,#063b50 0,transparent 25%),
+    linear-gradient(135deg,#060810,#090d16 55%,#05070d);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;
 }
 
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 a{text-decoration:none;color:inherit}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0}
+img{max-width:100%}
 
-:root{
---bg:#070a11;
---card:#0e1420;
---card2:#111a29;
---line:#202c40;
---muted:#8490a5;
---blue:#2876ff;
---blue2:#6446ff;
---green:#36e58a;
---red:#ff6677;
---gold:#ffc84d
+header{
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:#060810dd;
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid #ffffff0c;
 }
 
-.container{
-width:min(1180px,92%);
-margin:auto
+.bar{
+  height:70px;
+  max-width:1180px;
+  margin:auto;
+  padding:0 15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.nav{
-height:72px;
-display:flex;
-align-items:center;
-justify-content:space-between
-}
-
-.navbar{
-position:sticky;
-top:0;
-z-index:50;
-background:rgba(7,10,17,.92);
-backdrop-filter:blur(16px);
-border-bottom:1px solid var(--line)
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:950;
+  letter-spacing:-.5px;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:21px;
-font-weight:900
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  box-shadow:0 0 30px #765cff45;
+  font-size:22px;
 }
 
-.logo i{
-width:42px;
-height:42px;
-border-radius:13px;
-background:linear-gradient(135deg,var(--blue),var(--blue2));
-display:grid;
-place-items:center;
-font-style:normal;
-font-size:22px
+.nav{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:3px;
 }
 
-.logo b{color:#65a0ff}
-
-.navlinks{
-display:flex;
-gap:22px;
-color:#9da8bb;
-font-size:14px
+.nav button{
+  border:0;
+  color:var(--muted);
+  background:transparent;
+  padding:10px 11px;
+  border-radius:12px;
+  font-weight:700;
 }
 
-.navlinks a:hover{color:#fff}
-
-.account{
-background:linear-gradient(135deg,var(--blue),var(--blue2));
-color:#fff;
-padding:11px 16px;
-border-radius:11px;
-font-weight:800;
-max-width:180px;
-overflow:hidden;
-text-overflow:ellipsis;
-white-space:nowrap
+.nav button:hover,
+.nav button.active{
+  color:#fff;
+  background:#ffffff09;
 }
+
+.menu{
+  display:none;
+  margin-left:auto;
+  border:1px solid var(--line);
+  color:#fff;
+  background:#121824;
+  border-radius:13px;
+  padding:9px 12px;
+  font-size:20px;
+}
+
+main{
+  max-width:1180px;
+  margin:auto;
+  padding:25px 15px 110px;
+}
+
+.page{display:none}
+.page.active{display:block}
 
 .hero{
-padding:75px 0 45px;
-background:
-radial-gradient(circle at 80% 20%,rgba(40,118,255,.18),transparent 35%),
-radial-gradient(circle at 10% 70%,rgba(100,70,255,.12),transparent 30%)
+  position:relative;
+  min-height:490px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  border:1px solid #ffffff12;
+  border-radius:30px;
+  padding:45px;
+  background:linear-gradient(120deg,#17102e,#101a2a 55%,#07131a);
+  box-shadow:0 25px 80px #00000035;
 }
 
-.heroGrid{
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:38px;
-align-items:center
+.hero:before{
+  content:"";
+  position:absolute;
+  width:350px;
+  height:350px;
+  right:-120px;
+  top:-120px;
+  border-radius:50%;
+  background:#765cff25;
+  filter:blur(20px);
 }
 
-.pill{
-display:inline-block;
-border:1px solid #294b86;
-background:#0c1a31;
-color:#6da4ff;
-padding:9px 14px;
-border-radius:30px;
-font-size:12px;
-font-weight:800;
-margin-bottom:18px
+.hero:after{
+  content:"⚽";
+  position:absolute;
+  right:7%;
+  bottom:-30px;
+  font-size:210px;
+  opacity:.055;
+  transform:rotate(-15deg);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:750px;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  color:#d5ceff;
+  background:#765cff18;
+  border:1px solid #765cff55;
+  padding:8px 13px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.8px;
 }
 
 h1{
-font-size:clamp(42px,6vw,68px);
-line-height:.98;
-margin-bottom:20px
+  font-size:clamp(48px,8vw,82px);
+  line-height:.9;
+  letter-spacing:-5px;
+  margin:20px 0;
 }
 
-h1 span{color:#4f8fff}
+.gradient-text{
+  background:linear-gradient(90deg,#8c75ff,#32dfff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
 
-.hero p{
-color:#9aa6ba;
-font-size:17px;
-line-height:1.75;
-max-width:650px
+h2{
+  margin:0 0 7px;
+  font-size:31px;
+  letter-spacing:-1px;
+}
+
+h3{margin:0 0 7px}
+
+p{
+  color:var(--muted);
+  line-height:1.6;
 }
 
 .actions{
-display:flex;
-gap:12px;
-margin-top:28px;
-flex-wrap:wrap
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:22px;
 }
 
-.primary,.secondary{
-padding:14px 20px;
-border-radius:11px;
-font-weight:800
+.btn{
+  border:1px solid var(--line);
+  background:#131a26;
+  color:#fff;
+  padding:11px 15px;
+  border-radius:13px;
+  font-weight:850;
+  transition:.18s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:#ffffff25;
 }
 
 .primary{
-background:var(--blue);
-color:#fff
+  border:0;
+  background:linear-gradient(135deg,var(--purple),#4c39d9);
+  box-shadow:0 8px 25px #765cff25;
 }
 
-.secondary{
-background:#111926;
-border:1px solid #29364b;
-color:#fff
-}
-
-.heroCard{
-background:linear-gradient(145deg,#111927,#0b1019);
-border:1px solid #25334a;
-border-radius:22px;
-padding:26px;
-box-shadow:0 25px 70px #0008
-}
-
-.hcTop{
-display:flex;
-justify-content:space-between
-}
-
-.live{
-color:#45f99a;
-font-size:12px;
-font-weight:900
-}
-
-.score{
-font-size:48px;
-text-align:center;
-font-weight:900;
-margin:32px 0 22px
-}
-
-.teams{
-display:flex;
-justify-content:space-around;
-text-align:center;
-color:#b6c0d0
-}
-
-.teamIcon{
-width:58px;
-height:58px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:#18253c;
-margin:auto auto 8px;
-font-size:25px
-}
-
-section{padding:58px 0}
-
-.sectionHead{margin-bottom:25px}
-
-.sectionHead h2{font-size:30px}
-
-.sectionHead p{
-color:var(--muted);
-margin-top:6px
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:17px
-}
-
-.card{
-background:linear-gradient(145deg,#101722,#0b1018);
-border:1px solid var(--line);
-border-radius:17px;
-padding:21px
-}
-
-.card:hover{border-color:#376fd0}
-
-.status{
-display:inline-block;
-padding:6px 9px;
-border-radius:7px;
-background:#102b20;
-color:#50f99c;
-font-size:10px;
-font-weight:900
-}
-
-.card h3{margin:12px 0 8px}
-
-.card p{
-color:#8f9bae;
-line-height:1.6;
-font-size:13px
-}
-
-.meta{
-display:flex;
-justify-content:space-between;
-border-top:1px solid var(--line);
-padding-top:14px;
-margin-top:17px;
-color:#aeb8c8;
-font-size:12px
-}
-
-.tourBanner{
-min-height:190px;
-display:flex;
-align-items:end;
-padding:23px;
-border-radius:19px;
-overflow:hidden;
-position:relative;
-background:linear-gradient(120deg,#101d36,#151029);
-border:1px solid #2a416b
-}
-
-.tourBanner:after{
-content:"🏆";
-position:absolute;
-right:28px;
-top:25px;
-font-size:80px;
-opacity:.13
-}
-
-.tourBanner h3{font-size:25px}
-
-.tourBanner p{
-color:#a3aec0;
-margin-top:6px
-}
-
-.tourGrid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px
-}
-
-.playerList{
-display:flex;
-flex-direction:column;
-gap:9px
-}
-
-.playerRow{
-display:grid;
-grid-template-columns:42px 1fr 70px 70px 70px 70px 80px;
-align-items:center;
-gap:10px;
-background:#0d131e;
-border:1px solid var(--line);
-padding:10px 13px;
-border-radius:12px
-}
-
-.playerRow img,
-.miniAvatar{
-width:38px;
-height:38px;
-border-radius:50%;
-object-fit:cover;
-background:#19263e;
-display:grid;
-place-items:center
-}
-
-.playerRow strong{cursor:pointer}
-
-.playerRow strong:hover{color:#67a1ff}
-
-.tableWrap{overflow-x:auto}
-
-.table{
-width:100%;
-border-collapse:collapse;
-min-width:620px
-}
-
-.table th,
-.table td{
-padding:11px 10px;
-border-bottom:1px solid var(--line);
-text-align:center;
-font-size:12px
-}
-
-.table th{
-color:#7e8aa0;
-font-size:10px;
-text-transform:uppercase
-}
-
-.table td:first-child,
-.table th:first-child{text-align:left}
-
-.rank{
-color:var(--gold);
-font-weight:900
-}
-
-.matchGroup{margin-bottom:22px}
-
-.matchGroup h3{
-margin-bottom:10px;
-color:#b8c5d8
-}
-
-.match{
-display:grid;
-grid-template-columns:1fr 70px 1fr 100px;
-gap:12px;
-align-items:center;
-background:#0d131e;
-border:1px solid var(--line);
-border-radius:12px;
-padding:13px;
-margin-bottom:8px
-}
-
-.match .right{text-align:right}
-
-.match .score{
-text-align:center;
-font-size:15px;
-margin:0
-}
-
-.badge2{
-font-size:10px;
-padding:6px 8px;
-border-radius:7px;
-background:#17243a;
-color:#8eabdb;
-display:inline-block
-}
-
-.approved{
-background:#103023;
-color:#4ff49a
-}
-
-.pending{
-background:#352a10;
-color:#ffd45c
-}
-
-.knockout{
-border-color:#4d6d9d
-}
-
-/* KNOCKOUT */
-
-.knockoutRound{
-margin-bottom:25px
-}
-
-.knockoutRoundTitle{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:12px;
-font-size:18px
-}
-
-.knockoutRoundTitle span{
-font-size:10px;
-padding:5px 8px;
-border-radius:6px;
-background:#17243a;
-color:#8eabdb
-}
-
-.knockMatch{
-display:grid;
-grid-template-columns:1fr 170px 1fr;
-align-items:center;
-gap:15px;
-background:linear-gradient(145deg,#101722,#0b1018);
-border:1px solid var(--line);
-border-radius:15px;
-padding:15px;
-margin-bottom:10px
-}
-
-.knockPlayer{
-display:flex;
-align-items:center;
-gap:12px;
-cursor:pointer;
-min-width:0
-}
-
-.knockPlayer.right{
-justify-content:flex-end;
-text-align:right
-}
-
-.knockAvatar{
-width:50px;
-height:50px;
-min-width:50px;
-border-radius:50%;
-background:#19263e;
-display:grid;
-place-items:center;
-overflow:hidden;
-font-size:21px;
-border:2px solid #263a59
-}
-
-.knockAvatar img{
-width:100%;
-height:100%;
-object-fit:cover
-}
-
-.knockName{
-font-weight:800;
-font-size:13px;
-word-break:break-word
-}
-
-.knockPlayer:hover .knockName{
-color:#67a1ff
-}
-
-.knockCenter{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:8px
-}
-
-.knockScore{
-font-size:20px;
-font-weight:900
-}
-
-.knockVs{
-font-size:11px;
-color:#728097;
-font-weight:900
-}
-
-.byeText{
-color:#ffc84d;
-font-size:11px;
-font-weight:900
-}
-
-/* FEATURES */
-
-.features{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px
-}
-
-.feature{
-background:#0d131e;
-border:1px solid var(--line);
-border-radius:15px;
-padding:21px
-}
-
-.feature b{
-display:block;
-margin:10px 0 7px
-}
-
-.feature p{
-font-size:12px;
-color:#8c98ab;
-line-height:1.5
-}
-
-footer{
-border-top:1px solid var(--line);
-padding:35px 0;
-color:#718097;
-text-align:center;
-font-size:12px
-}
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:#000b;
-backdrop-filter:blur(8px);
-z-index:100;
-align-items:center;
-justify-content:center;
-padding:18px
-}
-
-.modal.active{display:flex}
-
-.modalBox{
-width:min(560px,100%);
-max-height:92vh;
-overflow:auto;
-background:#101722;
-border:1px solid #2b3a51;
-border-radius:18px;
-padding:24px;
-position:relative
-}
-
-.close{
-position:absolute;
-right:15px;
-top:12px;
-background:none;
-color:#8793a7;
-font-size:27px
-}
-
-.modalBox h2{margin-bottom:7px}
-
-.sub{
-color:#7f8ba0;
-font-size:12px;
-margin-bottom:20px
-}
-
-.form{
-display:grid;
-gap:12px
-}
-
-.field label{
-display:block;
-font-size:11px;
-color:#9eabbf;
-margin-bottom:6px
-}
-
-.field input,
-.field select,
-.field textarea{
-width:100%;
-background:#090e16;
-color:#fff;
-border:1px solid #29364a;
-border-radius:9px;
-padding:11px;
-outline:0
-}
-
-.field textarea{
-min-height:80px;
-resize:vertical
-}
-
-.submit{
-width:100%;
-padding:12px;
-background:var(--blue);
-color:#fff;
-border-radius:9px;
-font-weight:900
-}
-
-.msg{
-text-align:center;
-font-size:12px;
-color:#58f59b;
-margin-top:10px
+.cyan{
+  border:0;
+  background:linear-gradient(135deg,#20caff,#167db8);
 }
 
 .danger{
-background:#38151c;
-color:#ff8290
+  color:#ff9bad;
+  background:#ff557710;
+  border-color:#ff557744;
 }
 
-.adminPanel{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px
+.ok{
+  color:#62e7bb;
+  background:#20d39b10;
+  border-color:#20d39b44;
 }
 
-.adminCard{
-background:#0c121c;
-border:1px solid var(--line);
-border-radius:14px;
-padding:17px
+.announcement{
+  margin-top:16px;
+  padding:17px 18px;
+  border:1px solid #765cff44;
+  border-radius:18px;
+  background:linear-gradient(110deg,#765cff13,#24d9ff08);
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
 }
 
-.adminCard h3{margin-bottom:12px}
-
-.adminList{
-display:grid;
-gap:7px;
-max-height:300px;
-overflow:auto
+.announcement-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  flex:none;
+  background:#765cff20;
 }
 
-.checkRow{
-display:flex;
-gap:8px;
-align-items:center;
-background:#111a28;
-border:1px solid var(--line);
-padding:8px;
-border-radius:8px;
-font-size:12px
+.announcement h3{margin-bottom:3px}
+
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:10px;
+  margin:35px 0 15px;
 }
 
-.smallBtn{
-padding:8px 10px;
-border-radius:8px;
-background:#1a2941;
-color:#fff;
-font-size:11px;
-font-weight:800
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
 }
 
-.smallBtn.blue{background:var(--blue)}
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
 
-.smallBtn.red{
-background:#4a1921;
-color:#ff9aa5
+.card{
+  background:linear-gradient(180deg,#111824,#0d121b);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 10px 35px #00000020;
+}
+
+.stat{
+  margin-top:4px;
+  font-size:35px;
+  font-weight:950;
+  letter-spacing:-1px;
+}
+
+.muted{color:var(--muted)}
+.small{font-size:12px}
+
+.form{
+  max-width:720px;
+  margin:auto;
+}
+
+.field{margin:12px 0}
+
+.field label{
+  display:block;
+  color:#cbd3df;
+  font-size:13px;
+  font-weight:850;
+  margin-bottom:6px;
+}
+
+input,textarea,select{
+  width:100%;
+  color:#fff;
+  background:#080c13;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  outline:none;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#765cff88;
+  box-shadow:0 0 0 3px #765cff0d;
 }
 
 .notice{
-padding:11px 13px;
-background:#101d31;
-border:1px solid #29446f;
-border-radius:10px;
-color:#9eb8df;
-font-size:12px;
-margin-bottom:14px
+  margin:10px 0;
+  padding:12px 14px;
+  border-radius:13px;
+  background:#ffffff07;
+  border:1px solid var(--line);
+  color:#cdd5e2;
 }
 
-.searchBox{
-width:100%;
-max-width:450px;
-background:#0d131e;
-color:#fff;
-border:1px solid #29364a;
-border-radius:10px;
-padding:12px 14px;
-outline:none;
-margin-bottom:18px
+.error{
+  color:#ff9bad;
+  background:#ff557710;
+  border-color:#ff557744;
 }
 
-.searchBox:focus{
-border-color:#377cf5
+.success{
+  color:#72e8bd;
+  background:#20d39b10;
+  border-color:#20d39b44;
 }
 
-.hidden{display:none!important}
+.player-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,#121a29,#0b1019);
+  transition:.18s;
+}
 
-.loading,
+.player-card:before{
+  content:"";
+  position:absolute;
+  right:-70px;
+  top:-80px;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:#765cff17;
+  filter:blur(10px);
+}
+
+.player-card:hover{
+  border-color:#765cff70;
+  transform:translateY(-2px);
+}
+
+.player{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.avatar{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:17px;
+  background:#1a2231;
+  border:1px solid #ffffff14;
+  flex:none;
+}
+
+.avatar.big{
+  width:94px;
+  height:94px;
+  border-radius:27px;
+}
+
+.avatar-xl{
+  width:115px;
+  height:115px;
+  border-radius:30px;
+  object-fit:cover;
+  border:2px solid #765cff66;
+  background:#151d2c;
+  box-shadow:0 10px 35px #00000035;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#ffffff09;
+  color:#bac4d2;
+  font-size:11px;
+  font-weight:850;
+}
+
+.badge-purple{
+  color:#d1c8ff;
+  background:#765cff17;
+  border:1px solid #765cff33;
+}
+
+.badge-green{
+  color:#72e8bd;
+  background:#20d39b12;
+  border:1px solid #20d39b33;
+}
+
+.badge-gold{
+  color:#ffe08a;
+  background:#ffc85712;
+  border:1px solid #ffc85733;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:13px;
+  border:1px solid var(--line);
+  background:#0b0f16;
+  border-radius:15px;
+}
+
 .empty{
-text-align:center;
-padding:30px;
-color:#7e899b
+  text-align:center;
+  padding:35px;
+  border:1px dashed var(--line);
+  border-radius:18px;
+  color:var(--muted);
 }
 
-.error{color:#ff7f8c}
+.search{margin-bottom:14px}
 
-.profileHero{
-text-align:center;
-padding:10px 0 20px
+.clickable{
+  cursor:pointer;
+  transition:.18s;
 }
 
-.profileAvatar{
-width:110px;
-height:110px;
-margin:auto;
-border-radius:50%;
-overflow:hidden;
-background:#19263e;
-display:grid;
-place-items:center;
-font-size:42px;
-border:3px solid #2e5fb5
+.statgrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:16px;
 }
 
-.profileAvatar img{
-width:100%;
-height:100%;
-object-fit:cover
+.statbox{
+  background:#0a0f16;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:13px;
 }
 
-.profileStatGrid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:15px
+.statbox b{
+  font-size:25px;
 }
 
-.profileStat{
-background:#0d131e;
-border:1px solid var(--line);
-border-radius:10px;
-padding:13px;
-text-align:center
+.profile-banner{
+  padding:22px;
+  border-radius:23px;
+  border:1px solid #765cff35;
+  background:linear-gradient(120deg,#1a1532,#111c2a);
 }
 
-.profileStat b{
-display:block;
-font-size:20px;
-color:#fff
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:18px;
 }
 
-.profileStat span{
-font-size:10px;
-color:#7e899b
+.admin{
+  background:linear-gradient(145deg,#19152f,#111a27);
+  border:1px solid #765cff55;
+  border-radius:22px;
+  padding:18px;
 }
 
-@media(max-width:850px){
-
-.heroGrid{
-grid-template-columns:1fr
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+  margin:15px 0;
+  padding-bottom:2px;
 }
 
-.navlinks{display:none}
-
-.grid,
-.tourGrid{
-grid-template-columns:1fr
+.tab{
+  white-space:nowrap;
+  border:1px solid var(--line);
+  background:#0d1118;
+  color:var(--muted);
+  padding:9px 12px;
+  border-radius:999px;
 }
 
-.features{
-grid-template-columns:1fr 1fr
+.tab.active{
+  color:#fff;
+  border-color:#765cff66;
+  background:#765cff18;
 }
 
-.playerRow{
-grid-template-columns:42px 1fr 55px 55px 55px 55px
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:#000b;
+  backdrop-filter:blur(8px);
 }
 
-.playerRow .gf{display:none}
+.modal.show{display:flex}
 
-.match{
-grid-template-columns:1fr 60px 1fr
+.modalbox{
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:linear-gradient(180deg,#131925,#0c1119);
+  border:1px solid var(--line);
+  border-radius:23px;
+  padding:18px;
+  box-shadow:0 30px 100px #00000070;
 }
 
-.match .action{
-grid-column:1/-1;
-text-align:center
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:grid;
+  place-items:center;
+  background:#060810f2;
 }
 
-.knockMatch{
-grid-template-columns:1fr 130px 1fr
+.loader.off{display:none}
+
+.spin{
+  width:42px;
+  height:42px;
+  border:4px solid #ffffff18;
+  border-top-color:#8d7fff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
 }
 
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
-@media(max-width:600px){
-
-.nav{
-height:64px
+footer{
+  text-align:center;
+  color:#667183;
+  font-size:12px;
+  padding:25px;
 }
 
-.logo{
-font-size:16px
-}
+.bottom{display:none}
 
-.logo i{
-width:36px;
-height:36px
-}
+@media(max-width:800px){
 
-.account{
-font-size:11px;
-padding:9px 10px
-}
+  .nav{display:none}
 
-.features{
-grid-template-columns:1fr
-}
+  .menu{
+    display:block;
+    margin-left:auto;
+  }
 
-.playerRow{
-grid-template-columns:38px 1fr 45px 45px 45px
-}
+  .bottom{
+    position:fixed;
+    display:flex;
+    z-index:50;
+    left:0;
+    right:0;
+    bottom:0;
+    justify-content:space-around;
+    background:#080b11ed;
+    backdrop-filter:blur(18px);
+    border-top:1px solid var(--line);
+    padding:6px 3px calc(6px + env(safe-area-inset-bottom));
+  }
 
-.playerRow .gd,
-.playerRow .gf{
-display:none
-}
+  .bottom button{
+    color:var(--muted);
+    background:transparent;
+    border:0;
+    font-size:10px;
+    padding:6px;
+  }
 
-.hero{
-padding-top:50px
-}
+  .bottom b{
+    display:block;
+    font-size:17px;
+  }
 
-.actions>*{
-width:100%;
-text-align:center
-}
+  .grid,
+  .grid2{
+    grid-template-columns:1fr;
+  }
 
-.knockMatch{
-grid-template-columns:1fr 75px 1fr;
-gap:5px;
-padding:10px
-}
+  .statgrid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-.knockAvatar{
-width:38px;
-height:38px;
-min-width:38px;
-font-size:16px
-}
+  .hero{
+    min-height:460px;
+    padding:27px;
+  }
 
-.knockPlayer{
-gap:6px
-}
+  main{
+    padding-left:12px;
+    padding-right:12px;
+  }
 
-.knockName{
-font-size:10px
-}
+  .profile-top{
+    align-items:flex-start;
+  }
 
-.knockScore{
-font-size:14px
-}
-
-.knockCenter .smallBtn{
-font-size:9px;
-padding:6px
-}
-
-.profileStatGrid{
-grid-template-columns:1fr 1fr
-}
+  h1{
+    letter-spacing:-3px;
+  }
 
 }
 </style>
@@ -888,205 +674,287 @@ grid-template-columns:1fr 1fr
 
 <body>
 
-<header class="navbar">
-<div class="container nav">
-
-<div class="logo">
-<i>⚡</i>
-BMG <b>OFFICIAL</b>
+<div id="loader" class="loader">
+  <div class="spin"></div>
 </div>
 
-<nav class="navlinks">
-<a href="#home">Home</a>
-<a href="#tournaments">Tournaments</a>
-<a href="#players">Players</a>
-<a href="#leaderboard">Top Scorer</a>
+<header>
+<div class="bar">
+
+<a class="brand" href="#home" onclick="go('home')">
+  <span class="logo">⚽</span>
+  LUCC eFootball
+</a>
+
+<nav class="nav">
+
+<button data-p="home" onclick="go('home')">Home</button>
+<button data-p="tournament" onclick="go('tournament')">Tournament</button>
+<button data-p="players" onclick="go('players')">Players</button>
+<button data-p="results" onclick="go('results')">Results</button>
+<button data-p="rules" onclick="go('rules')">Rules</button>
+
+<button data-p="login" id="loginNav" onclick="go('login')">
+  Login
+</button>
+
+<button data-p="profile"
+        id="profileNav"
+        style="display:none"
+        onclick="go('profile')">
+  Profile
+</button>
+
+<button data-p="admin"
+        id="adminNav"
+        style="display:none"
+        onclick="go('admin')">
+  Admin
+</button>
+
+<button id="logoutNav"
+        style="display:none"
+        onclick="logout()">
+  Logout
+</button>
+
 </nav>
 
-<button id="accountBtn" class="account">
-Login / Register
-</button>
+<button class="menu" onclick="toggleMobileMenu()">☰</button>
 
 </div>
 </header>
 
+<main>
 
-<section class="hero" id="home">
+<!-- HOME -->
 
-<div class="container heroGrid">
+<section id="home" class="page active">
 
-<div>
+<div class="hero">
 
-<div class="pill">
-⚡ BMG OFFICIAL • eFOOTBALL
-</div>
+<div class="hero-content">
+
+<span class="tag">
+  🏆 LUCC OFFICIAL eFOOTBALL PLATFORM
+</span>
 
 <h1>
-Compete.<br>
-<span>Dominate.</span><br>
-Become a Legend.
+  LUCC<br>
+  <span class="gradient-text">eFootball</span>
 </h1>
 
 <p>
-Bangladesh Mighty Gamers official competitive platform.
-Manage players, tournaments, fixtures, results, rankings and knockout rounds from one place.
+  Register, compete, follow fixtures,
+  check results and climb the leaderboard.
+  Your competitive eFootball journey starts here.
 </p>
 
 <div class="actions">
 
-<a class="primary" href="#tournaments">
-🏆 View Tournaments
+<button id="homeRegisterBtn"
+        class="btn primary"
+        onclick="go('register')">
+  🚀 Register Now
+</button>
+
+<button class="btn"
+        onclick="go('login')">
+  🔐 Login
+</button>
+
+<button class="btn cyan"
+        onclick="go('tournament')">
+  🏆 Tournament
+</button>
+
+<button class="btn"
+        onclick="go('rules')">
+  📋 Rules
+</button>
+
+</div>
+
+</div>
+</div>
+
+<div class="announcement">
+
+<div class="announcement-icon">🔥</div>
+
+<div>
+
+<h3>Tournament Starting Very Soon!</h3>
+
+<p class="small" style="margin:0">
+  Our next LUCC eFootball tournament is coming very soon.
+  Everyone is requested to register as soon as possible
+  and secure your place in the competition.
+</p>
+
+</div>
+</div>
+
+<div class="head">
+<div>
+<h2>Live Overview</h2>
+<p class="small">Current tournament platform statistics</p>
+</div>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<span class="muted">Registered Players</span>
+<div class="stat" id="sp">—</div>
+</div>
+
+<div class="card">
+<span class="muted">Matches</span>
+<div class="stat" id="sr">—</div>
+</div>
+
+<div class="card">
+<span class="muted">Tournaments</span>
+<div class="stat" id="st">—</div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REGISTER -->
+
+<section id="register" class="page">
+
+<div class="head">
+<div>
+<h2>Player Registration</h2>
+<p>Create your LUCC tournament account.</p>
+</div>
+</div>
+
+<div class="card form">
+
+<div id="regmsg"></div>
+
+<form id="reg">
+
+<div class="grid2">
+
+<div class="field">
+<label>Player Name *</label>
+<input id="name" required maxlength="60">
+</div>
+
+<div class="field">
+<label>Konami / eFootball UID *</label>
+<input id="uid" required maxlength="60">
+</div>
+
+</div>
+
+<div class="grid2">
+
+<div class="field">
+<label>Email *</label>
+<input id="email" type="email" required>
+</div>
+
+<div class="field">
+<label>Mobile</label>
+<input id="mobile">
+</div>
+
+</div>
+
+<div class="field">
+<label>Password *</label>
+<input id="pass" type="password" minlength="6" required>
+</div>
+
+<div class="field">
+<label>Mobile / Device Model</label>
+<input id="device" placeholder="e.g. Pixel 7">
+</div>
+
+<div class="field">
+
+<label>Player Avatar</label>
+
+<input id="avatar" type="file" accept="image/*">
+
+<img id="preview"
+     class="avatar big"
+     style="display:none;margin-top:8px">
+
+</div>
+
+<button id="regBtn"
+        class="btn primary"
+        type="submit">
+  Create Account
+</button>
+
+</form>
+
+<p class="small">
+Already registered?
+
+<a onclick="go('login')"
+   style="color:#a79cff;cursor:pointer">
+  Login
 </a>
-
-<button class="secondary" id="heroAccount">
-👤 Player Account
-</button>
-
-</div>
-
-</div>
-
-
-<div class="heroCard">
-
-<div class="hcTop">
-
-<b>⚡ BMG MATCH CENTER</b>
-
-<span class="live">
-● LIVE
-</span>
-
-</div>
-
-<div style="text-align:center;color:#7f8ba0;margin-top:28px">
-BMG eFootball
-</div>
-
-<div class="score">
-VS
-</div>
-
-<div class="teams">
-
-<div>
-<div class="teamIcon">🔵</div>
-BMG Player
-</div>
-
-<div>
-<div class="teamIcon">🔴</div>
-Opponent
-</div>
-
-</div>
-
-</div>
+</p>
 
 </div>
 </section>
 
 
-<!-- TOURNAMENTS -->
+<!-- LOGIN -->
 
-<section id="tournaments">
+<section id="login" class="page">
 
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>🏆 Tournaments</h2>
-
-<p>
-Public tournament list • enter a tournament to view fixtures, results and rankings.
-</p>
-
+<div class="head">
+<div>
+<h2>Player Login</h2>
+<p>Login to access your profile and tournament dashboard.</p>
+</div>
 </div>
 
-<div id="tournamentGrid" class="tourGrid">
+<div class="card form">
 
-<div class="loading">
-Loading tournaments...
+<div id="loginmsg"></div>
+
+<form id="signin">
+
+<div class="field">
+<label>Email</label>
+<input id="lemail" type="email" required>
 </div>
 
+<div class="field">
+<label>Password</label>
+<input id="lpass" type="password" required>
 </div>
 
-</div>
-
-</section>
-
-
-<!-- TOURNAMENT PAGE -->
-
-<section id="tournamentPage" class="hidden">
-
-<div class="container">
-
-<div class="sectionHead">
-
-<button class="smallBtn" onclick="showHome()">
-← Back to tournaments
+<button id="loginBtn"
+        class="btn primary"
+        type="submit">
+  Login
 </button>
 
-<h2 id="tourTitle" style="margin-top:16px"></h2>
+</form>
 
-<p id="tourDesc"></p>
+<p class="small">
+Don't have an account?
 
-</div>
-
-<div id="tourInfo" class="notice"></div>
-
-
-<!-- GROUP STANDINGS -->
-
-<div id="groupSection">
-
-<div class="sectionHead">
-<h2>📊 Group Standings</h2>
-</div>
-
-<div id="standingsArea"></div>
-
-</div>
-
-
-<!-- GROUP MATCHES -->
-
-<div id="groupMatchSection">
-
-<div class="sectionHead" style="margin-top:35px">
-
-<h2>⚽ Group Matches</h2>
-
-<p>
-Players can submit their own score.
-Admin approves it before it becomes official.
+<a onclick="go('register')"
+   style="color:#a79cff;cursor:pointer">
+  Register
+</a>
 </p>
-
-</div>
-
-<div id="groupMatchesArea"></div>
-
-</div>
-
-
-<!-- KNOCKOUT -->
-
-<div id="knockoutSection">
-
-<div class="sectionHead" style="margin-top:35px">
-
-<h2>🏆 Knockout Stage</h2>
-
-<p>
-Winner automatically advances after admin approval.
-</p>
-
-</div>
-
-<div id="knockoutArea"></div>
-
-</div>
 
 </div>
 
@@ -1095,2181 +963,4200 @@ Winner automatically advances after admin approval.
 
 <!-- PLAYERS -->
 
-<section id="players">
+<section id="players" class="page">
 
-<div class="container">
+<div class="head">
+<div>
+<h2>Players</h2>
+<p>Search and open any registered player profile.</p>
+</div>
+</div>
 
-<div class="sectionHead">
+<div class="search">
 
-<h2>👥 BMG Players</h2>
-
-<p>
-Click a player name to view their public profile.
-</p>
+<input id="playerSearch"
+       placeholder="🔎 Search player name or UID..."
+       oninput="renderPlayers()">
 
 </div>
 
-<input
-id="playerSearch"
-class="searchBox"
-type="text"
-placeholder="🔎 Search player..."
->
-
-<div class="playerList" id="playersList">
-
-<div class="loading">
-Loading players...
-</div>
-
-</div>
-
-</div>
+<div id="plist" class="grid"></div>
 
 </section>
 
 
-<!-- TOP SCORER -->
+<!-- RULES -->
 
-<section id="leaderboard">
+<section id="rules" class="page">
 
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>🔥 Top Scorer</h2>
-
-<p>
-Combined tournament goals ranking.
-</p>
-
+<div class="head">
+<div>
+<h2>Tournament Rules</h2>
+<p>Rules every LUCC player must follow.</p>
+</div>
 </div>
 
-<div class="card tableWrap">
-
-<table class="table">
-
-<thead>
-
-<tr>
-<th># Player</th>
-<th>Goals</th>
-<th>Matches</th>
-<th>Tournaments</th>
-</tr>
-
-</thead>
-
-<tbody id="scorerBody">
-
-<tr>
-<td colspan="4" class="loading">
-Loading...
-</td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
+<div id="rul" class="grid2"></div>
 
 </section>
 
 
-<!-- FEATURES -->
+<!-- TOURNAMENT -->
 
-<section>
+<section id="tournament" class="page">
 
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>🚀 BMG Platform</h2>
-
-<p>
-Built for tournaments of 20, 40, 60, 100+ players.
-</p>
-
+<div class="head">
+<div>
+<h2>Tournament</h2>
+<p>Fixtures, schedule and tournament information.</p>
+</div>
 </div>
 
-<div class="features">
-
-<div class="feature">
-👥
-<b>Unlimited-style player pool</b>
-<p>
-Players live in separate Firestore documents.
-</p>
-</div>
-
-<div class="feature">
-🎲
-<b>Automatic groups</b>
-<p>
-Admin can still use group tournaments.
-</p>
-</div>
-
-<div class="feature">
-⚽
-<b>Automatic fixtures</b>
-<p>
-Knockout fixtures are generated automatically.
-</p>
-</div>
-
-<div class="feature">
-🏆
-<b>Automatic knockout</b>
-<p>
-Winners advance automatically after approval.
-</p>
-</div>
-
-</div>
-
-</div>
+<div id="tour"></div>
 
 </section>
 
 
-<footer>
+<!-- RESULTS -->
 
-<div class="container">
+<section id="results" class="page">
 
-<b>BMG OFFICIAL</b>
-
-<br><br>
-
-Bangladesh Mighty Gamers • eFootball Community
-
-<br><br>
-
-© 2026 BMG Official
-
+<div class="head">
+<div>
+<h2>Results & Leaderboard</h2>
+<p>Published match results and rankings.</p>
+</div>
 </div>
 
-</footer>
+<div id="leader"></div>
 
+<br>
 
-<!-- AUTH MODAL -->
+<div id="res" class="list"></div>
 
-<div id="authModal" class="modal">
-
-<div class="modalBox">
-
-<button class="close" onclick="closeModal()">×</button>
-
-<h2 id="authTitle">
-Welcome to BMG
-</h2>
-
-<p class="sub">
-Login to your player or admin account.
-</p>
-
-<div class="actions" style="margin:0 0 15px">
-
-<button
-id="loginTab"
-class="primary"
-onclick="switchAuth('login')">
-Login
-</button>
-
-<button
-id="registerTab"
-class="secondary"
-onclick="switchAuth('register')">
-Register
-</button>
-
-</div>
-
-
-<form id="loginForm" class="form">
-
-<div class="field">
-
-<label>Email</label>
-
-<input
-id="loginEmail"
-type="email"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Password</label>
-
-<input
-id="loginPassword"
-type="password"
-required
->
-
-</div>
-
-<button class="submit">
-Login
-</button>
-
-</form>
-
-
-<form id="registerForm" class="form hidden">
-
-<div class="field">
-
-<label>Player Name</label>
-
-<input
-id="regName"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Player Image (optional)</label>
-
-<input
-id="regImage"
-type="file"
-accept="image/*"
->
-
-</div>
-
-<div class="field">
-
-<label>Konami UID</label>
-
-<input
-id="regKonami"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Device</label>
-
-<input
-id="regDevice"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Email</label>
-
-<input
-id="regEmail"
-type="email"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Password (6+)</label>
-
-<input
-id="regPass"
-type="password"
-minlength="6"
-required
->
-
-</div>
-
-<button class="submit">
-Create Player
-</button>
-
-</form>
-
-<div id="authMsg" class="msg"></div>
-
-</div>
-
-</div>
+</section>
 
 
 <!-- PROFILE -->
 
-<div id="profileModal" class="modal">
+<section id="profile" class="page">
 
-<div class="modalBox">
-
-<button class="close" onclick="closeProfile()">
-×
-</button>
-
-<div id="profileContent"></div>
-
+<div class="head">
+<div>
+<h2>My Profile</h2>
+<p>Your LUCC player dashboard.</p>
+</div>
 </div>
 
-</div>
+<div id="prof"></div>
+
+</section>
 
 
 <!-- ADMIN -->
 
-<div id="adminModal" class="modal">
+<section id="admin" class="page">
 
-<div class="modalBox">
+<div class="head">
+<div>
+<h2>Admin Panel</h2>
+<p>Manage players, tournaments, fixtures, results and rules.</p>
+</div>
+</div>
 
-<button class="close" onclick="closeAdmin()">
-×
+<div id="aguard"></div>
+
+<div id="acont" style="display:none">
+
+<div class="tabs">
+
+<button class="tab active"
+        onclick="atab('players',this)">
+  Players
 </button>
 
-<h2>
-⚙️ BMG Admin Panel
-</h2>
-
-<p class="sub">
-Create tournaments, add players, generate fixtures and approve results.
-</p>
-
-<div id="adminNotice" class="notice"></div>
-
-
-<div class="adminPanel">
-
-
-<!-- CREATE TOURNAMENT -->
-
-<div class="adminCard">
-
-<h3>
-🏆 Create Tournament
-</h3>
-
-<form id="createTourForm" class="form">
-
-<div class="field">
-
-<label>Tournament Name</label>
-
-<input
-id="tName"
-required
->
-
-</div>
-
-
-<div class="field">
-
-<label>Description</label>
-
-<textarea id="tDesc"></textarea>
-
-</div>
-
-
-<div class="field">
-
-<label>Group Size</label>
-
-<select id="groupSize">
-
-<option value="4">
-4 players
-</option>
-
-<option value="5" selected>
-5 players
-</option>
-
-<option value="6">
-6 players
-</option>
-
-<option value="8">
-8 players
-</option>
-
-<option value="10">
-10 players
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>Tournament Format</label>
-
-<select id="tournamentFormat">
-
-<option value="knockout" selected>
-🏆 Knockout
-</option>
-
-<option value="groups">
-🎲 Groups + Knockout
-</option>
-
-</select>
-
-</div>
-
-
-<button class="submit">
-Create Tournament
+<button class="tab"
+        onclick="atab('tournaments',this)">
+  Tournament
 </button>
 
-</form>
-
-<div id="tourMsg" class="msg"></div>
-
-</div>
-
-
-<!-- MANAGE -->
-
-<div class="adminCard">
-
-<h3>
-👥 Manage Tournament
-</h3>
-
-<div class="field">
-
-<label>Select Tournament</label>
-
-<select id="adminTourSelect"></select>
-
-</div>
-
-<div
-id="adminPlayerList"
-class="adminList"
-style="margin-top:10px">
-</div>
-
-
-<div
-style="display:flex;gap:7px;margin-top:10px;flex-wrap:wrap">
-
-<button
-id="drawBtn"
-class="smallBtn blue">
-🎲 Generate Tournament
+<button class="tab"
+        onclick="atab('fixtures',this)">
+  Fixtures
 </button>
 
-<button
-id="resetBtn"
-class="smallBtn red">
-Reset Tournament
+<button class="tab"
+        onclick="atab('results',this)">
+  Results
+</button>
+
+<button class="tab"
+        onclick="atab('rules',this)">
+  Rules
 </button>
 
 </div>
 
-<div id="manageMsg" class="msg"></div>
+<div id="apanel"></div>
 
 </div>
 
-</div>
+</section>
 
+<footer>
+LUCC eFootball • Competitive Gaming Platform
+</footer>
 
-<!-- PENDING -->
+</main>
 
-<div
-class="adminCard"
-style="margin-top:14px">
 
-<h3>
-📝 Pending Result Submissions
-</h3>
+<!-- MOBILE -->
 
-<div
-id="pendingList"
-class="adminList">
+<nav class="bottom">
 
-<div class="loading">
-Loading...
-</div>
+<button onclick="go('home')">
+  <b>⌂</b>
+  Home
+</button>
 
-</div>
+<button onclick="go('tournament')">
+  <b>🏆</b>
+  Tournament
+</button>
 
-</div>
+<button onclick="go('players')">
+  <b>👥</b>
+  Players
+</button>
 
-</div>
+<button onclick="go('results')">
+  <b>📊</b>
+  Results
+</button>
 
-</div>
+<button onclick="go(currentUser?'profile':'login')">
+  <b>👤</b>
+  Profile
+</button>
 
-
-<script type="module">
-
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-import {
-getFirestore,
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#070a11">
-<title>BMG Official • Tournament Platform</title>
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-font-family:Inter,Arial,sans-serif;
-background:#070a11;
-color:#eef3ff;
-min-height:100vh
-}
-
-a{text-decoration:none;color:inherit}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0}
-
-:root{
---bg:#070a11;
---card:#0e1420;
---card2:#111a29;
---line:#202c40;
---muted:#8490a5;
---blue:#2876ff;
---blue2:#6446ff;
---green:#36e58a;
---red:#ff6677;
---gold:#ffc84d
-}
-
-.container{
-width:min(1180px,92%);
-margin:auto
-}
-
-.nav{
-height:72px;
-display:flex;
-align-items:center;
-justify-content:space-between
-}
-
-.navbar{
-position:sticky;
-top:0;
-z-index:50;
-background:rgba(7,10,17,.92);
-backdrop-filter:blur(16px);
-border-bottom:1px solid var(--line)
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:21px;
-font-weight:900
-}
-
-.logo i{
-width:42px;
-height:42px;
-border-radius:13px;
-background:linear-gradient(135deg,var(--blue),var(--blue2));
-display:grid;
-place-items:center;
-font-style:normal;
-font-size:22px
-}
-
-.logo b{color:#65a0ff}
-
-.navlinks{
-display:flex;
-gap:22px;
-color:#9da8bb;
-font-size:14px
-}
-
-.navlinks a:hover{color:#fff}
-
-.account{
-background:linear-gradient(135deg,var(--blue),var(--blue2));
-color:#fff;
-padding:11px 16px;
-border-radius:11px;
-font-weight:800;
-max-width:180px;
-overflow:hidden;
-text-overflow:ellipsis;
-white-space:nowrap
-}
-
-.hero{
-padding:75px 0 45px;
-background:
-radial-gradient(circle at 80% 20%,rgba(40,118,255,.18),transparent 35%),
-radial-gradient(circle at 10% 70%,rgba(100,70,255,.12),transparent 30%)
-}
-
-.heroGrid{
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:38px;
-align-items:center
-}
-
-.pill{
-display:inline-block;
-border:1px solid #294b86;
-background:#0c1a31;
-color:#6da4ff;
-padding:9px 14px;
-border-radius:30px;
-font-size:12px;
-font-weight:800;
-margin-bottom:18px
-}
-
-h1{
-font-size:clamp(42px,6vw,68px);
-line-height:.98;
-margin-bottom:20px
-}
-
-h1 span{color:#4f8fff}
-
-.hero p{
-color:#9aa6ba;
-font-size:17px;
-line-height:1.75;
-max-width:650px
-}
-
-.actions{
-display:flex;
-gap:12px;
-margin-top:28px;
-flex-wrap:wrap
-}
-
-.primary,.secondary{
-padding:14px 20px;
-border-radius:11px;
-font-weight:800
-}
-
-.primary{
-background:var(--blue);
-color:#fff
-}
-
-.secondary{
-background:#111926;
-border:1px solid #29364b;
-color:#fff
-}
-
-.heroCard{
-background:linear-gradient(145deg,#111927,#0b1019);
-border:1px solid #25334a;
-border-radius:22px;
-padding:26px;
-box-shadow:0 25px 70px #0008
-}
-
-.hcTop{
-display:flex;
-justify-content:space-between
-}
-
-.live{
-color:#45f99a;
-font-size:12px;
-font-weight:900
-}
-
-.score{
-font-size:48px;
-text-align:center;
-font-weight:900;
-margin:32px 0 22px
-}
-
-.teams{
-display:flex;
-justify-content:space-around;
-text-align:center;
-color:#b6c0d0
-}
-
-.teamIcon{
-width:58px;
-height:58px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:#18253c;
-margin:auto auto 8px;
-font-size:25px
-}
-
-section{padding:58px 0}
-
-.sectionHead{margin-bottom:25px}
-
-.sectionHead h2{font-size:30px}
-
-.sectionHead p{
-color:var(--muted);
-margin-top:6px
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:17px
-}
-
-.card{
-background:linear-gradient(145deg,#101722,#0b1018);
-border:1px solid var(--line);
-border-radius:17px;
-padding:21px
-}
-
-.card:hover{border-color:#376fd0}
-
-.status{
-display:inline-block;
-padding:6px 9px;
-border-radius:7px;
-background:#102b20;
-color:#50f99c;
-font-size:10px;
-font-weight:900
-}
-
-.card h3{margin:12px 0 8px}
-
-.card p{
-color:#8f9bae;
-line-height:1.6;
-font-size:13px
-}
-
-.meta{
-display:flex;
-justify-content:space-between;
-border-top:1px solid var(--line);
-padding-top:14px;
-margin-top:17px;
-color:#aeb8c8;
-font-size:12px
-}
-
-.tourBanner{
-min-height:190px;
-display:flex;
-align-items:end;
-padding:23px;
-border-radius:19px;
-overflow:hidden;
-position:relative;
-background:linear-gradient(120deg,#101d36,#151029);
-border:1px solid #2a416b
-}
-
-.tourBanner:after{
-content:"🏆";
-position:absolute;
-right:28px;
-top:25px;
-font-size:80px;
-opacity:.13
-}
-
-.tourBanner h3{font-size:25px}
-
-.tourBanner p{
-color:#a3aec0;
-margin-top:6px
-}
-
-.tourGrid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px
-}
-
-.playerList{
-display:flex;
-flex-direction:column;
-gap:9px
-}
-
-.playerRow{
-display:grid;
-grid-template-columns:42px 1fr 70px 70px 70px 70px 80px;
-align-items:center;
-gap:10px;
-background:#0d131e;
-border:1px solid var(--line);
-padding:10px 13px;
-border-radius:12px
-}
-
-.playerRow img,
-.miniAvatar{
-width:38px;
-height:38px;
-border-radius:50%;
-object-fit:cover;
-background:#19263e;
-display:grid;
-place-items:center
-}
-
-.playerRow strong{cursor:pointer}
-
-.playerRow strong:hover{color:#67a1ff}
-
-.tableWrap{overflow-x:auto}
-
-.table{
-width:100%;
-border-collapse:collapse;
-min-width:620px
-}
-
-.table th,
-.table td{
-padding:11px 10px;
-border-bottom:1px solid var(--line);
-text-align:center;
-font-size:12px
-}
-
-.table th{
-color:#7e8aa0;
-font-size:10px;
-text-transform:uppercase
-}
-
-.table td:first-child,
-.table th:first-child{text-align:left}
-
-.rank{
-color:var(--gold);
-font-weight:900
-}
-
-.matchGroup{margin-bottom:22px}
-
-.matchGroup h3{
-margin-bottom:10px;
-color:#b8c5d8
-}
-
-.match{
-display:grid;
-grid-template-columns:1fr 70px 1fr 100px;
-gap:12px;
-align-items:center;
-background:#0d131e;
-border:1px solid var(--line);
-border-radius:12px;
-padding:13px;
-margin-bottom:8px
-}
-
-.match .right{text-align:right}
-
-.match .score{
-text-align:center;
-font-size:15px;
-margin:0
-}
-
-.badge2{
-font-size:10px;
-padding:6px 8px;
-border-radius:7px;
-background:#17243a;
-color:#8eabdb;
-display:inline-block
-}
-
-.approved{
-background:#103023;
-color:#4ff49a
-}
-
-.pending{
-background:#352a10;
-color:#ffd45c
-}
-
-.knockout{
-border-color:#4d6d9d
-}
-
-/* KNOCKOUT */
-
-.knockoutRound{
-margin-bottom:25px
-}
-
-.knockoutRoundTitle{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:12px;
-font-size:18px
-}
-
-.knockoutRoundTitle span{
-font-size:10px;
-padding:5px 8px;
-border-radius:6px;
-background:#17243a;
-color:#8eabdb
-}
-
-.knockMatch{
-display:grid;
-grid-template-columns:1fr 170px 1fr;
-align-items:center;
-gap:15px;
-background:linear-gradient(145deg,#101722,#0b1018);
-border:1px solid var(--line);
-border-radius:15px;
-padding:15px;
-margin-bottom:10px
-}
-
-.knockPlayer{
-display:flex;
-align-items:center;
-gap:12px;
-cursor:pointer;
-min-width:0
-}
-
-.knockPlayer.right{
-justify-content:flex-end;
-text-align:right
-}
-
-.knockAvatar{
-width:50px;
-height:50px;
-min-width:50px;
-border-radius:50%;
-background:#19263e;
-display:grid;
-place-items:center;
-overflow:hidden;
-font-size:21px;
-border:2px solid #263a59
-}
-
-.knockAvatar img{
-width:100%;
-height:100%;
-object-fit:cover
-}
-
-.knockName{
-font-weight:800;
-font-size:13px;
-word-break:break-word
-}
-
-.knockPlayer:hover .knockName{
-color:#67a1ff
-}
-
-.knockCenter{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:8px
-}
-
-.knockScore{
-font-size:20px;
-font-weight:900
-}
-
-.knockVs{
-font-size:11px;
-color:#728097;
-font-weight:900
-}
-
-.byeText{
-color:#ffc84d;
-font-size:11px;
-font-weight:900
-}
-
-/* FEATURES */
-
-.features{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px
-}
-
-.feature{
-background:#0d131e;
-border:1px solid var(--line);
-border-radius:15px;
-padding:21px
-}
-
-.feature b{
-display:block;
-margin:10px 0 7px
-}
-
-.feature p{
-font-size:12px;
-color:#8c98ab;
-line-height:1.5
-}
-
-footer{
-border-top:1px solid var(--line);
-padding:35px 0;
-color:#718097;
-text-align:center;
-font-size:12px
-}
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:#000b;
-backdrop-filter:blur(8px);
-z-index:100;
-align-items:center;
-justify-content:center;
-padding:18px
-}
-
-.modal.active{display:flex}
-
-.modalBox{
-width:min(560px,100%);
-max-height:92vh;
-overflow:auto;
-background:#101722;
-border:1px solid #2b3a51;
-border-radius:18px;
-padding:24px;
-position:relative
-}
-
-.close{
-position:absolute;
-right:15px;
-top:12px;
-background:none;
-color:#8793a7;
-font-size:27px
-}
-
-.modalBox h2{margin-bottom:7px}
-
-.sub{
-color:#7f8ba0;
-font-size:12px;
-margin-bottom:20px
-}
-
-.form{
-display:grid;
-gap:12px
-}
-
-.field label{
-display:block;
-font-size:11px;
-color:#9eabbf;
-margin-bottom:6px
-}
-
-.field input,
-.field select,
-.field textarea{
-width:100%;
-background:#090e16;
-color:#fff;
-border:1px solid #29364a;
-border-radius:9px;
-padding:11px;
-outline:0
-}
-
-.field textarea{
-min-height:80px;
-resize:vertical
-}
-
-.submit{
-width:100%;
-padding:12px;
-background:var(--blue);
-color:#fff;
-border-radius:9px;
-font-weight:900
-}
-
-.msg{
-text-align:center;
-font-size:12px;
-color:#58f59b;
-margin-top:10px
-}
-
-.danger{
-background:#38151c;
-color:#ff8290
-}
-
-.adminPanel{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px
-}
-
-.adminCard{
-background:#0c121c;
-border:1px solid var(--line);
-border-radius:14px;
-padding:17px
-}
-
-.adminCard h3{margin-bottom:12px}
-
-.adminList{
-display:grid;
-gap:7px;
-max-height:300px;
-overflow:auto
-}
-
-.checkRow{
-display:flex;
-gap:8px;
-align-items:center;
-background:#111a28;
-border:1px solid var(--line);
-padding:8px;
-border-radius:8px;
-font-size:12px
-}
-
-.smallBtn{
-padding:8px 10px;
-border-radius:8px;
-background:#1a2941;
-color:#fff;
-font-size:11px;
-font-weight:800
-}
-
-.smallBtn.blue{background:var(--blue)}
-
-.smallBtn.red{
-background:#4a1921;
-color:#ff9aa5
-}
-
-.notice{
-padding:11px 13px;
-background:#101d31;
-border:1px solid #29446f;
-border-radius:10px;
-color:#9eb8df;
-font-size:12px;
-margin-bottom:14px
-}
-
-.searchBox{
-width:100%;
-max-width:450px;
-background:#0d131e;
-color:#fff;
-border:1px solid #29364a;
-border-radius:10px;
-padding:12px 14px;
-outline:none;
-margin-bottom:18px
-}
-
-.searchBox:focus{
-border-color:#377cf5
-}
-
-.hidden{display:none!important}
-
-.loading,
-.empty{
-text-align:center;
-padding:30px;
-color:#7e899b
-}
-
-.error{color:#ff7f8c}
-
-.profileHero{
-text-align:center;
-padding:10px 0 20px
-}
-
-.profileAvatar{
-width:110px;
-height:110px;
-margin:auto;
-border-radius:50%;
-overflow:hidden;
-background:#19263e;
-display:grid;
-place-items:center;
-font-size:42px;
-border:3px solid #2e5fb5
-}
-
-.profileAvatar img{
-width:100%;
-height:100%;
-object-fit:cover
-}
-
-.profileStatGrid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:15px
-}
-
-.profileStat{
-background:#0d131e;
-border:1px solid var(--line);
-border-radius:10px;
-padding:13px;
-text-align:center
-}
-
-.profileStat b{
-display:block;
-font-size:20px;
-color:#fff
-}
-
-.profileStat span{
-font-size:10px;
-color:#7e899b
-}
-
-@media(max-width:850px){
-
-.heroGrid{
-grid-template-columns:1fr
-}
-
-.navlinks{display:none}
-
-.grid,
-.tourGrid{
-grid-template-columns:1fr
-}
-
-.features{
-grid-template-columns:1fr 1fr
-}
-
-.playerRow{
-grid-template-columns:42px 1fr 55px 55px 55px 55px
-}
-
-.playerRow .gf{display:none}
-
-.match{
-grid-template-columns:1fr 60px 1fr
-}
-
-.match .action{
-grid-column:1/-1;
-text-align:center
-}
-
-.knockMatch{
-grid-template-columns:1fr 130px 1fr
-}
-
-}
-
-@media(max-width:600px){
-
-.nav{
-height:64px
-}
-
-.logo{
-font-size:16px
-}
-
-.logo i{
-width:36px;
-height:36px
-}
-
-.account{
-font-size:11px;
-padding:9px 10px
-}
-
-.features{
-grid-template-columns:1fr
-}
-
-.playerRow{
-grid-template-columns:38px 1fr 45px 45px 45px
-}
-
-.playerRow .gd,
-.playerRow .gf{
-display:none
-}
-
-.hero{
-padding-top:50px
-}
-
-.actions>*{
-width:100%;
-text-align:center
-}
-
-.knockMatch{
-grid-template-columns:1fr 75px 1fr;
-gap:5px;
-padding:10px
-}
-
-.knockAvatar{
-width:38px;
-height:38px;
-min-width:38px;
-font-size:16px
-}
-
-.knockPlayer{
-gap:6px
-}
-
-.knockName{
-font-size:10px
-}
-
-.knockScore{
-font-size:14px
-}
-
-.knockCenter .smallBtn{
-font-size:9px;
-padding:6px
-}
-
-.profileStatGrid{
-grid-template-columns:1fr 1fr
-}
-
-}
-</style>
-</head>
-
-<body>
-
-<header class="navbar">
-<div class="container nav">
-
-<div class="logo">
-<i>⚡</i>
-BMG <b>OFFICIAL</b>
-</div>
-
-<nav class="navlinks">
-<a href="#home">Home</a>
-<a href="#tournaments">Tournaments</a>
-<a href="#players">Players</a>
-<a href="#leaderboard">Top Scorer</a>
 </nav>
 
-<button id="accountBtn" class="account">
-Login / Register
+
+<!-- MODAL -->
+
+<div id="modal" class="modal">
+
+<div class="modalbox">
+
+<button class="btn"
+        style="float:right"
+        onclick="closeModal()">
+  ✕
 </button>
 
-</div>
-</header>
-
-
-<section class="hero" id="home">
-
-<div class="container heroGrid">
-
-<div>
-
-<div class="pill">
-⚡ BMG OFFICIAL • eFOOTBALL
-</div>
-
-<h1>
-Compete.<br>
-<span>Dominate.</span><br>
-Become a Legend.
-</h1>
-
-<p>
-Bangladesh Mighty Gamers official competitive platform.
-Manage players, tournaments, fixtures, results, rankings and knockout rounds from one place.
-</p>
-
-<div class="actions">
-
-<a class="primary" href="#tournaments">
-🏆 View Tournaments
-</a>
-
-<button class="secondary" id="heroAccount">
-👤 Player Account
-</button>
-
-</div>
-
-</div>
-
-
-<div class="heroCard">
-
-<div class="hcTop">
-
-<b>⚡ BMG MATCH CENTER</b>
-
-<span class="live">
-● LIVE
-</span>
-
-</div>
-
-<div style="text-align:center;color:#7f8ba0;margin-top:28px">
-BMG eFootball
-</div>
-
-<div class="score">
-VS
-</div>
-
-<div class="teams">
-
-<div>
-<div class="teamIcon">🔵</div>
-BMG Player
-</div>
-
-<div>
-<div class="teamIcon">🔴</div>
-Opponent
-</div>
-
-</div>
-
-</div>
-
-</div>
-</section>
-
-
-<!-- TOURNAMENTS -->
-
-<section id="tournaments">
-
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>🏆 Tournaments</h2>
-
-<p>
-Public tournament list • enter a tournament to view fixtures, results and rankings.
-</p>
-
-</div>
-
-<div id="tournamentGrid" class="tourGrid">
-
-<div class="loading">
-Loading tournaments...
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- TOURNAMENT PAGE -->
-
-<section id="tournamentPage" class="hidden">
-
-<div class="container">
-
-<div class="sectionHead">
-
-<button class="smallBtn" onclick="showHome()">
-← Back to tournaments
-</button>
-
-<h2 id="tourTitle" style="margin-top:16px"></h2>
-
-<p id="tourDesc"></p>
-
-</div>
-
-<div id="tourInfo" class="notice"></div>
-
-
-<!-- GROUP STANDINGS -->
-
-<div id="groupSection">
-
-<div class="sectionHead">
-<h2>📊 Group Standings</h2>
-</div>
-
-<div id="standingsArea"></div>
-
-</div>
-
-
-<!-- GROUP MATCHES -->
-
-<div id="groupMatchSection">
-
-<div class="sectionHead" style="margin-top:35px">
-
-<h2>⚽ Group Matches</h2>
-
-<p>
-Players can submit their own score.
-Admin approves it before it becomes official.
-</p>
-
-</div>
-
-<div id="groupMatchesArea"></div>
-
-</div>
-
-
-<!-- KNOCKOUT -->
-
-<div id="knockoutSection">
-
-<div class="sectionHead" style="margin-top:35px">
-
-<h2>🏆 Knockout Stage</h2>
-
-<p>
-Winner automatically advances after admin approval.
-</p>
-
-</div>
-
-<div id="knockoutArea"></div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PLAYERS -->
-
-<section id="players">
-
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>👥 BMG Players</h2>
-
-<p>
-Click a player name to view their public profile.
-</p>
-
-</div>
-
-<input
-id="playerSearch"
-class="searchBox"
-type="text"
-placeholder="🔎 Search player..."
->
-
-<div class="playerList" id="playersList">
-
-<div class="loading">
-Loading players...
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- TOP SCORER -->
-
-<section id="leaderboard">
-
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>🔥 Top Scorer</h2>
-
-<p>
-Combined tournament goals ranking.
-</p>
-
-</div>
-
-<div class="card tableWrap">
-
-<table class="table">
-
-<thead>
-
-<tr>
-<th># Player</th>
-<th>Goals</th>
-<th>Matches</th>
-<th>Tournaments</th>
-</tr>
-
-</thead>
-
-<tbody id="scorerBody">
-
-<tr>
-<td colspan="4" class="loading">
-Loading...
-</td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- FEATURES -->
-
-<section>
-
-<div class="container">
-
-<div class="sectionHead">
-
-<h2>🚀 BMG Platform</h2>
-
-<p>
-Built for tournaments of 20, 40, 60, 100+ players.
-</p>
-
-</div>
-
-<div class="features">
-
-<div class="feature">
-👥
-<b>Unlimited-style player pool</b>
-<p>
-Players live in separate Firestore documents.
-</p>
-</div>
-
-<div class="feature">
-🎲
-<b>Automatic groups</b>
-<p>
-Admin can still use group tournaments.
-</p>
-</div>
-
-<div class="feature">
-⚽
-<b>Automatic fixtures</b>
-<p>
-Knockout fixtures are generated automatically.
-</p>
-</div>
-
-<div class="feature">
-🏆
-<b>Automatic knockout</b>
-<p>
-Winners advance automatically after approval.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<footer>
-
-<div class="container">
-
-<b>BMG OFFICIAL</b>
-
-<br><br>
+<div id="mc"></div>
 
-Bangladesh Mighty Gamers • eFootball Community
-
-<br><br>
-
-© 2026 BMG Official
-
-</div>
-
-</footer>
-
-
-<!-- AUTH MODAL -->
-
-<div id="authModal" class="modal">
-
-<div class="modalBox">
-
-<button class="close" onclick="closeModal()">×</button>
-
-<h2 id="authTitle">
-Welcome to BMG
-</h2>
-
-<p class="sub">
-Login to your player or admin account.
-</p>
-
-<div class="actions" style="margin:0 0 15px">
-
-<button
-id="loginTab"
-class="primary"
-onclick="switchAuth('login')">
-Login
-</button>
-
-<button
-id="registerTab"
-class="secondary"
-onclick="switchAuth('register')">
-Register
-</button>
-
-</div>
-
-
-<form id="loginForm" class="form">
-
-<div class="field">
-
-<label>Email</label>
-
-<input
-id="loginEmail"
-type="email"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Password</label>
-
-<input
-id="loginPassword"
-type="password"
-required
->
-
-</div>
-
-<button class="submit">
-Login
-</button>
-
-</form>
-
-
-<form id="registerForm" class="form hidden">
-
-<div class="field">
-
-<label>Player Name</label>
-
-<input
-id="regName"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Player Image (optional)</label>
-
-<input
-id="regImage"
-type="file"
-accept="image/*"
->
-
-</div>
-
-<div class="field">
-
-<label>Konami UID</label>
-
-<input
-id="regKonami"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Device</label>
-
-<input
-id="regDevice"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Email</label>
-
-<input
-id="regEmail"
-type="email"
-required
->
-
-</div>
-
-<div class="field">
-
-<label>Password (6+)</label>
-
-<input
-id="regPass"
-type="password"
-minlength="6"
-required
->
-
-</div>
-
-<button class="submit">
-Create Player
-</button>
-
-</form>
-
-<div id="authMsg" class="msg"></div>
-
-</div>
-
-</div>
-
-
-<!-- PROFILE -->
-
-<div id="profileModal" class="modal">
-
-<div class="modalBox">
-
-<button class="close" onclick="closeProfile()">
-×
-</button>
-
-<div id="profileContent"></div>
-
-</div>
-
-</div>
-
-
-<!-- ADMIN -->
-
-<div id="adminModal" class="modal">
-
-<div class="modalBox">
-
-<button class="close" onclick="closeAdmin()">
-×
-</button>
-
-<h2>
-⚙️ BMG Admin Panel
-</h2>
-
-<p class="sub">
-Create tournaments, add players, generate fixtures and approve results.
-</p>
-
-<div id="adminNotice" class="notice"></div>
-
-
-<div class="adminPanel">
-
-
-<!-- CREATE TOURNAMENT -->
-
-<div class="adminCard">
-
-<h3>
-🏆 Create Tournament
-</h3>
-
-<form id="createTourForm" class="form">
-
-<div class="field">
-
-<label>Tournament Name</label>
-
-<input
-id="tName"
-required
->
-
-</div>
-
-
-<div class="field">
-
-<label>Description</label>
-
-<textarea id="tDesc"></textarea>
-
-</div>
-
-
-<div class="field">
-
-<label>Group Size</label>
-
-<select id="groupSize">
-
-<option value="4">
-4 players
-</option>
-
-<option value="5" selected>
-5 players
-</option>
-
-<option value="6">
-6 players
-</option>
-
-<option value="8">
-8 players
-</option>
-
-<option value="10">
-10 players
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>Tournament Format</label>
-
-<select id="tournamentFormat">
-
-<option value="knockout" selected>
-🏆 Knockout
-</option>
-
-<option value="groups">
-🎲 Groups + Knockout
-</option>
-
-</select>
-
 </div>
-
-
-<button class="submit">
-Create Tournament
-</button>
-
-</form>
-
-<div id="tourMsg" class="msg"></div>
-
-</div>
-
-
-<!-- MANAGE -->
-
-<div class="adminCard">
-
-<h3>
-👥 Manage Tournament
-</h3>
-
-<div class="field">
-
-<label>Select Tournament</label>
-
-<select id="adminTourSelect"></select>
-
-</div>
-
-<div
-id="adminPlayerList"
-class="adminList"
-style="margin-top:10px">
-</div>
-
-
-<div
-style="display:flex;gap:7px;margin-top:10px;flex-wrap:wrap">
-
-<button
-id="drawBtn"
-class="smallBtn blue">
-🎲 Generate Tournament
-</button>
-
-<button
-id="resetBtn"
-class="smallBtn red">
-Reset Tournament
-</button>
-
-</div>
-
-<div id="manageMsg" class="msg"></div>
-
-</div>
-
-</div>
-
-
-<!-- PENDING -->
-
-<div
-class="adminCard"
-style="margin-top:14px">
-
-<h3>
-📝 Pending Result Submissions
-</h3>
-
-<div
-id="pendingList"
-class="adminList">
-
-<div class="loading">
-Loading...
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 
 <script type="module">
 
 import {
-initializeApp
+  initializeApp
 }
 from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile,
+  deleteUser
 }
 from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 import {
-getFirestore,
-  
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  getDocs,
+  addDoc,
+  serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+  "AIzaSyCVD_Qn5_JBMlvY_edurZkheB0G-ekUVFs",
+
+  authDomain:
+  "lucc-efootball-tournamen-a2eef.firebaseapp.com",
+
+  projectId:
+  "lucc-efootball-tournamen-a2eef",
+
+  storageBucket:
+  "lucc-efootball-tournamen-a2eef.firebasestorage.app",
+
+  messagingSenderId:
+  "562916468135",
+
+  appId:
+  "1:562916468135:web:8e8b72af92757f407dc282",
+
+  measurementId:
+  "G-HRMKH8HFQZ"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+/* =====================================================
+   ADMIN EMAIL
+===================================================== */
+
+const ADMIN_EMAIL =
+"hrpteam333@gmail.com";
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let currentUser = null;
+let profile = null;
+
+let D = {
+  players: [],
+  results: [],
+  tournaments: [],
+  rules: [],
+  fixtures: []
+};
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+const $ = id => document.getElementById(id);
+
+const esc = x =>
+String(x ?? "")
+.replace(/[&<>"']/g, c => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+}[c]));
+
+
+function isAdminUser(){
+
+  return !!(
+    currentUser &&
+    currentUser.email &&
+    currentUser.email.toLowerCase() ===
+    ADMIN_EMAIL.toLowerCase()
+  );
+
+}
+
+
+function note(id,text,ok=false){
+
+  if(!$(
+    id
+  )) return;
+
+  $(id).innerHTML =
+  `<div class="notice ${ok?"success":"error"}">
+    ${esc(text)}
+  </div>`;
+
+}
+
+
+function firebaseError(e){
+
+  const m = {
+
+    "auth/email-already-in-use":
+    "This email is already registered. Please login.",
+
+    "auth/invalid-email":
+    "Invalid email address.",
+
+    "auth/weak-password":
+    "Password must contain at least 6 characters.",
+
+    "auth/invalid-credential":
+    "Wrong email or password.",
+
+    "auth/user-not-found":
+    "No account found with this email.",
+
+    "auth/wrong-password":
+    "Wrong password.",
+
+    "auth/network-request-failed":
+    "Network error. Check your internet connection.",
+
+    "permission-denied":
+    "You don't have permission for this action."
+
+  };
+
+  return m[e?.code] ||
+         e?.message ||
+         "Something went wrong.";
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+window.go = p => {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
+
+  if($(p))
+    $(p).classList.add("active");
+
+
+  document
+    .querySelectorAll("[data-p]")
+    .forEach(x =>
+      x.classList.toggle(
+        "active",
+        x.dataset.p === p
+      )
+    );
+
+
+  scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  if(p === "players")
+    renderPlayers();
+
+  if(p === "results")
+    renderResults();
+
+  if(p === "rules")
+    renderRules();
+
+  if(p === "tournament")
+    renderTournament();
+
+  if(p === "profile")
+    renderProfile();
+
+  if(p === "admin")
+    admin();
+
+};
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+window.toggleMobileMenu = () => {
+
+  if(currentUser)
+    go("profile");
+  else
+    go("login");
+
+};
+
+
+/* =====================================================
+   IMAGE TO BASE64
+===================================================== */
+
+function compressImage(file){
+
+  return new Promise((resolve,reject)=>{
+
+    if(!file){
+      resolve("");
+      return;
+    }
+
+    if(!file.type.startsWith("image/")){
+      reject(new Error("Please select an image."));
+      return;
+    }
+
+
+    const reader = new FileReader();
+
+
+    reader.onload = () => {
+
+      const img = new Image();
+
+
+      img.onload = () => {
+
+        let w = img.width;
+        let h = img.height;
+        const max = 420;
+
+
+        if(w > max || h > max){
+
+          const scale =
+          Math.min(
+            max/w,
+            max/h
+          );
+
+          w = Math.round(w * scale);
+          h = Math.round(h * scale);
+
+        }
+
+
+        const canvas =
+        document.createElement("canvas");
+
+
+        canvas.width = w;
+        canvas.height = h;
+
+
+        const ctx =
+        canvas.getContext("2d");
+
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          w,
+          h
+        );
+
+
+        const data =
+        canvas.toDataURL(
+          "image/jpeg",
+          .65
+        );
+
+
+        resolve(data);
+
+      };
+
+
+      img.onerror = () => {
+
+        reject(
+          new Error("Could not read image.")
+        );
+
+      };
+
+
+      img.src = reader.result;
+
+    };
+
+
+    reader.onerror = () => {
+
+      reject(
+        new Error("Image reading failed.")
+      );
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+
+/* =====================================================
+   AVATAR PREVIEW
+===================================================== */
+
+$("avatar").onchange =
+async e => {
+
+  try{
+
+    const data =
+    await compressImage(
+      e.target.files[0]
+    );
+
+    if(!data)
+      return;
+
+
+    $("preview").src = data;
+    $("preview").style.display = "block";
+
+  }catch(error){
+
+    note(
+      "regmsg",
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   REGISTRATION
+===================================================== */
+
+$("reg").onsubmit =
+async e => {
+
+  e.preventDefault();
+
+
+  const btn = $("regBtn");
+
+  btn.disabled = true;
+  btn.textContent = "Creating account...";
+
+
+  note(
+    "regmsg",
+    "Creating your account...",
+    true
+  );
+
+
+  let createdUser = null;
+
+
+  try{
+
+    const name =
+    $("name").value.trim();
+
+    const konamiUid =
+    $("uid").value.trim();
+
+    const email =
+    $("email").value.trim();
+
+    const mobile =
+    $("mobile").value.trim();
+
+    const device =
+    $("device").value.trim() ||
+    "Not specified";
+
+
+    if(
+      !name ||
+      !konamiUid ||
+      !email ||
+      !$("pass").value
+    ){
+
+      throw new Error(
+        "Please complete all required fields."
+      );
+
+    }
+
+
+    const result =
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      $("pass").value
+    );
+
+
+    const user = result.user;
+    createdUser = user;
+
+
+    await updateProfile(
+      user,
+      {
+        displayName:name
+      }
+    );
+
+
+    let avatarUrl = "";
+
+
+    const avatarFile =
+    $("avatar").files[0];
+
+
+    if(avatarFile){
+
+      avatarUrl =
+      await compressImage(
+        avatarFile
+      );
+
+    }
+
+
+    const playerData = {
+
+      uid:user.uid,
+      name:name,
+      konamiUid:konamiUid,
+      email:user.email,
+      mobile:mobile,
+      device:device,
+      avatarUrl:avatarUrl,
+      role:"user",
+      createdAt:serverTimestamp()
+
+    };
+
+
+    await setDoc(
+      doc(db,"users",user.uid),
+      playerData
+    );
+
+
+    await setDoc(
+      doc(db,"players",user.uid),
+      playerData
+    );
+
+
+    $("reg").reset();
+    $("preview").style.display = "none";
+
+
+    note(
+      "regmsg",
+      "Registration successful! Welcome to LUCC.",
+      true
+    );
+
+
+    await load();
+
+    go("profile");
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    if(createdUser){
+
+      try{
+
+        await deleteUser(createdUser);
+
+      }catch(rollbackError){
+
+        console.error(
+          "Registration rollback failed:",
+          rollbackError
+        );
+
+      }
+
+    }
+
+
+    note(
+      "regmsg",
+      firebaseError(error)
+    );
+
+
+  }finally{
+
+    btn.disabled = false;
+    btn.textContent = "Create Account";
+
+  }
+
+};
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+$("signin").onsubmit =
+async e => {
+
+  e.preventDefault();
+
+
+  const btn = $("loginBtn");
+
+  btn.disabled = true;
+  btn.textContent = "Signing in...";
+
+
+  note(
+    "loginmsg",
+    "Signing in...",
+    true
+  );
+
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      $("lemail").value.trim(),
+      $("lpass").value
+    );
+
+
+    $("signin").reset();
+
+
+    note(
+      "loginmsg",
+      "Login successful!",
+      true
+    );
+
+
+  }catch(error){
+
+    note(
+      "loginmsg",
+      firebaseError(error)
+    );
+
+  }finally{
+
+    btn.disabled = false;
+    btn.textContent = "Login";
+
+  }
+
+};
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+window.logout =
+async () => {
+
+  try{
+
+    await signOut(auth);
+
+    currentUser = null;
+    profile = null;
+
+    updateNav();
+    go("home");
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   NAV UI
+===================================================== */
+
+function updateNav(){
+
+  if(currentUser){
+
+    $("loginNav").style.display = "none";
+    $("profileNav").style.display = "inline-block";
+    $("logoutNav").style.display = "inline-block";
+
+    $("adminNav").style.display =
+    isAdminUser()
+    ? "inline-block"
+    : "none";
+
+    $("homeRegisterBtn").style.display = "none";
+
+  }else{
+
+    $("loginNav").style.display = "inline-block";
+    $("profileNav").style.display = "none";
+    $("logoutNav").style.display = "none";
+    $("adminNav").style.display = "none";
+    $("homeRegisterBtn").style.display = "inline-block";
+
+  }
+
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    currentUser = user;
+
+
+    if(user){
+
+      try{
+
+        const snap =
+        await getDoc(
+          doc(
+            db,
+            "users",
+            user.uid
+          )
+        );
+
+
+        if(snap.exists()){
+
+          profile = snap.data();
+
+        }else{
+
+          profile = {
+
+            uid:user.uid,
+            name:user.displayName || "Player",
+            email:user.email,
+            role:"user"
+
+          };
+
+        }
+
+      }catch(error){
+
+        console.error(
+          "Profile load error:",
+          error
+        );
+
+
+        profile = {
+
+          uid:user.uid,
+          name:user.displayName || "Player",
+          email:user.email,
+          role:"user"
+
+        };
+
+      }
+
+
+      if(
+        user.email &&
+        user.email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase()
+      ){
+
+        profile.role = "admin";
+
+      }
+
+
+    }else{
+
+      profile = null;
+
+    }
+
+
+    updateNav();
+
+
+    $("loader").classList.add("off");
+
+
+    await load();
+
+
+    if(
+      user &&
+      $("profile").classList.contains("active")
+    ){
+
+      renderProfile();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   FIRESTORE COLLECTION
+===================================================== */
+
+async function col(name){
+
+  try{
+
+    const snap =
+    await getDocs(
+      collection(db,name)
+    );
+
+
+    return snap.docs.map(
+      x => ({
+        id:x.id,
+        ...x.data()
+      })
+    );
+
+
+  }catch(error){
+
+    console.error(name,error);
+
+    return [];
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+async function load(){
+
+  D.players = await col("players");
+  D.results = await col("results");
+  D.tournaments = await col("tournaments");
+  D.rules = await col("rules");
+  D.fixtures = await col("fixtures");
+
+
+  $("sp").textContent = D.players.length;
+  $("sr").textContent = D.results.length;
+  $("st").textContent = D.tournaments.length;
+
+
+  renderPlayers();
+  renderResults();
+  renderRules();
+  renderTournament();
+  renderProfile();
+
+}
+
+
+/* =====================================================
+   PLAYER STATS
+===================================================== */
+
+function playerStats(id){
+
+  const matches =
+  D.results.filter(
+    x =>
+      x.playerAId === id ||
+      x.playerBId === id
+  );
+
+
+  let wins = 0;
+  let losses = 0;
+  let draws = 0;
+
+  const history = [];
+
+
+  matches.forEach(match => {
+
+    const isA =
+    match.playerAId === id;
+
+
+    const mine =
+    Number(
+      isA
+      ? match.scoreA
+      : match.scoreB
+    );
+
+
+    const opponentScore =
+    Number(
+      isA
+      ? match.scoreB
+      : match.scoreA
+    );
+
+
+    if(mine > opponentScore)
+      wins++;
+
+    else if(mine < opponentScore)
+      losses++;
+
+    else
+      draws++;
+
+
+    history.push({
+
+      opponent:
+      isA
+      ? match.playerB
+      : match.playerA,
+
+      score:
+      mine + " - " + opponentScore,
+
+      date:
+      match.date || ""
+
+    });
+
+  });
+
+
+  const played = matches.length;
+
+
+  const winRate =
+  played
+  ? Math.round(wins / played * 100)
+  : 0;
+
+
+  return {
+    played,
+    wins,
+    losses,
+    draws,
+    winRate,
+    history
+  };
+
+}
+
+
+/* =====================================================
+   PLAYERS
+===================================================== */
+
+window.renderPlayers =
+() => {
+
+  const q =
+  (
+    $("playerSearch")?.value ||
+    ""
+  )
+  .trim()
+  .toLowerCase();
+
+
+  const players =
+  D.players.filter(
+    p =>
+      (p.name || "")
+      .toLowerCase()
+      .includes(q)
+
+      ||
+
+      (p.konamiUid || "")
+      .toLowerCase()
+      .includes(q)
+  );
+
+
+  $("plist").innerHTML =
+  players.length
+
+  ?
+
+  players.map(p => {
+
+    const s =
+    playerStats(p.id);
+
+
+    return `
+
+    <div
+      class="card player-card clickable"
+      onclick="openPlayer('${esc(p.id)}')">
+
+      <div class="player">
+
+        ${
+          p.avatarUrl
+
+          ?
+
+          `<img
+            class="avatar"
+            src="${esc(p.avatarUrl)}"
+            alt="Player avatar">`
+
+          :
+
+          `<div
+            class="avatar"
+            style="display:grid;place-items:center;font-size:24px">
+            👤
+           </div>`
+        }
+
+        <div>
+
+          <h3>
+            ${esc(p.name)}
+          </h3>
+
+          <span class="badge badge-purple">
+            UID ${esc(p.konamiUid)}
+          </span>
+
+          <div
+            class="small muted"
+            style="margin-top:6px">
+
+            📱 ${esc(
+              p.device ||
+              "Device not specified"
+            )}
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="statgrid"
+        style="margin-top:14px">
+
+        <div class="statbox">
+          <span class="small muted">Played</span>
+          <br>
+          <b>${s.played}</b>
+        </div>
+
+        <div class="statbox">
+          <span class="small muted">Wins</span>
+          <br>
+          <b>${s.wins}</b>
+        </div>
+
+        <div class="statbox">
+          <span class="small muted">Losses</span>
+          <br>
+          <b>${s.losses}</b>
+        </div>
+
+        <div class="statbox">
+          <span class="small muted">WR</span>
+          <br>
+          <b>${s.winRate}%</b>
+        </div>
+
+      </div>
+
+    </div>
+
+    `;
+
+  }).join("")
+
+  :
+
+  `
+  <div class="empty">
+    No player found.
+  </div>
+  `;
+
+};
+
+
+/* =====================================================
+   PLAYER PROFILE MODAL
+===================================================== */
+
+window.openPlayer =
+id => {
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
+
+  if(!p)
+    return;
+
+
+  const s =
+  playerStats(id);
+
+
+  $("mc").innerHTML = `
+
+  <div class="profile-banner">
+
+    <div class="profile-top">
+
+      ${
+        p.avatarUrl
+
+        ?
+
+        `<img
+          class="avatar-xl"
+          src="${esc(p.avatarUrl)}"
+          alt="Player avatar">`
+
+        :
+
+        `<div
+          class="avatar-xl"
+          style="display:grid;place-items:center;font-size:38px">
+          👤
+         </div>`
+      }
+
+
+      <div>
+
+        <span class="badge badge-purple">
+          ⚽ LUCC PLAYER
+        </span>
+
+        <h2 style="margin-top:7px">
+          ${esc(p.name)}
+        </h2>
+
+        <span class="badge">
+          UID ${esc(p.konamiUid)}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DEVICE + MOBILE -->
+
+  <div class="grid2" style="margin-top:14px">
+
+    <div class="statbox">
+
+      <span class="small muted">
+        📱 Device
+      </span>
+
+      <br>
+
+      <b>
+        ${esc(
+          p.device ||
+          "Not specified"
+        )}
+      </b>
+
+    </div>
+
+
+    <div class="statbox">
+
+      <span class="small muted">
+        📞 Mobile
+      </span>
+
+      <br>
+
+      <b>
+        ${esc(
+          p.mobile ||
+          "Not specified"
+        )}
+      </b>
+
+    </div>
+
+  </div>
+
+
+  <div class="statgrid">
+
+    <div class="statbox">
+      <span class="muted small">Matches</span>
+      <br>
+      <b>${s.played}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Wins</span>
+      <br>
+      <b>${s.wins}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Losses</span>
+      <br>
+      <b>${s.losses}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Win Rate</span>
+      <br>
+      <b>${s.winRate}%</b>
+    </div>
+
+  </div>
+
+
+  <h3 style="margin-top:22px">
+    Match History
+  </h3>
+
+
+  ${
+    s.history.length
+
+    ?
+
+    [...s.history]
+    .reverse()
+    .map(
+      x => `
+
+      <div class="row">
+
+        <span>
+
+          <span class="small muted">
+            VS
+          </span>
+
+          <br>
+
+          <b>
+            ${esc(x.opponent)}
+          </b>
+
+          <br>
+
+          <span class="small muted">
+            ${esc(x.date)}
+          </span>
+
+        </span>
+
+        <span class="badge badge-green">
+          ${esc(x.score)}
+        </span>
+
+      </div>
+
+      `
+    )
+    .join("")
+
+    :
+
+    `
+    <div class="empty">
+      No completed matches yet.
+    </div>
+    `
+  }
+
+  `;
+
+
+  $("modal")
+    .classList
+    .add("show");
+
+};
+
+
+/* =====================================================
+   RULES
+===================================================== */
+
+window.renderRules =
+() => {
+
+  $("rul").innerHTML = `
+
+  <!-- MATCH RULES -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      ⚙️ MATCH SETTINGS
+    </span>
+
+    <h3 style="margin-top:10px">
+      Match Rules
+    </h3>
+
+    <div class="list" style="margin-top:14px">
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Match Time
+          </span>
+
+          <br>
+
+          <b>8 min</b>
+        </span>
+
+        <span class="badge badge-green">
+          8 MIN
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Condition
+          </span>
+
+          <br>
+
+          <b>Normal</b>
+        </span>
+
+        <span class="badge">
+          NORMAL
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Penalty
+          </span>
+
+          <br>
+
+          <b>On</b>
+        </span>
+
+        <span class="badge badge-green">
+          ON
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Extra Time
+          </span>
+
+          <br>
+
+          <b>On</b>
+        </span>
+
+        <span class="badge badge-green">
+          ON
+        </span>
+
+      </div>
+
+
+      <div class="row">
+
+        <span>
+          <span class="muted small">
+            Smart Assist
+          </span>
+
+          <br>
+
+          <b>Off</b>
+        </span>
+
+        <span class="badge danger">
+          OFF
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FAIR PLAY -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      🤝 FAIR PLAY
+    </span>
+
+    <h3 style="margin-top:10px">
+      Fair Play
+    </h3>
+
+    <p>
+      No cheating, exploits or abusive behavior.
+      All players must maintain fair and respectful
+      gameplay.
+    </p>
+
+  </div>
+
+
+  <!-- CONNECTION -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      📶 CONNECTION
+    </span>
+
+    <h3 style="margin-top:10px">
+      Connection
+    </h3>
+
+    <p>
+      Players are responsible for maintaining a stable
+      internet connection during their matches.
+    </p>
+
+  </div>
+
+
+  <!-- ADMIN -->
+
+  <div class="card">
+
+    <span class="badge badge-purple">
+      🛡️ ADMIN
+    </span>
+
+    <h3 style="margin-top:10px">
+      Admin Decision
+    </h3>
+
+    <p>
+      Admin decisions regarding tournament disputes
+      and match issues are final.
+    </p>
+
+  </div>
+
+  `;
+
+};
+
+
+/* =====================================================
+   TOURNAMENT
+===================================================== */
+
+window.renderTournament =
+() => {
+
+  let tournaments =
+  D.tournaments.length
+
+  ?
+
+  D.tournaments.map(
+    t => `
+
+    <div class="card">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        gap:10px;
+      ">
+
+        <div>
+
+          <span class="badge badge-purple">
+            🏆 TOURNAMENT
+          </span>
+
+          <h3 style="margin-top:8px">
+            ${esc(t.name)}
+          </h3>
+
+        </div>
+
+        <span class="badge">
+          ${esc(t.status || "Upcoming")}
+        </span>
+
+      </div>
+
+
+      <p>
+        ${esc(t.description || "")}
+      </p>
+
+
+      <div class="grid2">
+
+        <div>
+          <span class="small muted">
+            Date
+          </span>
+          <br>
+          ${esc(t.date || "TBA")}
+        </div>
+
+        <div>
+          <span class="small muted">
+            Prize
+          </span>
+          <br>
+          ${esc(t.prize || "TBA")}
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+  ).join("")
+
+  :
+
+  "";
+
+
+  let fixtures =
+  D.fixtures.length
+
+  ?
+
+  `
+
+  <h2 style="margin:25px 0 12px">
+    Fixtures
+  </h2>
+
+  <div class="list">
+
+  ${
+    D.fixtures.map(
+      f => `
+
+      <div class="card">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          gap:10px;
+        ">
+
+          <div>
+
+            <b>
+              ${esc(f.playerA)}
+            </b>
+
+            <span class="badge">
+
+              ${
+                f.status === "completed"
+                ?
+                esc(f.scoreA) +
+                " - " +
+                esc(f.scoreB)
+                :
+                "VS"
+              }
+
+            </span>
+
+            <b>
+              ${esc(f.playerB)}
+            </b>
+
+            <div class="small muted">
+
+              ${esc(f.tournament || "")}
+              •
+              ${esc(f.date || "")}
+
+            </div>
+
+          </div>
+
+          <span class="badge">
+            ${esc(f.status || "Scheduled")}
+          </span>
+
+        </div>
+
+      </div>
+
+      `
+    ).join("")
+  }
+
+  </div>
+
+  `
+
+  :
+
+  `
+  <div class="empty">
+    No fixtures generated yet.
+  </div>
+  `;
+
+
+  $("tour").innerHTML =
+  tournaments +
+  fixtures;
+
+};
+
+
+/* =====================================================
+   RESULTS
+===================================================== */
+
+window.renderResults =
+() => {
+
+  const board = {};
+
+
+  D.players.forEach(
+    p => {
+
+      board[p.id] = {
+
+        id:p.id,
+        name:p.name,
+        played:0,
+        wins:0,
+        losses:0,
+        draws:0
+
+      };
+
+    }
+  );
+
+
+  D.results.forEach(
+    r => {
+
+      if(
+        !board[r.playerAId] ||
+        !board[r.playerBId]
+      )
+        return;
+
+
+      const a = board[r.playerAId];
+      const b = board[r.playerBId];
+
+
+      const sa = Number(r.scoreA);
+      const sb = Number(r.scoreB);
+
+
+      a.played++;
+      b.played++;
+
+
+      if(sa > sb){
+
+        a.wins++;
+        b.losses++;
+
+      }
+
+      else if(sa < sb){
+
+        b.wins++;
+        a.losses++;
+
+      }
+
+      else{
+
+        a.draws++;
+        b.draws++;
+
+      }
+
+    }
+  );
+
+
+  const ranking =
+  Object.values(board)
+  .sort(
+    (a,b) =>
+      b.wins-a.wins ||
+      b.played-a.played
+  );
+
+
+  $("leader").innerHTML = `
+
+  <div class="card">
+
+    <h3>
+      🏆 Leaderboard
+    </h3>
+
+    <div class="list">
+
+      ${
+        ranking.length
+
+        ?
+
+        ranking.map(
+          (p,i) => `
+
+          <div class="row">
+
+            <span>
+
+              <b>
+                #${i+1}
+                ${esc(p.name)}
+              </b>
+
+              <br>
+
+              <span class="small muted">
+                ${p.played} played
+                • ${p.wins}W
+                • ${p.losses}L
+                • ${p.draws}D
+              </span>
+
+            </span>
+
+            <span class="badge badge-purple">
+
+              ${
+                p.played
+                ?
+                Math.round(
+                  p.wins/p.played*100
+                )
+                :
+                0
+              }% WR
+
+            </span>
+
+          </div>
+
+          `
+        ).join("")
+
+        :
+
+        `
+        <div class="empty">
+          No players yet.
+        </div>
+        `
+      }
+
+    </div>
+
+  </div>
+
+  `;
+
+
+  $("res").innerHTML =
+
+  D.results.length
+
+  ?
+
+  [...D.results]
+  .reverse()
+  .map(
+    r => `
+
+    <div class="row">
+
+      <div>
+
+        <b>
+          ${esc(r.playerA)}
+        </b>
+
+        <span class="badge badge-green">
+          ${esc(r.scoreA)}
+          -
+          ${esc(r.scoreB)}
+        </span>
+
+        <b>
+          ${esc(r.playerB)}
+        </b>
+
+        <div class="small muted">
+
+          ${esc(r.tournament || "")}
+          •
+          ${esc(r.date || "")}
+
+        </div>
+
+      </div>
+
+      <span class="badge">
+        Final
+      </span>
+
+    </div>
+
+    `
+  )
+  .join("")
+
+  :
+
+  `
+  <div class="empty">
+    No results published yet.
+  </div>
+  `;
+
+};
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+window.renderProfile =
+() => {
+
+  if(!currentUser){
+
+    $("prof").innerHTML = `
+
+    <div class="card">
+
+      <h3>
+        Login Required
+      </h3>
+
+      <p>
+        Please login to see your profile.
+      </p>
+
+      <button
+        class="btn primary"
+        onclick="go('login')">
+        Login
+      </button>
+
+    </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const s =
+  playerStats(
+    currentUser.uid
+  );
+
+
+  const name =
+  profile?.name ||
+  currentUser.displayName ||
+  "Player";
+
+
+  const admin =
+  isAdminUser();
+
+
+  $("prof").innerHTML = `
+
+  <div class="profile-banner">
+
+    <div class="profile-top">
+
+      ${
+        profile?.avatarUrl
+
+        ?
+
+        `<img
+          class="avatar-xl"
+          src="${esc(profile.avatarUrl)}"
+          alt="Profile avatar">`
+
+        :
+
+        `<div
+          class="avatar-xl"
+          style="display:grid;place-items:center;font-size:40px">
+          👤
+         </div>`
+      }
+
+
+      <div>
+
+        <span class="badge ${
+          admin
+          ? "badge-gold"
+          : "badge-purple"
+        }">
+
+          ${
+            admin
+            ? "👑 ADMIN"
+            : "⚽ PLAYER"
+          }
+
+        </span>
+
+        <h2 style="margin-top:8px">
+          ${esc(name)}
+        </h2>
+
+        <span class="small muted">
+          ${esc(currentUser.email || "")}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="statgrid">
+
+    <div class="statbox">
+      <span class="muted small">Played</span>
+      <br>
+      <b>${s.played}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Wins</span>
+      <br>
+      <b>${s.wins}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Losses</span>
+      <br>
+      <b>${s.losses}</b>
+    </div>
+
+    <div class="statbox">
+      <span class="muted small">Win Rate</span>
+      <br>
+      <b>${s.winRate}%</b>
+    </div>
+
+  </div>
+
+
+  <!-- PLAYER INFORMATION -->
+
+  <div class="card" style="margin-top:13px">
+
+    <h3>
+      Player Information
+    </h3>
+
+    <div
+      class="grid2"
+      style="margin-top:15px">
+
+      <div>
+        <span class="small muted">
+          Email
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.email ||
+            currentUser.email
+          )}
+        </b>
+      </div>
+
+
+      <div>
+        <span class="small muted">
+          Konami UID
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.konamiUid ||
+            "—"
+          )}
+        </b>
+      </div>
+
+
+      <div>
+        <span class="small muted">
+          📞 Mobile
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.mobile ||
+            "Not specified"
+          )}
+        </b>
+      </div>
+
+
+      <div>
+        <span class="small muted">
+          📱 Device / Mobile Model
+        </span>
+        <br>
+        <b>
+          ${esc(
+            profile?.device ||
+            "Not specified"
+          )}
+        </b>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MATCH HISTORY -->
+
+  <div
+    class="card"
+    style="margin-top:13px">
+
+    <h3>
+      My Match History
+    </h3>
+
+    ${
+      s.history.length
+
+      ?
+
+      [...s.history]
+      .reverse()
+      .map(
+        x => `
+
+        <div class="row">
+
+          <span>
+
+            VS
+            <b>
+              ${esc(x.opponent)}
+            </b>
+
+            <br>
+
+            <span class="small muted">
+              ${esc(x.date)}
+            </span>
+
+          </span>
+
+          <span class="badge badge-green">
+            ${esc(x.score)}
+          </span>
+
+        </div>
+
+        `
+      )
+      .join("")
+
+      :
+
+      `
+      <div class="empty">
+        No completed matches yet.
+      </div>
+      `
+    }
+
+  </div>
+
+
+  <div
+    class="actions"
+    style="margin-top:15px">
+
+    ${
+      admin
+      ?
+
+      `<button
+        class="btn primary"
+        onclick="go('admin')">
+        👑 Open Admin Panel
+       </button>`
+
+      :
+
+      ""
+    }
+
+    <button
+      class="btn danger"
+      onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+  `;
+
+};
+
+
+/* =====================================================
+   ADMIN ACCESS
+===================================================== */
+
+window.admin =
+() => {
+
+  if(!currentUser){
+
+    $("aguard").innerHTML = `
+
+    <div class="admin">
+
+      <b>
+        Login required.
+      </b>
+
+      <p>
+        Please login with the admin account.
+      </p>
+
+      <button
+        class="btn primary"
+        onclick="go('login')">
+        Login
+      </button>
+
+    </div>
+
+    `;
+
+    $("acont").style.display = "none";
+
+    return;
+
+  }
+
+
+  if(!isAdminUser()){
+
+    $("aguard").innerHTML = `
+
+    <div class="admin">
+
+      <b>
+        🛡️ Admin access required.
+      </b>
+
+      <p class="small">
+        This account is not authorized
+        to access the LUCC administration panel.
+      </p>
+
+    </div>
+
+    `;
+
+    $("acont").style.display = "none";
+
+    return;
+
+  }
+
+
+  $("aguard").innerHTML = `
+
+  <div class="notice success">
+
+    👑 Admin authenticated:
+    <b>
+      ${esc(currentUser.email)}
+    </b>
+
+  </div>
+
+  `;
+
+
+  $("acont").style.display = "block";
+
+
+  adminPlayers();
+
+};
+
+
+/* =====================================================
+   ADMIN TABS
+===================================================== */
+
+window.atab =
+(tab,button) => {
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      x =>
+      x.classList.remove("active")
+    );
+
+
+  if(button)
+    button.classList.add("active");
+
+
+  if(tab === "players")
+    adminPlayers();
+
+  if(tab === "tournaments")
+    adminTournaments();
+
+  if(tab === "fixtures")
+    adminFixtures();
+
+  if(tab === "results")
+    adminResults();
+
+  if(tab === "rules")
+    adminRules();
+
+};
+
+
+/* =====================================================
+   ADMIN PLAYERS
+===================================================== */
+
+function adminPlayers(){
+
+  $("apanel").innerHTML = `
+
+  <div class="card">
+
+    <h3>
+      👥 Manage Players
+    </h3>
+
+    <div class="list">
+
+    ${
+      D.players.length
+
+      ?
+
+      D.players.map(
+        p => `
+
+        <div class="row">
+
+          <div class="player">
+
+            ${
+              p.avatarUrl
+
+              ?
+
+              `<img
+                class="avatar"
+                src="${esc(p.avatarUrl)}"
+                alt="Avatar">`
+
+              :
+
+              `<div
+                class="avatar"
+                style="display:grid;place-items:center">
+                👤
+               </div>`
+            }
+
+            <div>
+
+              <b>
+                ${esc(p.name)}
+              </b>
+
+              <div class="small muted">
+                ${esc(p.konamiUid)}
+                •
+                ${esc(p.email)}
+              </div>
+
+              <div class="small muted"
+                   style="margin-top:4px">
+                📱 ${esc(p.device || "Device not specified")}
+                •
+                📞 ${esc(p.mobile || "Mobile not specified")}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="actions" style="margin-top:0;justify-content:flex-end">
+            <button
+              class="btn"
+              onclick="editPlayer('${esc(p.id)}')">
+              Edit
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="removePlayer('${esc(p.id)}')">
+              🗑️ Remove
+            </button>
+          </div>
+
+        </div>
+
+        `
+      ).join("")
+
+      :
+
+      `
+      <div class="empty">
+        No players.
+      </div>
+      `
+    }
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   EDIT PLAYER
+===================================================== */
+
+window.editPlayer =
+id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
+
+  if(!p)
+    return;
+
+
+  $("mc").innerHTML = `
+
+  <h2>
+    Edit Player
+  </h2>
+
+
+  <div class="field">
+
+    <label>Name</label>
+
+    <input
+      id="mn"
+      value="${esc(p.name)}">
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Konami UID</label>
+
+    <input
+      id="mu"
+      value="${esc(p.konamiUid)}">
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Mobile</label>
+
+    <input
+      id="mm"
+      value="${esc(p.mobile || "")}">
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Device / Mobile Model</label>
+
+    <input
+      id="md"
+      value="${esc(p.device || "")}">
+
+  </div>
+
+
+  <button
+    class="btn primary"
+    onclick="savePlayer('${esc(id)}')">
+    Save Changes
+  </button>
+
+  `;
+
+
+  $("modal")
+    .classList
+    .add("show");
+
+};
+
+
+/* =====================================================
+   SAVE PLAYER
+===================================================== */
+
+window.savePlayer =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  try{
+
+    const p =
+    D.players.find(
+      x => x.id === id
+    );
+
+
+    const name =
+    $("mn").value.trim();
+
+    const konamiUid =
+    $("mu").value.trim();
+
+
+    if(!name || !konamiUid){
+
+      alert(
+        "Name and Konami UID are required."
+      );
+
+      return;
+
+    }
+
+
+    const data = {
+
+      name:name,
+      konamiUid:konamiUid,
+      mobile:$("mm").value.trim(),
+      device:$("md").value.trim()
+
+    };
+
+
+    await updateDoc(
+      doc(
+        db,
+        "players",
+        id
+      ),
+      data
+    );
+
+
+    if(p?.uid){
+
+      await updateDoc(
+        doc(
+          db,
+          "users",
+          p.uid
+        ),
+        data
+      );
+
+    }
+
+
+    closeModal();
+
+    await load();
+
+    adminPlayers();
+
+
+    alert(
+      "Player information updated."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   REMOVE PLAYER
+===================================================== */
+
+window.removePlayer =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+  const p =
+  D.players.find(
+    x => x.id === id
+  );
+
+  if(!p) return;
+
+  const playerName = p.name || "this player";
+
+  const confirmed = confirm(
+    `Remove ${playerName} from LUCC?\n\nThis will remove the player's profile from the Players list and delete the related Firestore profile data.`
+  );
+
+  if(!confirmed) return;
+
+  try{
+
+    // Remove the player profile.
+    await deleteDoc(
+      doc(
+        db,
+        "players",
+        id
+      )
+    );
+
+    // Also remove the matching user profile when the UID exists.
+    if(p.uid){
+      await deleteDoc(
+        doc(
+          db,
+          "users",
+          p.uid
+        )
+      );
+    }
+
+    // Refresh local data and the admin player list.
+    await load();
+    adminPlayers();
+
+    alert(
+      `${playerName} has been removed from the player list.`
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      firebaseError(error)
+    );
+  }
+};
+
+
+/* =====================================================
+   ADMIN TOURNAMENT
+===================================================== */
+
+function adminTournaments(){
+
+  $("apanel").innerHTML = `
+
+  <div class="card">
+
+    <h3>
+      🏆 Create Tournament
+    </h3>
+
+    <div class="grid2">
+
+      <div class="field">
+
+        <label>Name</label>
+        <input id="tn">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Date</label>
+
+        <input
+          id="td"
+          type="date">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Status</label>
+
+        <select id="ts">
+
+          <option>Registration Open</option>
+          <option>Upcoming</option>
+          <option>Live</option>
+          <option>Completed</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Prize</label>
+        <input id="tp">
+
+      </div>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Description</label>
+      <textarea id="tx"></textarea>
+
+    </div>
+
+
+    <button
+      class="btn primary"
+      onclick="addTournament()">
+
+      Publish Tournament
+
+    </button>
+
+  </div>
+
+
+  <div
+    class="card"
+    style="margin-top:12px">
+
+    <h3>
+      Published Tournaments
+    </h3>
+
+    ${
+      D.tournaments.map(
+        t => `
+
+        <div class="row">
+
+          <span>
+
+            <b>
+              ${esc(t.name)}
+            </b>
+
+            <br>
+
+            <span class="small muted">
+              ${esc(t.status || "")}
+            </span>
+
+          </span>
+
+          <button
+            class="btn danger"
+            onclick="deleteTournament('${esc(t.id)}')">
+            Remove
+          </button>
+
+        </div>
+
+        `
+      ).join("")
+
+      ||
+
+      `
+      <div class="empty">
+        No tournaments.
+      </div>
+      `
+    }
+
+  </div>
+
+  `;
+
+}
+
+
+window.addTournament =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  try{
+
+    const name =
+    $("tn").value.trim();
+
+
+    if(!name){
+
+      alert(
+        "Tournament name is required."
+      );
+
+      return;
+
+    }
+
+
+    await addDoc(
+      collection(
+        db,
+        "tournaments"
+      ),
+      {
+
+        name:name,
+        date:$("td").value,
+        status:$("ts").value,
+        prize:$("tp").value.trim(),
+        description:$("tx").value.trim(),
+        createdAt:serverTimestamp()
+
+      }
+    );
+
+
+    await load();
+
+    adminTournaments();
+
+
+    alert(
+      "Tournament published."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+window.deleteTournament =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(!confirm(
+    "Remove this tournament?"
+  ))
+    return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "tournaments",
+        id
+      )
+    );
+
+
+    await load();
+
+    adminTournaments();
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array){
+
+  for(
+    let i = array.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+    Math.floor(
+      Math.random() *
+      (i + 1)
+    );
+
+
+    [
+      array[i],
+      array[j]
+    ] =
+    [
+      array[j],
+      array[i]
+    ];
+
+  }
+
+
+  return array;
+
+}
+
+
+/* =====================================================
+   ADMIN FIXTURES
+===================================================== */
+
+function adminFixtures(){
+
+  $("apanel").innerHTML = `
+
+  <div class="card">
+
+    <h3>
+      🎲 Random Fixture Generator
+    </h3>
+
+    <p>
+      Every registered player will be matched
+      with every other player once.
+    </p>
+
+
+    <div class="grid2">
+
+      <div class="field">
+
+        <label>
+          Tournament Name
+        </label>
+
+        <input
+          id="fxTour"
+          placeholder="LUCC eFootball Tournament">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Match Date
+        </label>
+
+        <input
+          id="fxDate"
+          type="date">
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn primary"
+        onclick="generateFixtures()">
+
+        🎲 Generate Random Fixtures
+
+      </button>
+
+
+      <button
+        class="btn danger"
+        onclick="resetTournament()">
+
+        ♻️ Reset Tournament
+
+      </button>
+
+    </div>
+
+
+    <div class="notice">
+
+      Reset deletes only:
+      <b>fixtures + results</b>.
+
+      <br><br>
+
+      ✅ Players remain saved.
+      <br>
+      ✅ Accounts remain saved.
+      <br>
+      ✅ Registration data remains saved.
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="card"
+    style="margin-top:12px">
+
+    <h3>
+      Current Fixtures
+    </h3>
+
+    <div class="list">
+
+    ${
+      D.fixtures.length
+
+      ?
+
+      D.fixtures.map(
+        f => `
+
+        <div class="row">
+
+          <span>
+
+            <b>
+              ${esc(f.playerA)}
+            </b>
+
+            vs
+
+            <b>
+              ${esc(f.playerB)}
+            </b>
+
+            <br>
+
+            <span class="small muted">
+
+              ${esc(f.tournament || "")}
+              •
+              ${esc(f.date || "")}
+
+            </span>
+
+          </span>
+
+          <span class="badge">
+            ${esc(f.status || "Scheduled")}
+          </span>
+
+        </div>
+
+        `
+      ).join("")
+
+      :
+
+      `
+      <div class="empty">
+        No fixtures.
+      </div>
+      `
+    }
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   GENERATE FIXTURES
+===================================================== */
+
+window.generateFixtures =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(D.players.length < 2){
+
+    alert(
+      "At least 2 registered players are required."
+    );
+
+    return;
+
+  }
+
+
+  if(!confirm(
+    "Generate new random fixtures?\n\n" +
+    "Existing fixtures will be replaced.\n" +
+    "Players will NOT be deleted."
+  ))
+    return;
+
+
+  try{
+
+    for(
+      const fixture of D.fixtures
+    ){
+
+      await deleteDoc(
+        doc(
+          db,
+          "fixtures",
+          fixture.id
+        )
+      );
+
+    }
+
+
+    const players =
+    shuffle([...D.players]);
+
+
+    const tournament =
+    $("fxTour").value.trim() ||
+    "LUCC eFootball Tournament";
+
+
+    const date =
+    $("fxDate").value ||
+    "TBA";
+
+
+    const pairs = [];
+
+
+    for(
+      let i = 0;
+      i < players.length;
+      i++
+    ){
+
+      for(
+        let j = i + 1;
+        j < players.length;
+        j++
+      ){
+
+        pairs.push([
+          players[i],
+          players[j]
+        ]);
+
+      }
+
+    }
+
+
+    shuffle(pairs);
+
+
+    for(
+      const pair of pairs
+    ){
+
+      const a = pair[0];
+      const b = pair[1];
+
+
+      await addDoc(
+        collection(
+          db,
+          "fixtures"
+        ),
+        {
+
+          playerAId:a.id,
+          playerBId:b.id,
+          playerA:a.name,
+          playerB:b.name,
+          tournament:tournament,
+          date:date,
+          status:"scheduled",
+          createdAt:serverTimestamp()
+
+        }
+      );
+
+    }
+
+
+    await load();
+
+    adminFixtures();
+
+
+    alert(
+      pairs.length +
+      " random fixtures generated."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   RESET TOURNAMENT
+===================================================== */
+
+window.resetTournament =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(!confirm(
+    "RESET TOURNAMENT?\n\n" +
+    "Fixtures and results will be deleted.\n" +
+    "Players and accounts will remain safe.\n\n" +
+    "Continue?"
+  ))
+    return;
+
+
+  try{
+
+    for(
+      const f of D.fixtures
+    ){
+
+      await deleteDoc(
+        doc(
+          db,
+          "fixtures",
+          f.id
+        )
+      );
+
+    }
+
+
+    for(
+      const r of D.results
+    ){
+
+      await deleteDoc(
+        doc(
+          db,
+          "results",
+          r.id
+        )
+      );
+
+    }
+
+
+    await load();
+
+    adminFixtures();
+
+
+    alert(
+      "Tournament reset complete."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   ADMIN RESULTS
+===================================================== */
+
+function adminResults(){
+
+  $("apanel").innerHTML = `
+
+  <div class="card">
+
+    <h3>
+      📊 Publish Match Result
+    </h3>
+
+
+    <div class="field">
+
+      <label>
+        Fixture (optional)
+      </label>
+
+      <select id="rF" onchange="syncResultFixture()">
+
+        <option value="">
+          Manual result
+        </option>
+
+        ${
+          D.fixtures
+          .filter(
+            f =>
+            f.status !== "completed"
+          )
+          .map(
+            f => `
+
+            <option value="${esc(f.id)}">
+
+              ${esc(f.playerA)}
+              vs
+              ${esc(f.playerB)}
+              —
+              ${esc(f.tournament || "Tournament")}
+
+            </option>
+
+            `
+          ).join("")
+        }
+
+      </select>
+
+    </div>
+
+
+    <div class="grid2">
+
+      <div class="field">
+
+        <label>Player A</label>
+
+        <select id="rA">
+
+        ${
+          D.players.map(
+            p => `
+
+            <option value="${esc(p.id)}">
+              ${esc(p.name)}
+            </option>
+
+            `
+          ).join("")
+        }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Player B</label>
+
+        <select id="rB">
+
+        ${
+          D.players.map(
+            p => `
+
+            <option value="${esc(p.id)}">
+              ${esc(p.name)}
+            </option>
+
+            `
+          ).join("")
+        }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Score A</label>
+
+        <input
+          id="rSA"
+          type="number"
+          min="0"
+          value="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Score B</label>
+
+        <input
+          id="rSB"
+          type="number"
+          min="0"
+          value="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Tournament</label>
+
+        <input id="rT">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Date</label>
+
+        <input
+          id="rD"
+          type="date">
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="btn primary"
+      onclick="addResult()">
+
+      Publish Result
+
+    </button>
+
+  </div>
+
+
+  <div
+    class="card"
+    style="margin-top:12px">
+
+    <h3>
+      Published Results
+    </h3>
+
+    ${
+      D.results.map(
+        r => `
+
+        <div class="row">
+
+          <span>
+
+            ${esc(r.playerA)}
+
+            <span class="badge badge-green">
+              ${esc(r.scoreA)}
+              -
+              ${esc(r.scoreB)}
+            </span>
+
+            ${esc(r.playerB)}
+
+          </span>
+
+          <button
+            class="btn danger"
+            onclick="deleteResult('${esc(r.id)}')">
+
+            Remove
+
+          </button>
+
+        </div>
+
+        `
+      ).join("")
+
+      ||
+
+      `
+      <div class="empty">
+        No results.
+      </div>
+      `
+    }
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   SYNC RESULT FIXTURE
+===================================================== */
+
+window.syncResultFixture = () => {
+
+  const fixtureId =
+  $("rF")?.value || "";
+
+
+  if(!fixtureId)
+    return;
+
+
+  const fixture =
+  D.fixtures.find(
+    f => f.id === fixtureId
+  );
+
+
+  if(!fixture)
+    return;
+
+
+  if($("rA"))
+    $("rA").value =
+    fixture.playerAId || "";
+
+
+  if($("rB"))
+    $("rB").value =
+    fixture.playerBId || "";
+
+
+  if($("rT"))
+    $("rT").value =
+    fixture.tournament || "";
+
+
+  if($("rD"))
+    $("rD").value =
+    fixture.date || "";
+
+};
+
+
+/* =====================================================
+   ADD RESULT
+===================================================== */
+
+window.addResult =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  try{
+
+    const a =
+    D.players.find(
+      p =>
+      p.id ===
+      $("rA").value
+    );
+
+
+    const b =
+    D.players.find(
+      p =>
+      p.id ===
+      $("rB").value
+    );
+
+
+    const scoreA =
+    Number($("rSA").value);
+
+    const scoreB =
+    Number($("rSB").value);
+
+
+    if(
+      !a ||
+      !b ||
+      a.id === b.id
+    ){
+
+      alert(
+        "Choose two different players."
+      );
+
+      return;
+
+    }
+
+
+    if(
+      !Number.isFinite(scoreA) ||
+      !Number.isFinite(scoreB) ||
+      scoreA < 0 ||
+      scoreB < 0
+    ){
+
+      alert(
+        "Scores must be valid numbers greater than or equal to 0."
+      );
+
+      return;
+
+    }
+
+
+    const fixtureId =
+    $("rF")?.value || "";
+
+
+    const resultRef =
+    await addDoc(
+      collection(
+        db,
+        "results"
+      ),
+      {
+
+        playerAId:a.id,
+        playerBId:b.id,
+        playerA:a.name,
+        playerB:b.name,
+        scoreA:scoreA,
+        scoreB:scoreB,
+        fixtureId:fixtureId || null,
+        tournament:$("rT").value.trim(),
+        date:$("rD").value,
+        status:"Final",
+        createdAt:serverTimestamp()
+
+      }
+    );
+
+
+    if(fixtureId){
+
+      await updateDoc(
+        doc(
+          db,
+          "fixtures",
+          fixtureId
+        ),
+        {
+
+          status:"completed",
+          scoreA:scoreA,
+          scoreB:scoreB,
+          resultId:resultRef.id
+
+        }
+      );
+
+    }
+
+
+    await load();
+
+    adminResults();
+
+
+    alert(
+      "Result published."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   DELETE RESULT
+===================================================== */
+
+window.deleteResult =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(!confirm(
+    "Delete this result?"
+  ))
+    return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "results",
+        id
+      )
+    );
+
+
+    await load();
+
+    adminResults();
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   ADMIN RULES
+===================================================== */
+
+function adminRules(){
+
+  $("apanel").innerHTML = `
+
+  <div class="card">
+
+    <h3>
+      📋 Publish Rule
+    </h3>
+
+
+    <div class="field">
+
+      <label>
+        Title
+      </label>
+
+      <input id="rtitle">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Rule
+      </label>
+
+      <textarea id="rbody"></textarea>
+
+    </div>
+
+
+    <button
+      class="btn primary"
+      onclick="addRule()">
+
+      Publish Rule
+
+    </button>
+
+  </div>
+
+
+  <div
+    class="card"
+    style="margin-top:12px">
+
+    <h3>
+      Custom Rules
+    </h3>
+
+
+    ${
+      D.rules.map(
+        r => `
+
+        <div class="row">
+
+          <span>
+            <b>
+              ${esc(r.title)}
+            </b>
+          </span>
+
+          <button
+            class="btn danger"
+            onclick="deleteRule('${esc(r.id)}')">
+
+            Remove
+
+          </button>
+
+        </div>
+
+        `
+      ).join("")
+
+      ||
+
+      `
+      <div class="empty">
+        No custom rules.
+      </div>
+      `
+    }
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   ADD RULE
+===================================================== */
+
+window.addRule =
+async () => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  try{
+
+    const title =
+    $("rtitle").value.trim();
+
+    const body =
+    $("rbody").value.trim();
+
+
+    if(!title || !body){
+
+      alert(
+        "Rule title and rule text are required."
+      );
+
+      return;
+
+    }
+
+
+    await addDoc(
+      collection(
+        db,
+        "rules"
+      ),
+      {
+
+        title:title,
+        body:body,
+        createdAt:serverTimestamp()
+
+      }
+    );
+
+
+    await load();
+
+    adminRules();
+
+
+    alert(
+      "Rule published."
+    );
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   DELETE RULE
+===================================================== */
+
+window.deleteRule =
+async id => {
+
+  if(!isAdminUser()){
+    alert("Admin access required.");
+    return;
+  }
+
+
+  if(!confirm(
+    "Remove this rule?"
+  ))
+    return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "rules",
+        id
+      )
+    );
+
+
+    await load();
+
+    adminRules();
+
+
+  }catch(error){
+
+    alert(
+      firebaseError(error)
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+window.closeModal =
+() => {
+
+  $("modal")
+    .classList
+    .remove("show");
+
+};
+
+
+$("modal")?.addEventListener(
+  "click",
+  e => {
+
+    if(
+      e.target.id ===
+      "modal"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+go("home");
+
+</script>
+
+</body>
+</html>w
