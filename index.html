@@ -2817,7 +2817,7 @@ window.renderTournament = () => {
     </div>` : "";
 
   if(!fixtures.length){
-    $("tour").innerHTML = searchHtml + matchSearchHtml + (!q ? tournamentCards : "") + `<div class="empty" style="margin-top:15px">${q ? "No match found." : "No knockout fixtures generated yet."}</div>`;
+    $("tour").innerHTML = matchSearchHtml + (!q ? tournamentCards : "") + `<div class="empty" style="margin-top:15px">${q ? "No match found." : "No knockout fixtures generated yet."}</div>`;
     return;
   }
 
