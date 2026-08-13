@@ -614,6 +614,8 @@ footer{
 .match-search-box{position:sticky;top:8px;z-index:5;margin-bottom:15px;padding:15px;border:1px solid var(--line);border-radius:18px;background:rgba(16,22,34,.96);backdrop-filter:blur(10px)}
 .match-search-box input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#0b1018;color:var(--txt);font-size:15px;outline:none}
 .match-search-box input:focus{border-color:var(--purple)}
+.search-highlight{animation:matchSearchPulse 2.5s ease;box-shadow:0 0 0 3px rgba(124,92,255,.75),0 0 30px rgba(124,92,255,.35)!important}
+@keyframes matchSearchPulse{0%,100%{transform:scale(1)}20%{transform:scale(1.02)}40%{transform:scale(1)}}
 .bracket-player.winner-player{border:1px solid rgba(32,211,155,.55);background:rgba(32,211,155,.10);border-radius:10px;padding-left:8px;padding-right:8px}
 .bracket-player.winner-player .player-name{color:var(--green);font-weight:800}
 .bracket-player.loser-player{border:1px solid rgba(255,85,119,.45);background:rgba(255,85,119,.08);border-radius:10px;padding-left:8px;padding-right:8px}
@@ -2729,17 +2731,53 @@ window.renderRules =
 window.searchTournamentMatch = () => {
   const input = document.getElementById("tournamentSearch");
   const q = (input?.value || "").trim();
+  if(!q){
+    renderTournament();
+    return;
+  }
+
+  const tokens = q.toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter(x => x !== "vs" && x !== "v" && x !== "versus");
+
+  // Find the actual fixture from the complete fixture list first.
+  // This makes the jump reliable even when the bracket is horizontally scrollable.
+  const first = D.fixtures.find(f => {
+    const hay = `${String(f.playerA||"").toLowerCase()} ${String(f.playerB||"").toLowerCase()}`;
+    return tokens.length && tokens.every(t => hay.includes(t));
+  });
+
   renderTournament();
-  if(!q) return;
+
+  if(!first){
+    setTimeout(() => {
+      const empty = document.getElementById("matchSearchResult");
+      if(empty) window.scrollTo({top: empty.getBoundingClientRect().top + window.scrollY - 90, behavior:"smooth"});
+    }, 100);
+    return;
+  }
+
   setTimeout(() => {
-    const tokens = q.toLowerCase().split(/\s+/).filter(Boolean).filter(x => x !== "vs" && x !== "v");
-    const first = D.fixtures.find(f => {
-      const hay = `${String(f.playerA||"").toLowerCase()} ${String(f.playerB||"").toLowerCase()}`;
-      return tokens.length && tokens.every(t => hay.includes(t));
-    });
-    const el = first ? document.getElementById(`fixture-${first.id}`) : null;
-    if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
-  }, 80);
+    const el = document.getElementById(`fixture-${first.id}`);
+    if(!el) return;
+
+    // Scroll the horizontal bracket container to the matching fixture.
+    const wrap = el.closest('.bracket-wrap');
+    if(wrap){
+      const wrapRect = wrap.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const targetLeft = wrap.scrollLeft + (elRect.left - wrapRect.left) - Math.max(12, (wrap.clientWidth - elRect.width) / 2);
+      wrap.scrollTo({left: Math.max(0, targetLeft), behavior:"smooth"});
+    }
+
+    // Then scroll the page vertically to the exact fixture.
+    const top = el.getBoundingClientRect().top + window.scrollY - 105;
+    window.scrollTo({top: Math.max(0, top), behavior:"smooth"});
+
+    el.classList.add('search-highlight');
+    setTimeout(() => el.classList.remove('search-highlight'), 2500);
+  }, 120);
 };
 
 window.renderTournament = () => {
