@@ -609,6 +609,18 @@ footer{
 /* =====================================================
    KNOCKOUT TOURNAMENT UI
 ===================================================== */
+/* MATCH SEARCH + WIN/LOSS STATES */
+.match-search-box{position:sticky;top:8px;z-index:5;margin-bottom:15px;padding:15px;border:1px solid var(--line);border-radius:18px;background:rgba(16,22,34,.96);backdrop-filter:blur(10px)}
+.match-search-box input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#0b1018;color:var(--txt);font-size:15px;outline:none}
+.match-search-box input:focus{border-color:var(--purple)}
+.bracket-player.winner-player{border:1px solid rgba(32,211,155,.55);background:rgba(32,211,155,.10);border-radius:10px;padding-left:8px;padding-right:8px}
+.bracket-player.winner-player .player-name{color:var(--green);font-weight:800}
+.bracket-player.loser-player{border:1px solid rgba(255,85,119,.45);background:rgba(255,85,119,.08);border-radius:10px;padding-left:8px;padding-right:8px}
+.bracket-player.loser-player .player-name{color:var(--red);font-weight:800}
+.result-state{font-size:11px;font-weight:800;margin-left:5px}
+.result-state.win{color:var(--green)}
+.result-state.loss{color:var(--red)}
+
 .bracket-wrap{overflow-x:auto;padding-bottom:8px}
 .bracket{display:flex;gap:18px;align-items:flex-start;min-width:max-content}
 .bracket-round{width:280px;flex:none}
@@ -1112,6 +1124,16 @@ Don't have an account?
 <h2>Tournament</h2>
 <p>Fixtures, knockout bracket, schedule and result submission.</p>
 </div>
+</div>
+
+<div id="tournamentMatchSearch" style="display:block !important;visibility:visible !important;opacity:1 !important;width:100%;box-sizing:border-box;margin:18px 0;padding:16px;background:#101622;border:2px solid #39466b;border-radius:18px;position:relative;z-index:20;overflow:visible">
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px;color:#fff">🔎 Search Match</div>
+  <div style="font-size:13px;color:#9aa4b5;margin-bottom:10px">Search who is playing against whom — example: <b style="color:#fff">Tahsin vs Nayan</b></div>
+  <div style="display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;width:100%">
+    <input id="tournamentSearch" type="search" autocomplete="off" placeholder="Player name or Player vs Opponent..." style="display:block !important;visibility:visible !important;opacity:1 !important;flex:1 1 220px;min-width:0;width:100%;box-sizing:border-box;padding:14px 15px;background:#0b1018;color:#fff;border:1px solid #4a5778;border-radius:12px;font-size:15px;outline:none">
+    <button class="btn primary" type="button" onclick="renderTournament()">🔎 Search</button>
+    <button class="btn" type="button" onclick="document.getElementById('tournamentSearch').value='';renderTournament()">Clear</button>
+  </div>
 </div>
 
 <div id="tour"></div>
@@ -2738,7 +2760,19 @@ window.renderRules =
 
 window.renderTournament = () => {
 
-  const tournamentCards = D.tournaments.length ? D.tournaments.map(t => `
+  const q = (document.getElementById("tournamentSearch")?.value || "").trim().toLowerCase();
+  const matchingTournamentIds = new Set(
+    D.tournaments
+      .filter(t => {
+        if(!q) return true;
+        return [t.name, t.description, t.status, t.date]
+          .filter(Boolean)
+          .some(v => String(v).toLowerCase().includes(q));
+      })
+      .map(t => t.id)
+  );
+
+  const tournamentCards = D.tournaments.filter(t => matchingTournamentIds.has(t.id)).length ? D.tournaments.filter(t => matchingTournamentIds.has(t.id)).map(t => `
     <div class="card">
       <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
         <div>
@@ -2756,10 +2790,50 @@ window.renderTournament = () => {
   `).join("") : "";
 
   const tournamentIds = new Set(D.tournaments.map(t => t.id));
-  const fixtures = D.fixtures.filter(f => !f.tournamentId || tournamentIds.has(f.tournamentId));
+  const fixtures = D.fixtures.filter(f => {
+    if(f.tournamentId && !tournamentIds.has(f.tournamentId)) return false;
+    if(!q) return true;
+    const t = D.tournaments.find(x => x.id === f.tournamentId);
+    const haystack = [
+      f.tournament, f.playerA, f.playerB,
+      t?.name, t?.description, f.roundName, f.roundNumber
+    ].filter(Boolean).join(" ").toLowerCase();
+
+    // Supports searches like: "Tahsin Nayan", "Tahsin vs Nayan",
+    // or simply one player's name. The word "vs" is ignored.
+    const tokens = q.split(/\s+/).filter(Boolean).filter(x => x !== "vs" && x !== "v");
+    return tokens.length ? tokens.every(token => haystack.includes(token)) : true;
+  });
+
+  const searchHtml = "";
+
+  const matchSearchHtml = q ? `
+    <div class="card" style="margin-bottom:15px">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+        <div>
+          <span class="badge badge-purple">🎮 MATCH SEARCH RESULTS</span>
+          <h3 style="margin-top:8px">${fixtures.length} match${fixtures.length === 1 ? "" : "es"} found</h3>
+        </div>
+      </div>
+      <div class="list" style="margin-top:12px">
+        ${fixtures.length ? fixtures.map(f => {
+          const t = D.tournaments.find(x => x.id === f.tournamentId);
+          return `<div class="row" style="display:block">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+              <div>
+                <span class="small muted">${esc(t?.name || f.tournament || "Tournament")} • ${esc(roundName(Number(f.roundNumber || 1), 5))}</span>
+                <div style="font-size:18px;margin-top:6px"><b>${esc(f.playerA || "TBD")}</b> <span class="muted">VS</span> <b>${esc(f.playerB || "TBD")}</b></div>
+              </div>
+              <span class="badge ${f.status === 'completed' ? 'badge-green' : ''}">${esc(f.status || "scheduled")}</span>
+            </div>
+            <div style="margin-top:10px">${fixtureCardHtml(f)}</div>
+          </div>`;
+        }).join("") : `<div class="empty">No match found for <b>${esc(q)}</b>.</div>`}
+      </div>
+    </div>` : "";
 
   if(!fixtures.length){
-    $("tour").innerHTML = tournamentCards + `<div class="empty" style="margin-top:15px">No knockout fixtures generated yet.</div>`;
+    $("tour").innerHTML = searchHtml + matchSearchHtml + (!q ? tournamentCards : "") + `<div class="empty" style="margin-top:15px">${q ? "No match found." : "No knockout fixtures generated yet."}</div>`;
     return;
   }
 
@@ -2823,7 +2897,7 @@ window.renderTournament = () => {
     </div>`;
   }).join("");
 
-  $("tour").innerHTML = tournamentCards + bracketHtml;
+  $("tour").innerHTML = searchHtml + matchSearchHtml + (!q ? tournamentCards : "") + bracketHtml;
 };
 
 function tournamentTopScorers(tournamentId, fixtures){
@@ -2884,17 +2958,30 @@ function fixtureCardHtml(f){
   const b = bId ? D.players.find(p=>p.id===bId) : null;
   const scoreA = f.scoreA ?? "";
   const scoreB = f.scoreB ?? "";
-  const status = f.status || "scheduled";
+  const status = String(f.status || "scheduled").toLowerCase();
+  const completed = status === "completed" && scoreA !== "" && scoreB !== "";
+  const sa = Number(scoreA);
+  const sb = Number(scoreB);
 
-  const playerLine = (id,name,avatar,score) => id
-    ? `<div class="bracket-player"><div class="mini clickable" onclick="openPlayer('${esc(id)}')">${avatarHtml(avatar,name)}<span>${esc(name)}</span></div><b class="bracket-score">${score !== "" && score !== null ? esc(score) : ""}</b></div>`
-    : `<div class="bracket-player"><div class="mini">${avatarHtml("",name)}<span>${esc(name)}</span></div><b class="bracket-score"></b></div>`;
+  // Use the approved fixture winnerId as the source of truth.
+  // This is more reliable than recalculating from the displayed score.
+  const approvedWinnerId = f.winnerId ? String(f.winnerId) : "";
+  const aWin = completed && (approvedWinnerId ? String(aId) === approvedWinnerId : sa > sb);
+  const bWin = completed && (approvedWinnerId ? String(bId) === approvedWinnerId : sb > sa);
+  const aLoss = completed && !aWin && bWin;
+  const bLoss = completed && !bWin && aWin;
+
+  const playerLine = (id,name,avatar,score,isWinner,isLoser) => {
+    const stateClass = isWinner ? " winner-player" : isLoser ? " loser-player" : "";
+    const inlineColor = isWinner ? ' style="color:#20d39b!important;font-weight:800"' : isLoser ? ' style="color:#ff5577!important;font-weight:800"' : "";
+    const state = isWinner ? `<span class="result-state win">WIN</span>` : isLoser ? `<span class="result-state loss">LOSS</span>` : "";
+    return id
+      ? `<div class="bracket-player${stateClass}"><div class="mini clickable" onclick="openPlayer('${esc(id)}')">${avatarHtml(avatar,name)}<span class="player-name"${inlineColor}>${esc(name)}</span>${state}</div><b class="bracket-score">${score !== "" && score !== null ? esc(score) : ""}</b></div>`
+      : `<div class="bracket-player"><div class="mini">${avatarHtml("",name)}<span class="player-name">${esc(name)}</span></div><b class="bracket-score"></b></div>`;
+  };
 
   let action = "";
   if(status === "scheduled" && aId && bId){
-    // Result submission is intentionally visible to everyone.
-    // Any logged-in player can submit a proposed score; admin approval
-    // is required before the result becomes official.
     if(currentUser){
       action = `<div class="fixture-actions"><button class="btn primary" onclick="submitFixtureResult('${esc(f.id)}')">📝 Upload Result</button></div>`;
     } else {
@@ -2905,18 +2992,17 @@ function fixtureCardHtml(f){
   } else if(status === "bye") {
     action = `<div class="fixture-actions"><span class="badge bye">BYE • ${esc(f.winnerName || aName)}</span></div>`;
   } else if(status === "completed") {
-    action = `<div class="fixture-actions"><span class="badge badge-green">✓ Completed</span></div>`;
+    action = `<div class="fixture-actions"><span class="badge badge-green">✓ Final Result</span></div>`;
   } else if(status === "waiting") {
     action = `<div class="fixture-actions"><span class="badge">Waiting for previous round</span></div>`;
   }
 
   return `<div class="bracket-match">
-    ${playerLine(aId,aName,f.playerAAvatar,aId ? scoreA : "")}
-    ${playerLine(bId,bName,f.playerBAvatar,bId ? scoreB : "")}
+    ${playerLine(aId,aName,f.playerAAvatar,aId ? scoreA : "",aWin,aLoss)}
+    ${playerLine(bId,bName,f.playerBAvatar,bId ? scoreB : "",bWin,bLoss)}
     ${action}
   </div>`;
 }
-
 
 /* =====================================================
    RESULTS
@@ -2925,6 +3011,16 @@ function fixtureCardHtml(f){
 window.renderResults =
 () => {
 
+  const q = (document.getElementById("resultSearch")?.value || "").trim().toLowerCase();
+  const allResults = D.results.filter(r => r.status !== "pending");
+  const visibleResults = allResults.filter(r => {
+    if(!q) return true;
+    return [r.playerA, r.playerB, r.tournament, r.date]
+      .filter(Boolean)
+      .some(v => String(v).toLowerCase().includes(q));
+  });
+
+  const boardSource = q ? visibleResults : allResults;
   const board = {};
 
 
@@ -2946,7 +3042,7 @@ window.renderResults =
   );
 
 
-  D.results.forEach(
+  boardSource.forEach(
     r => {
 
       if(r.status === "pending") return;
@@ -3004,7 +3100,7 @@ window.renderResults =
   );
 
 
-  $("leader").innerHTML = `
+  $("leader").innerHTML = resultSearchHtml + `
 
   <div class="card">
 
@@ -3077,13 +3173,20 @@ window.renderResults =
   `;
 
 
+  const resultSearchHtml = `
+    <div class="search actions" style="margin-bottom:14px">
+      <input id="resultSearch" value="${esc(q)}" placeholder="🔎 Search player, tournament or date..." onkeydown="if(event.key==='Enter')renderResults()">
+      <button class="btn primary" onclick="renderResults()">🔎 Search</button>
+      ${q ? `<button class="btn" onclick="document.getElementById('resultSearch').value='';renderResults()">Clear</button>` : ""}
+    </div>`;
+
   $("res").innerHTML =
 
-  D.results.filter(r=>r.status!=="pending").length
+  visibleResults.length
 
   ?
 
-  [...D.results.filter(r=>r.status!=="pending")]
+  [...visibleResults]
   .reverse()
   .map(
     r => `
