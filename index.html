@@ -2881,7 +2881,7 @@ window.renderTournament = () => {
     </div>`;
   }).join("");
 
-  $("tour").innerHTML = searchHtml + matchSearchHtml + (!q ? tournamentCards : "") + bracketHtml;
+  $("tour").innerHTML = matchSearchHtml + (!q ? tournamentCards : "") + bracketHtml;
 };
 
 function tournamentTopScorers(tournamentId, fixtures){
