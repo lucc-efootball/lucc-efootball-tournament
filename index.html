@@ -2739,51 +2739,65 @@ window.searchTournamentMatch = () => {
   const tokens = q.toLowerCase()
     .split(/\s+/)
     .filter(Boolean)
-    .filter(x => x !== "vs" && x !== "v" && x !== "versus");
+    .filter(x => !["vs","v","versus"].includes(x));
 
-  // Find the actual fixture from the complete fixture list first.
-  // This makes the jump reliable even when the bracket is horizontally scrollable.
-  const first = D.fixtures.find(f => {
-    const hay = `${String(f.playerA||"").toLowerCase()} ${String(f.playerB||"").toLowerCase()}`;
-    return tokens.length && tokens.every(t => hay.includes(t));
+  const pairParts = q.toLowerCase().split(/\s+(?:vs|v|versus)\s+/).map(x=>x.trim()).filter(Boolean);
+
+  const candidates = D.fixtures.filter(f => {
+    const a = String(f.playerA || "").toLowerCase();
+    const b = String(f.playerB || "").toLowerCase();
+    if(!tokens.length) return false;
+
+    if(pairParts.length === 2){
+      return (a.includes(pairParts[0]) && b.includes(pairParts[1])) ||
+             (a.includes(pairParts[1]) && b.includes(pairParts[0]));
+    }
+    const hay = `${a} ${b}`;
+    return tokens.some(t => hay.includes(t));
   });
 
-  renderTournament();
-
-  if(!first){
-    setTimeout(() => {
-      const empty = document.getElementById("matchSearchResult");
-      if(empty) window.scrollTo({top: empty.getBoundingClientRect().top + window.scrollY - 90, behavior:"smooth"});
-    }, 100);
+  if(!candidates.length){
+    renderTournament();
     return;
   }
 
-  setTimeout(() => {
-    const el = document.getElementById(`fixture-${first.id}`);
-    if(!el) return;
+  // A player can appear in several fixtures after advancing. Search must show
+  // ONLY the player's current/latest real fixture, not old R1/QF matches.
+  // Prefer a fixture where both players are known, then the highest round.
+  const selected = candidates.slice().sort((x,y) => {
+    const xKnown = x.playerAId && x.playerBId ? 1 : 0;
+    const yKnown = y.playerAId && y.playerBId ? 1 : 0;
+    if(yKnown !== xKnown) return yKnown - xKnown;
+    const xr = Number(x.roundNumber || 1), yr = Number(y.roundNumber || 1);
+    if(yr !== xr) return yr - xr;
+    const xc = String(x.status || '').toLowerCase() === 'completed' ? 1 : 0;
+    const yc = String(y.status || '').toLowerCase() === 'completed' ? 1 : 0;
+    return yc - xc;
+  })[0];
 
-    // Scroll the horizontal bracket container to the matching fixture.
+  // Store the selected fixture for renderTournament().
+  window._selectedTournamentFixtureId = selected.id;
+  renderTournament();
+
+  setTimeout(() => {
+    const el = document.getElementById(`fixture-${selected.id}`);
+    if(!el) return;
     const wrap = el.closest('.bracket-wrap');
     if(wrap){
       const wrapRect = wrap.getBoundingClientRect();
       const elRect = el.getBoundingClientRect();
       const targetLeft = wrap.scrollLeft + (elRect.left - wrapRect.left) - Math.max(12, (wrap.clientWidth - elRect.width) / 2);
-      wrap.scrollTo({left: Math.max(0, targetLeft), behavior:"smooth"});
+      wrap.scrollTo({left:Math.max(0,targetLeft),behavior:"smooth"});
     }
-
-    // Then scroll the page vertically to the exact fixture.
-    const top = el.getBoundingClientRect().top + window.scrollY - 105;
-    window.scrollTo({top: Math.max(0, top), behavior:"smooth"});
-
+    window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top + window.scrollY - 105),behavior:"smooth"});
     el.classList.add('search-highlight');
-    setTimeout(() => el.classList.remove('search-highlight'), 2500);
-  }, 120);
+    setTimeout(()=>el.classList.remove('search-highlight'),2500);
+  },120);
 };
 
 window.renderTournament = () => {
-
   const q = (document.getElementById("tournamentSearch")?.value || "").trim().toLowerCase();
-  const tokens = q.split(/\s+/).filter(Boolean).filter(x => x !== "vs" && x !== "v");
+  const selectedId = q ? window._selectedTournamentFixtureId : null;
 
   const tournamentCards = !q ? D.tournaments.map(t => `
     <div class="card">
@@ -2802,22 +2816,24 @@ window.renderTournament = () => {
     </div>
   `).join("") : "";
 
-  const tournamentIds = new Set(D.tournaments.map(t => t.id));
-  const fixtures = D.fixtures.filter(f => {
-    if(f.tournamentId && !tournamentIds.has(f.tournamentId)) return false;
-    if(!q) return true;
-    const haystack = `${String(f.playerA||"").toLowerCase()} ${String(f.playerB||"").toLowerCase()}`;
-    return tokens.length ? tokens.every(token => haystack.includes(token)) : true;
-  });
+  let fixtures;
+  if(q && selectedId){
+    fixtures = D.fixtures.filter(f => f.id === selectedId);
+  }else if(q){
+    // Search button has not selected a fixture yet: show nothing rather than
+    // dumping every round where the player name appears.
+    fixtures = [];
+  }else{
+    const tournamentIds = new Set(D.tournaments.map(t => t.id));
+    fixtures = D.fixtures.filter(f => !f.tournamentId || tournamentIds.has(f.tournamentId));
+  }
 
-  const matchSearchHtml = q ? `
-    <div class="card" style="margin-bottom:15px" id="matchSearchResult">
+  if(q && !fixtures.length){
+    $("tour").innerHTML = `<div class="card" style="margin-bottom:15px" id="matchSearchResult">
       <span class="badge badge-purple">🎮 MATCH SEARCH</span>
-      <h3 style="margin-top:8px">${fixtures.length} matching match${fixtures.length===1 ? "" : "es"}</h3>
-    </div>` : "";
-
-  if(!fixtures.length){
-    $("tour").innerHTML = matchSearchHtml + (!q ? tournamentCards : "") + `<div class="empty" style="margin-top:15px">${q ? "No match found." : "No knockout fixtures generated yet."}</div>`;
+      <h3 style="margin-top:8px">No match selected</h3>
+      <p class="muted">Search a player name or use <b>Player vs Opponent</b>. Only that player's current/latest fixture will be shown.</p>
+    </div>`;
     return;
   }
 
@@ -2830,58 +2846,46 @@ window.renderTournament = () => {
 
   const bracketHtml = Object.entries(groups).map(([key,fs]) => {
     const tour = D.tournaments.find(t => t.id === key);
+    const allTournamentFixtures = D.fixtures.filter(f => (f.tournamentId || f.tournament || "legacy") === key);
+    const totalRounds = Math.max(1, ...allTournamentFixtures.map(f => Number(f.roundNumber || 1)));
     const rounds = {};
     fs.forEach(f => { const r = Number(f.roundNumber || 1); (rounds[r] ||= []).push(f); });
 
     const roundHtml = Object.keys(rounds).sort((a,b)=>a-b).map(r => {
       const list = rounds[r].sort((a,b)=>(a.matchNumber||0)-(b.matchNumber||0));
       return `<div class="bracket-round">
-        <h3>${esc(roundName(Number(r), Object.keys(rounds).length))}</h3>
+        <h3>${esc(roundName(Number(r), totalRounds))}</h3>
         ${list.map(fixtureCardHtml).join("")}
       </div>`;
     }).join("");
 
     const tournamentName = tour?.name || fs[0]?.tournament || "Tournament";
-    const topScorers = tournamentTopScorers(key, fs);
+    const topScorers = q ? [] : tournamentTopScorers(key, allTournamentFixtures);
 
     return `<div class="card" style="margin-top:15px">
       <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px">
         <div><span class="badge badge-purple">🏆 ${esc(tournamentName)}</span></div>
-        <span class="small muted">${fs.length} bracket matches</span>
+        <span class="small muted">${q ? "1 selected fixture" : `${fs.length} bracket matches`}</span>
       </div>
       <div class="bracket-wrap"><div class="bracket">${roundHtml}</div></div>
-
-      <div class="top-scorer-section">
-        <div class="top-scorer-head">
-          <div>
-            <span class="badge badge-gold">⚽ TOP SCORERS</span>
-            <h3 style="margin-top:8px">Tournament Top Scorers</h3>
-            <div class="small muted">Official goals from approved match results only.</div>
-          </div>
-        </div>
-        ${topScorers.length ? `
-          <div class="top-scorer-list">
-            ${topScorers.map((p,i) => `
-              <div class="top-scorer-row clickable" onclick="openPlayer('${esc(p.id)}')">
-                <div class="top-scorer-rank">${i+1}</div>
-                ${avatarHtml(p.avatarUrl,p.name)}
-                <div class="top-scorer-info">
-                  <b>${esc(p.name)}</b>
-                  <span class="small muted">${p.played} match${p.played===1?'':'es'} • ${p.wins} win${p.wins===1?'':'s'}</span>
-                </div>
-                <div class="top-scorer-goals">
-                  <b>${p.goals}</b>
-                  <span>GOALS</span>
-                </div>
-              </div>
-            `).join("")}
-          </div>
-        ` : `<div class="empty" style="margin-top:12px">No approved results yet. Top scorers will appear here after results are approved.</div>`}
-      </div>
+      ${!q ? `<div class="top-scorer-section">
+        <div class="top-scorer-head"><div>
+          <span class="badge badge-gold">⚽ TOP SCORERS</span>
+          <h3 style="margin-top:8px">Tournament Top Scorers</h3>
+          <div class="small muted">Official goals from approved match results only.</div>
+        </div></div>
+        ${topScorers.length ? `<div class="top-scorer-list">${topScorers.map((p,i)=>`
+          <div class="top-scorer-row clickable" onclick="openPlayer('${esc(p.id)}')">
+            <div class="top-scorer-rank">${i+1}</div>${avatarHtml(p.avatarUrl,p.name)}
+            <div class="top-scorer-info"><b>${esc(p.name)}</b><span class="small muted">${p.played} match${p.played===1?'':'es'} • ${p.wins} win${p.wins===1?'':'s'}</span></div>
+            <div class="top-scorer-goals"><b>${p.goals}</b><span>GOALS</span></div>
+          </div>`).join("")}</div>` : `<div class="empty" style="margin-top:12px">No approved results yet. Top scorers will appear here after results are approved.</div>`}
+      </div>` : `<div class="small muted" style="margin-top:12px">Showing only the selected/current fixture for this player.</div>`}
     </div>`;
   }).join("");
 
-  $("tour").innerHTML = matchSearchHtml + (!q ? tournamentCards : "") + bracketHtml;
+  $("tour").innerHTML = (!q ? tournamentCards : `<div class="card" style="margin-bottom:15px" id="matchSearchResult"><span class="badge badge-purple">🎮 MATCH SEARCH</span><h3 style="margin-top:8px">Current match</h3><div class="small muted">Only the selected player's current/latest fixture is shown.</div></div>`) + bracketHtml;
+  if(!q) window._selectedTournamentFixtureId = null;
 };
 
 function tournamentTopScorers(tournamentId, fixtures){
