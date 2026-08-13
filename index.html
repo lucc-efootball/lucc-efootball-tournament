@@ -443,6 +443,7 @@ select:focus{
   border:1px solid #765cff33;
 }
 
+.badge-red{background:#3a1118;color:#ff5577;border:1px solid #6b2635}
 .badge-green{
   color:#72e8bd;
   background:#20d39b12;
@@ -1130,8 +1131,8 @@ Don't have an account?
   <div style="font-size:18px;font-weight:800;margin-bottom:6px;color:#fff">🔎 Search Match</div>
   <div style="font-size:13px;color:#9aa4b5;margin-bottom:10px">Search who is playing against whom — example: <b style="color:#fff">Tahsin vs Nayan</b></div>
   <div style="display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;width:100%">
-    <input id="tournamentSearch" type="search" autocomplete="off" placeholder="Player name or Player vs Opponent..." style="display:block !important;visibility:visible !important;opacity:1 !important;flex:1 1 220px;min-width:0;width:100%;box-sizing:border-box;padding:14px 15px;background:#0b1018;color:#fff;border:1px solid #4a5778;border-radius:12px;font-size:15px;outline:none">
-    <button class="btn primary" type="button" onclick="renderTournament()">🔎 Search</button>
+    <input id="tournamentSearch" type="search" autocomplete="off" onkeydown="if(event.key==='Enter')searchTournamentMatch()" placeholder="Search player name or Player vs Opponent..." style="display:block !important;visibility:visible !important;opacity:1 !important;flex:1 1 220px;min-width:0;width:100%;box-sizing:border-box;padding:14px 15px;background:#0b1018;color:#fff;border:1px solid #4a5778;border-radius:12px;font-size:15px;outline:none">
+    <button class="btn primary" type="button" onclick="searchTournamentMatch()">🔎 Search</button>
     <button class="btn" type="button" onclick="document.getElementById('tournamentSearch').value='';renderTournament()">Clear</button>
   </div>
 </div>
@@ -2430,45 +2431,12 @@ id => {
   </div>
 
 
-  <!-- DEVICE + MOBILE -->
-
+  <!-- MOBILE MODEL -->
   <div class="grid2" style="margin-top:14px">
-
-    <div class="statbox">
-
-      <span class="small muted">
-        📱 Device
-      </span>
-
-      <br>
-
-      <b>
-        ${esc(
-          p.device ||
-          "Not specified"
-        )}
-      </b>
-
+    <div class="statbox" style="grid-column:1/-1">
+      <span class="small muted">📱 Mobile Model</span><br>
+      <b>${esc(p.device || "Not specified")}</b>
     </div>
-
-
-    <div class="statbox">
-
-      <span class="small muted">
-        📞 Mobile
-      </span>
-
-      <br>
-
-      <b>
-        ${esc(
-          p.mobile ||
-          "Not specified"
-        )}
-      </b>
-
-    </div>
-
   </div>
 
 
@@ -2538,8 +2506,8 @@ id => {
 
         </span>
 
-        <span class="badge badge-green">
-          ${esc(x.score)}
+        <span class="badge ${Number(String(x.score).split("-")[0]?.trim()) > Number(String(x.score).split("-")[1]?.trim()) ? "badge-green" : Number(String(x.score).split("-")[0]?.trim()) < Number(String(x.score).split("-")[1]?.trim()) ? "badge-red" : "badge-purple"}">
+          ${Number(String(x.score).split("-")[0]?.trim()) > Number(String(x.score).split("-")[1]?.trim()) ? "WIN • " : Number(String(x.score).split("-")[0]?.trim()) < Number(String(x.score).split("-")[1]?.trim()) ? "LOSS • " : "DRAW • "}${esc(x.score)}
         </span>
 
       </div>
@@ -2758,21 +2726,28 @@ window.renderRules =
    TOURNAMENT
 ===================================================== */
 
+window.searchTournamentMatch = () => {
+  const input = document.getElementById("tournamentSearch");
+  const q = (input?.value || "").trim();
+  renderTournament();
+  if(!q) return;
+  setTimeout(() => {
+    const tokens = q.toLowerCase().split(/\s+/).filter(Boolean).filter(x => x !== "vs" && x !== "v");
+    const first = D.fixtures.find(f => {
+      const hay = `${String(f.playerA||"").toLowerCase()} ${String(f.playerB||"").toLowerCase()}`;
+      return tokens.length && tokens.every(t => hay.includes(t));
+    });
+    const el = first ? document.getElementById(`fixture-${first.id}`) : null;
+    if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
+  }, 80);
+};
+
 window.renderTournament = () => {
 
   const q = (document.getElementById("tournamentSearch")?.value || "").trim().toLowerCase();
-  const matchingTournamentIds = new Set(
-    D.tournaments
-      .filter(t => {
-        if(!q) return true;
-        return [t.name, t.description, t.status, t.date]
-          .filter(Boolean)
-          .some(v => String(v).toLowerCase().includes(q));
-      })
-      .map(t => t.id)
-  );
+  const tokens = q.split(/\s+/).filter(Boolean).filter(x => x !== "vs" && x !== "v");
 
-  const tournamentCards = D.tournaments.filter(t => matchingTournamentIds.has(t.id)).length ? D.tournaments.filter(t => matchingTournamentIds.has(t.id)).map(t => `
+  const tournamentCards = !q ? D.tournaments.map(t => `
     <div class="card">
       <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
         <div>
@@ -2793,43 +2768,14 @@ window.renderTournament = () => {
   const fixtures = D.fixtures.filter(f => {
     if(f.tournamentId && !tournamentIds.has(f.tournamentId)) return false;
     if(!q) return true;
-    const t = D.tournaments.find(x => x.id === f.tournamentId);
-    const haystack = [
-      f.tournament, f.playerA, f.playerB,
-      t?.name, t?.description, f.roundName, f.roundNumber
-    ].filter(Boolean).join(" ").toLowerCase();
-
-    // Supports searches like: "Tahsin Nayan", "Tahsin vs Nayan",
-    // or simply one player's name. The word "vs" is ignored.
-    const tokens = q.split(/\s+/).filter(Boolean).filter(x => x !== "vs" && x !== "v");
+    const haystack = `${String(f.playerA||"").toLowerCase()} ${String(f.playerB||"").toLowerCase()}`;
     return tokens.length ? tokens.every(token => haystack.includes(token)) : true;
   });
 
-  const searchHtml = "";
-
   const matchSearchHtml = q ? `
-    <div class="card" style="margin-bottom:15px">
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-        <div>
-          <span class="badge badge-purple">🎮 MATCH SEARCH RESULTS</span>
-          <h3 style="margin-top:8px">${fixtures.length} match${fixtures.length === 1 ? "" : "es"} found</h3>
-        </div>
-      </div>
-      <div class="list" style="margin-top:12px">
-        ${fixtures.length ? fixtures.map(f => {
-          const t = D.tournaments.find(x => x.id === f.tournamentId);
-          return `<div class="row" style="display:block">
-            <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-              <div>
-                <span class="small muted">${esc(t?.name || f.tournament || "Tournament")} • ${esc(roundName(Number(f.roundNumber || 1), 5))}</span>
-                <div style="font-size:18px;margin-top:6px"><b>${esc(f.playerA || "TBD")}</b> <span class="muted">VS</span> <b>${esc(f.playerB || "TBD")}</b></div>
-              </div>
-              <span class="badge ${f.status === 'completed' ? 'badge-green' : ''}">${esc(f.status || "scheduled")}</span>
-            </div>
-            <div style="margin-top:10px">${fixtureCardHtml(f)}</div>
-          </div>`;
-        }).join("") : `<div class="empty">No match found for <b>${esc(q)}</b>.</div>`}
-      </div>
+    <div class="card" style="margin-bottom:15px" id="matchSearchResult">
+      <span class="badge badge-purple">🎮 MATCH SEARCH</span>
+      <h3 style="margin-top:8px">${fixtures.length} matching match${fixtures.length===1 ? "" : "es"}</h3>
     </div>` : "";
 
   if(!fixtures.length){
@@ -2997,7 +2943,7 @@ function fixtureCardHtml(f){
     action = `<div class="fixture-actions"><span class="badge">Waiting for previous round</span></div>`;
   }
 
-  return `<div class="bracket-match">
+  return `<div class="bracket-match" id="fixture-${esc(f.id)}">
     ${playerLine(aId,aName,f.playerAAvatar,aId ? scoreA : "",aWin,aLoss)}
     ${playerLine(bId,bName,f.playerBAvatar,bId ? scoreB : "",bWin,bLoss)}
     ${action}
@@ -3379,74 +3325,12 @@ window.renderProfile =
 
 
   <!-- PLAYER INFORMATION -->
-
   <div class="card" style="margin-top:13px">
-
-    <h3>
-      Player Information
-    </h3>
-
-    <div
-      class="grid2"
-      style="margin-top:15px">
-
-      <div>
-        <span class="small muted">
-          Email
-        </span>
-        <br>
-        <b>
-          ${esc(
-            profile?.email ||
-            currentUser.email
-          )}
-        </b>
-      </div>
-
-
-      <div>
-        <span class="small muted">
-          Konami UID
-        </span>
-        <br>
-        <b>
-          ${esc(
-            profile?.konamiUid ||
-            "—"
-          )}
-        </b>
-      </div>
-
-
-      <div>
-        <span class="small muted">
-          📞 Mobile
-        </span>
-        <br>
-        <b>
-          ${esc(
-            profile?.mobile ||
-            "Not specified"
-          )}
-        </b>
-      </div>
-
-
-      <div>
-        <span class="small muted">
-          📱 Device / Mobile Model
-        </span>
-        <br>
-        <b>
-          ${esc(
-            profile?.device ||
-            "Not specified"
-          )}
-        </b>
-      </div>
-
+    <h3>Player Information</h3>
+    <div class="grid2" style="margin-top:15px">
+      <div><span class="small muted">Konami UID</span><br><b>${esc(profile?.konamiUid || "—")}</b></div>
+      <div><span class="small muted">📱 Mobile Model</span><br><b>${esc(profile?.device || "Not specified")}</b></div>
     </div>
-
   </div>
 
 
@@ -3487,8 +3371,8 @@ window.renderProfile =
 
           </span>
 
-          <span class="badge badge-green">
-            ${esc(x.score)}
+          <span class="badge ${Number(String(x.score).split("-")[0]?.trim()) > Number(String(x.score).split("-")[1]?.trim()) ? "badge-green" : Number(String(x.score).split("-")[0]?.trim()) < Number(String(x.score).split("-")[1]?.trim()) ? "badge-red" : "badge-purple"}">
+            ${Number(String(x.score).split("-")[0]?.trim()) > Number(String(x.score).split("-")[1]?.trim()) ? "WIN • " : Number(String(x.score).split("-")[0]?.trim()) < Number(String(x.score).split("-")[1]?.trim()) ? "LOSS • " : "DRAW • "}${esc(x.score)}
           </span>
 
         </div>
